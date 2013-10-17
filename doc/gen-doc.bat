@@ -1,0 +1,1 @@
+f:\programy\doxygen\doxygen.exe Doxyfile

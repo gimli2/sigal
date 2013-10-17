@@ -1,0 +1,57 @@
+html, body {
+	background-color: #333;
+	font-family: Calibri, Verdana, sans-serif;
+	background-image: linear-gradient(left , #737273 7%, #333 50%);
+	background-image: -o-linear-gradient(left , #737273 7%, #333 50%);
+	background-image: -moz-linear-gradient(left , #737273 7%, #333 50%);
+	background-image: -webkit-linear-gradient(left , #737273 7%, #333 50%);
+	background-image: -ms-linear-gradient(left , #737273 7%, #333 50%);
+	background-image: -webkit-gradient(	linear,	left top,	right top,	color-stop(0.07, #737273),	color-stop(0.5, #333));
+}
+a, .footer a, .header a {
+	color: rgb(0,160, 255);
+}
+.header{
+	border: 0;
+}
+#credits {
+	color: #fff;
+}
+#credits a {
+ 	color: rgb(0,160, 255);
+}
+.foto .desc {
+	background-color: #000;
+	color: #666;
+}
+ul.tabs {
+	margin: 0;
+	padding: 0;
+	float: left;
+	list-style: none;
+	height: 26px;
+	border-bottom: 1px solid #999;
+	border-left: 0;
+	width: 100%;
+}
+ul.tabs li {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	margin-right: 2pt;
+	border: 1px solid #999;
+}
+ul.tabs li a:hover {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	background: #fff;
+}
+html ul.tabs li.active, html ul.tabs li.active a:hover  {
+	background: #abc;
+	border-bottom: 1px solid #abc;
+}
+.tab_content {
+	
+}
+.tab_inner_content {
+	background-color: #abc;
+}
