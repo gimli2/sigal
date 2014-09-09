@@ -1,0 +1,3 @@
+http://stackoverflow.com/questions/7523888/javascript-get-sound-data
+http://chromium.googlecode.com/svn/trunk/samples/audio/visualizer-gl.html
+http://www.schillmania.com/projects/soundmanager2/demo/360-player/canvas-visualization.html

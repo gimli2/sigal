@@ -4,7 +4,9 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
 <meta name="author" content="Gimli2; http://gimli2.gipix.net" />
 <link rel="shotcut icon" href="./images/favicon.png" />
 <link rel="stylesheet" href="./css/style.css" type="text/css" />
-<!--OWNCSS--><link rel="stylesheet" href="./modules/ceebox/css/ceebox-min-static-img.css" type="text/css" media="screen" />
+<!--OWNCSS-->
+<link rel="stylesheet" href="./modules/ceebox/css/ceebox-min-static-img.css" type="text/css" media="screen" />
+<!--GAJS-->
 <script type="text/javascript" src="./js/sigal.js"></script>
 <script type="text/javascript" src="./modules/ceebox/js/jquery.js"></script>
 <script type="text/javascript" src="./modules/ceebox/js/jquery.metadata.js"></script>
