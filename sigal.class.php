@@ -63,6 +63,13 @@ class Sigal {
     'swf' => 'application/x-shockwave-flash',
     'flv' => 'video/x-flv'
   );
+  /** Callback function for sorting images in some album. */
+  public $func_sortimages = NULL;
+  /** Callback function for sorting albums in gallery. */
+  public $func_sortalbums = NULL;
+  /** Callback function for scanning directory for images. You can implement own filters tanks to this function. */
+  public $func_scandir = NULL;
+
   /** Flag for browsing in locked albums. */
   private $islocked = false;
   /** Array of usernames which have access to given album. */
@@ -113,7 +120,7 @@ class Sigal {
     echo '<div class="header">';
     echo '<h1>'.$this->galTitle.'</h1>';
     echo '</div>';
-    $albs=$this->getAlbums();
+    $albs = $this->getAlbums();
 
     // prepare tabs
     $albs_by_year = array();
@@ -185,9 +192,9 @@ class Sigal {
   public function showAlbum($alb) {
     ob_start();
     ob_implicit_flush(true);
-    $alb=$this->sanitizePath(urldecode($alb));
-    $aname=basename($alb);
-    echo str_replace('{title}',$aname,$this->html_head);
+    $alb = $this->sanitizePath(urldecode($alb));
+    $aname = basename($alb);
+    echo str_replace('{title}', $aname, $this->html_head);
     echo '<div class="header">';
     echo '<h1>'.$this->galTitle.': '.$aname.'</h1>';
     echo '</div>';
@@ -199,8 +206,10 @@ class Sigal {
     echo '</div>';
 
     // this automaticly check if album is locked an load usernames&passwords
-    $fotos=$this->getImages($alb);
+    $fotos = $this->getImages($alb);
+
     // is locked? and not set username&pass
+    $this->readLock($alb);
     if ($this->islocked && !$this->isAccessible()) {
       $this->showPassForm();
       echo $this->html_tail;
@@ -221,7 +230,7 @@ class Sigal {
         echo '<a href="?mkmid='.urlencode($f).'" title="'.$bn.'">';
       }
       $thumb = $this->getThumbName($f);
-      if ($thumb===$this->defaultIcon || file_exists($thumb)) {
+      if ($thumb === $this->defaultIcon || file_exists($thumb)) {
         echo '<img src="'.$thumb.'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
       } else {
         echo '<img src="?mkthumb='.urlencode($f).'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
@@ -263,7 +272,7 @@ class Sigal {
 
     // hlavicka
     $ext = strtolower($this->getExt($f));
-    echo str_replace('{title}',$bn,$this->html_head);
+    echo str_replace('{title}', $bn, $this->html_head);
     
     // je to zamcene?
     if ($this->islocked && !$this->isAccessible()) {
@@ -375,20 +384,55 @@ class Sigal {
   }
   /*========================================================================*/
   /**
+   * @brief Shows credit page.
+   */
+  public function showCreditPage() {
+    echo str_replace('{title}', $this->galTitle, $this->html_head);
+    require_once 'credits.html';
+    echo $this->html_tail;
+  }
+  /*========================================================================*/
+  private function sortItems($array, $callback_id) {
+    $callback = $this->$callback_id;
+    if (isset($callback) && $callback !== NULL && function_exists($callback)) {
+      return call_user_func($callback, $array);
+    }
+    return $array;
+  }
+  /*========================================================================*/
+  /**
    * @brief Get sorted (by name reversed eg. 9->0, Z->A) array of all albums.
    * @returns An array of all albums in defined dir ($this->dir).
    */
   public function getAlbums() {
     $files = glob($this->dir.'*');
-    foreach($files as $k=>$v) {
+    foreach($files as $k => $v) {
       if (is_dir($v)) {
-        $files[$k]=$v.'/';
+        $files[$k] = $v.'/';
       } else {
         unset($files[$k]);
       }
     }
-    arsort($files);
+    $files = $this->sortItems($files, 'func_sortalbums');
     return $files;
+  }
+  /*========================================================================*/
+  /**
+   * @brief Reads possible lock file and parse its contents into current object.
+   */
+   // TODO: respektovat separatory adresaru napric OS
+  public function readLock($dir) {
+    $abslockfname = $dir.'/'.$this->lockfname;
+    $this->islocked = false;
+    if (file_exists($abslockfname)) {
+      $this->islocked = true;
+      // read user names and passwords
+      $this->validusers = file($abslockfname);
+      // remove linebreaks
+      foreach ($this->validusers as $key=>$val) {
+        $this->validusers[$key] = trim($val);
+      }
+    }
   }
   /*========================================================================*/
   /**
@@ -397,23 +441,23 @@ class Sigal {
    * @returns An array of all images.
    */
   public function getImages($dir) {
-    $r = glob($dir.'*');
-    $photos = array();
-    $this->islocked = false;
-    foreach($r as $file) {
-      $ext = strtolower($this->getExt($file));
-      if (in_array($ext, $this->exts)) $photos[] = $file;
-      if (basename($file) == $this->lockfname) {
-        $this->islocked = true;
-        // read user names and passwords
-        $this->validusers = file($file); 
-        // remove linebreaks
-        foreach ($this->validusers as $key=>$val) {
-          $this->validusers[$key] = trim($val);
-        }
+    
+    $files = array();
+
+    // if we have scanning callback defined, lets use it...
+    if (isset($this->func_scandir) && $this->func_scandir !== NULL && function_exists($this->func_scandir)) {
+      $files = call_user_func($this->func_scandir, $array);
+    } else {
+      $r = glob($dir.'*');
+      foreach($r as $file) {
+        // filter to only permited extensions
+        $ext = strtolower($this->getExt($file));
+        if (in_array($ext, $this->exts)) $files[] = $file;
       }
     }
-    return $photos;
+    
+    $files = $this->sortItems($files, 'func_sortimages');
+    return $files;
   }
   /*========================================================================*/
   /**

@@ -21,4 +21,18 @@
   $conf['galTitle'] = 'SiGal gallery';
   /** String shown in bottom of each page. Designed to some words about legal use of photos. */
   $conf['legal_notice'] = 'No photos can be distributted without written permission of their author (<a href="http://gimli2.gipix.net">Gimli2</a>).';
+
+  /*==========================================================================*/
+  $conf['func_sortalbums'] = 'myalbsort';
+  $conf['func_sortimages'] = 'myimgsort';
+
+  function myalbsort($array) {
+    //shuffle($array);
+    arsort($array);
+    return  $array;
+  }
+  function myimgsort($array) {
+    asort($array);
+    return  $array;
+  }
 ?>
