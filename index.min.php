@@ -1,4 +1,4 @@
-<?php
+<?php    
 		if (isset($_GET["static"]) && $_GET["static"]==="favicon") {
   		header("Content-Type: text/plain"); header("Expires: Tue, 1 Jan 2030 05:00:00 GMT"); header("Cache-Control: max-age=8640000, public"); echo base64_decode("iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAIZSURBVDjLpZPPS1RRGIafe+feSccfacxACUFYDGaKlEmrqFVEi6Bdy7YmLqL6A1oEtQiCglZBtYhKKqiEFiGRUERQthhEjKi0UNSbkk73zjnfd1pMM2VpBB64i8OFh/flOa/nnGMtx7tzoq3g1HnqHKoOVUXUIaqoOkTK9+PXJtpXAgSq6vV0dyALBuOKWJdgBVSUb0lAfWMDz1++XjVBIOKMiebC8x2P8DxwDqxV5qOY6aklLtOHFf0HQNUPvVpMSfB9D3WOg0MH8iqKqPJeF8k113G9d+vMCrVygRXFqvI1igkCv/xThJ1dbdgFQ5qI2CzheakVawXWKsYIM9NF/JSHqqMkvitFkde7Z5I6r4i1isukqQnWka1t5uRjrdYKrIjGkDo1eWi7U0fFxuh4RN/Y7zaKWdElxs7mZ0OdwIpUABoOjxTYlGvk/2y0YIxg7XgZ0H/jczvAzf58YqK59LH2e2wJN5Cx8MnAlZ4L7M5+5NWld1hRMnWGIFisVvArOio2Utmj3He7iC1kgSdf9rNoNhNqhBXhyMAoSRIj+gegYqOplKGrYZ6p5jzWv8tAoZuGW6cxpgVrlcGHbxgcfotIeQJBFfDTRseO9XTW91HDDCPfz5Ekt2lt2kZwsRz7zIP53LKH9CuBaAwcvjqFF87Sum8je+nkw7MJCF6QJFKNvQpA08MjBUQVEcfToeWjqnx/rXGtc/4BfOeC6F88S7oAAAAASUVORK5CYII="); exit;
 		}
@@ -70,12 +70,12 @@
 		if (isset($_GET["static"]) && $_GET["static"]==="loader") {
   		header("Content-Type: text/plain"); header("Expires: Tue, 1 Jan 2030 05:00:00 GMT"); header("Cache-Control: max-age=8640000, public"); echo base64_decode("R0lGODlhKwALAPEAAP///wAAAIKCggAAACH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAKwALAAACMoSOCMuW2diD88UKG95W88uF4DaGWFmhZid93pq+pwxnLUnXh8ou+sSz+T64oCAyTBUAACH5BAkKAAAALAAAAAArAAsAAAI9xI4IyyAPYWOxmoTHrHzzmGHe94xkmJifyqFKQ0pwLLgHa82xrekkDrIBZRQab1jyfY7KTtPimixiUsevAAAh+QQJCgAAACwAAAAAKwALAAACPYSOCMswD2FjqZpqW9xv4g8KE7d54XmMpNSgqLoOpgvC60xjNonnyc7p+VKamKw1zDCMR8rp8pksYlKorgAAIfkECQoAAAAsAAAAACsACwAAAkCEjgjLltnYmJS6Bxt+sfq5ZUyoNJ9HHlEqdCfFrqn7DrE2m7Wdj/2y45FkQ13t5itKdshFExC8YCLOEBX6AhQAADsAAAAAAAAAAAA="); exit;
 		}
-		/*START-DO-NOT-REMOVE-THIS*/@set_time_limit(120);
+		/*START-DO-NOT-REMOVE-THIS*/    @set_time_limit(120);  
 
 
  
 class Sigal {
-  public $version = '1.1';
+  public $version = '1.2';
 
   
   public $dir = './pictures/';
@@ -123,6 +123,15 @@ class Sigal {
     'swf' => 'application/x-shockwave-flash',
     'flv' => 'video/x-flv'
   );
+  
+  public $func_sortimages = NULL;
+  
+  public $func_sortalbums = NULL;
+  
+  public $func_scandir = NULL;
+  
+  public $func_albumname = NULL;
+
   
   private $islocked = false;
   
@@ -216,11 +225,11 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
   public function showGallery() {
     ob_start();
     ob_implicit_flush(true);
-    echo str_replace('{title}',$this->galTitle,$this->html_head);
+    echo str_replace('{title}', $this->galTitle, $this->html_head);
     echo '<div class="header">';
     echo '<h1>'.$this->galTitle.'</h1>';
     echo '</div>';
-    $albs=$this->getAlbums();
+    $albs = $this->getAlbums();
 
         $albs_by_year = array();
         foreach($albs as $a) {
@@ -240,7 +249,7 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
     echo '</ul>';
     
     $tabs = 100;
-    foreach ($albs_by_year as $year=>$albs) {
+    foreach ($albs_by_year as $year => $albs) {
       echo '<div id="tab-'.$tabs.'" class="tab_content">';
       echo '<br class="clall" />';
       echo '<div class="tab_inner_content">';
@@ -284,9 +293,9 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
   public function showAlbum($alb) {
     ob_start();
     ob_implicit_flush(true);
-    $alb=$this->sanitizePath(urldecode($alb));
-    $aname=basename($alb);
-    echo str_replace('{title}',$aname,$this->html_head);
+    $alb = $this->sanitizePath(urldecode($alb));
+    $aname = basename($alb);
+    echo str_replace('{title}', $aname, $this->html_head);
     echo '<div class="header">';
     echo '<h1>'.$this->galTitle.': '.$aname.'</h1>';
     echo '</div>';
@@ -297,8 +306,10 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
     echo ', <a href="?#" onClick="javascript:toggleAllCheckboxes(); return false;">toggle all</a>';
     echo '</div>';
 
-        $fotos=$this->getImages($alb);
-        if ($this->islocked && !$this->isAccessible()) {
+        $fotos = $this->getImages($alb);
+
+        $this->readLock($alb);
+    if ($this->islocked && !$this->isAccessible()) {
       $this->showPassForm();
       echo $this->html_tail;
       die();
@@ -318,7 +329,7 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
         echo '<a href="?mkmid='.urlencode($f).'" title="'.$bn.'">';
       }
       $thumb = $this->getThumbName($f);
-      if ($thumb===$this->defaultIcon || file_exists($thumb)) {
+      if ($thumb === $this->defaultIcon || file_exists($thumb)) {
         echo '<img src="'.$thumb.'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
       } else {
         echo '<img src="?mkthumb='.urlencode($f).'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
@@ -355,7 +366,7 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
     }
 
         $ext = strtolower($this->getExt($f));
-    echo str_replace('{title}',$bn,$this->html_head);
+    echo str_replace('{title}', $bn, $this->html_head);
     
         if ($this->islocked && !$this->isAccessible()) {
       $this->showPassForm();
@@ -474,36 +485,136 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
 }
   
   
+  public function showCreditPage() {
+    echo str_replace('{title}', $this->galTitle, $this->html_head);
+    ?>
+<div class="header">
+<h1>Credits, info, license</h1>
+</div>
+
+<div class="credits_content">
+  <p>This script is inspired by simplicity of brilliant MySQL client
+    <a href="http://adminer.org">Adminer</a> from Jakub Vrána. It is completely in only one file. It is very simple to upload it anywhere to hosting and use it in few seconds. And why don't use this idea for web photo gallery?
+  </p>
+
+  <h2>Based on next works:</h2>
+  <ul>
+    <li><a href="http://www.famfamfam.com/lab/icons/silk/">FamFamFam Silk Icons</a></li>
+    <li><a href="http://catcubed.com/2009/11/19/ceebox-2-0/">CeeBox</a></li>
+    <li><a href="http://www.arwscripts.com/gallery-script-lite.html">Free Gallery Site Script</a></li>
+    <li><a href="http://ojw.dev.openstreetmap.org/StaticMap/">OSM Static maps API by OJW</a></li>
+    <li><a href="http://pafciu17.dev.openstreetmap.org/">Pawel's OSM Static maps API (pafciu17)</a></li>
+  </ul>
+
+  <h2>Info:</h2>
+  <p>Author:
+    <a href="http://gimli2.gipix.net">Gimli2</a>
+  </p>
+
+  <h2>History:</h2>
+  <ul>
+    <li><strong>1.20</strong> 2014-12-08 Support for own callback function for scanning image directories with images, for mapping of directory names to albums, for own sorting mechanisms for images and albums separately.<br />
+    </li>
+    <li><strong>1.10</strong> 2014-09-10 Support for own Google analytics measurement code.<br />
+    Fixed  browsing details of image in locked albums.
+    </li>
+    <li><strong>1.00</strong> 2013-10-17 Mass download in one zip file.<br />
+    Fixed typo in some "a" tags.<br />
+    HTML5 validity check.
+    </li>
+    <li><strong>0.98</strong> 2013-07-15 Many small bugfixes and improvements.<br />
+    </li>
+    <li><strong>0.97</strong> 2012-10-04 Support for own CSS styles.<br />
+    BUGFIX: When you return from album to album selection the correct tab is preserved.
+    </li>
+    <li><strong>0.96</strong> 2012-06-14 Source codes were completely documented.<br />
+    Direct access to file in locked album is disabled without valid login/pass.
+    </li>
+    <li><strong>0.95</strong> 2012-04-13 Source codes were splitted into smaller parts and compiled before deploying.<br />
+    Build script inspired from Adminer and Nette. From now is all in one PHP script (including ceebox).<br />
+    Temporary removed support for own css.
+    </li>
+    <li><strong>0.9</strong> 2011-10-02 List of albums is tabbed by year of access time of curren album (css only).</li>
+    <li><strong>0.8</strong> 2011-10-02 Support for locked albums. (Needs -OptionIndexes or equivalent and some random string in photos filenames.)</li>
+    <li><strong>0.7</strong> 2011-09-20 Code optimalizations. Support for external CSS.</li>
+    <li><strong>0.6</strong> 2011-09-08 Nicer URLs for albums. Maps at photos with geotag are in tabs.</li>
+    <li><strong>0.5</strong> 2011-08-15 First public version.</li>
+  </ul>
+
+  <h2>License of SiGal:</h2>
+  <p>Modified BSD License (<a href="http://www.xfree86.org/3.3.6/COPYRIGHT2.html#5">http://www.xfree86.org/3.3.6/COPYRIGHT2.html#5</a>)</p>
+  <p>
+  Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+  </p>
+  <ol>
+    <li>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</li>
+    <li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</li>
+    <li>The name of the author may not be used to endorse or promote products derived from this software without specific prior written permission.</li>
+  </ol>
+  <p>
+  THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  </p>
+
+  <div class="footer">Navigation:
+    <a href="?">Back to album selection</a>
+  </div>
+</div>
+<?php
+echo $this->html_tail;
+  }
+  
+  private function sortItems($array, $callback_id) {
+    $callback = $this->$callback_id;
+    if (isset($callback) && $callback !== NULL && function_exists($callback)) {
+      return call_user_func($callback, $array);
+    }
+    return $array;
+  }
+  
+  
   public function getAlbums() {
     $files = glob($this->dir.'*');
-    foreach($files as $k=>$v) {
+    foreach($files as $k => $v) {
       if (is_dir($v)) {
-        $files[$k]=$v.'/';
+        $files[$k] = $v.'/';
       } else {
         unset($files[$k]);
       }
     }
-    arsort($files);
+    $files = $this->sortItems($files, 'func_sortalbums');
     return $files;
   }
   
   
-  public function getImages($dir) {
-    $r = glob($dir.'*');
-    $photos = array();
+     public function readLock($dir) {
+    $abslockfname = $dir.'/'.$this->lockfname;
     $this->islocked = false;
-    foreach($r as $file) {
-      $ext = strtolower($this->getExt($file));
-      if (in_array($ext, $this->exts)) $photos[] = $file;
-      if (basename($file) == $this->lockfname) {
-        $this->islocked = true;
-                $this->validusers = file($file); 
-                foreach ($this->validusers as $key=>$val) {
-          $this->validusers[$key] = trim($val);
-        }
+    if (file_exists($abslockfname)) {
+      $this->islocked = true;
+            $this->validusers = file($abslockfname);
+            foreach ($this->validusers as $key=>$val) {
+        $this->validusers[$key] = trim($val);
       }
     }
-    return $photos;
+  }
+  
+  
+  public function getImages($dir) {
+    
+    $files = array();
+
+        if (isset($this->func_scandir) && $this->func_scandir !== NULL && function_exists($this->func_scandir)) {
+      $files = call_user_func($this->func_scandir, $array);
+    } else {
+      $r = glob($dir.'*');
+      foreach($r as $file) {
+                $ext = strtolower($this->getExt($file));
+        if (in_array($ext, $this->exts)) $files[] = $file;
+      }
+    }
+    
+    $files = $this->sortItems($files, 'func_sortimages');
+    return $files;
   }
   
   
@@ -628,16 +739,22 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
     return '<h2 title="'.$bn.'">'.mb_substr($bn,0,$this->imgTitleLen).$elipse.'</h2>';
   }
   
-    
+  
   private function getAlbumTitle($file){
     $bn = basename($file);
-    $patterns = array('~(19|20)(\d{2})-(\d{1,2})-(\d{1,2})_(.*)~si',
-                      '~(19|20)(\d{2})-(\d{1,2})-(\d{1,2})-(\d{1,2})_(.*)~si');
-    $replacements = array('\5 (\4. \3. \1\2)',
-                          '\6 (\4-\5. \3. \1\2)');
-    $bn = preg_replace($patterns, $replacements , $bn);
-    $elipse = (strlen($bn)>$this->imgTitleLen) ? '&hellip;':'';
-    return '<h2 title="'.$bn.'">'.substr($bn,0,$this->imgTitleLen).$elipse.'</h2>';
+
+    if (isset($this->func_albumname) && $this->func_albumname !== NULL && function_exists($this->func_albumname)) {
+      $title = call_user_func($this->func_albumname, $bn);
+    } else {
+      $patterns = array('~(19|20)(\d{2})-(\d{1,2})-(\d{1,2})_(.*)~si',
+                        '~(19|20)(\d{2})-(\d{1,2})-(\d{1,2})-(\d{1,2})_(.*)~si');
+      $replacements = array('\5 (\4. \3. \1\2)',
+                            '\6 (\4-\5. \3. \1\2)');
+      $bn = preg_replace($patterns, $replacements , $bn);
+      $elipse = (strlen($bn) > $this->imgTitleLen) ? '&hellip;':'';
+      $title = substr($bn, 0, $this->imgTitleLen).$elipse;
+    }
+    return '<h2 title="'.$bn.'">'.$title.'</h2>';
   }
   
   
@@ -1269,75 +1386,4 @@ class ZipStream {
     }
 }
 
-$gg = new Sigal();$conf = array();if (file_exists('./config.php')) include './config.php';$kws = array('dir', 'cache', 'defaultIcon', 'icotitlefname', 'lockfname', 'thumb_x', 'thumb_y', 'middle_x', 'imgTitleLen', 'galTitle', 'legal_notice');foreach ($kws as $item) {  if (isset($conf[$item])) $gg->$item = $conf[$item];}if (isset($_GET['credits'])) {  echo str_replace('{title}',$gg->galTitle,$gg->html_head);  ?>
-<div class="header">
-<h1>Credits, info, license</h1>
-</div>
-
-<div class="credits_content">
-  <p>This script is inspired by simplicity of brilliant MySQL client
-    <a href="http://adminer.org">Adminer</a> from Jakub Vrána. It is completely in only one file. It is very simple to upload it anywhere to hosting and use it in few seconds. And why don't use this idea for web photo gallery?
-  </p>
-
-  <h2>Based on next works:</h2>
-  <ul>
-    <li><a href="http://www.famfamfam.com/lab/icons/silk/">FamFamFam Silk Icons</a></li>
-    <li><a href="http://catcubed.com/2009/11/19/ceebox-2-0/">CeeBox</a></li>
-    <li><a href="http://www.arwscripts.com/gallery-script-lite.html">Free Gallery Site Script</a></li>
-    <li><a href="http://ojw.dev.openstreetmap.org/StaticMap/">OSM Static maps API by OJW</a></li>
-    <li><a href="http://pafciu17.dev.openstreetmap.org/">Pawel's OSM Static maps API (pafciu17)</a></li>
-  </ul>
-
-  <h2>Info:</h2>
-  <p>Author:
-    <a href="http://gimli2.gipix.net">Gimli2</a>
-  </p>
-
-  <h2>History:</h2>
-  <ul>
-    <li><strong>1.10</strong> 2014-09-10 Support for own Google analytics measurement code.<br />
-    Fixed  browsing details of image in locked albums.
-    </li>
-    <li><strong>1.00</strong> 2013-10-17 Mass download in one zip file.<br />
-    Fixed typo in some "a" tags.<br />
-    HTML5 validity check.
-    </li>
-    <li><strong>0.98</strong> 2013-07-15 Many small bugfixes and improvements.<br />
-    </li>
-    <li><strong>0.97</strong> 2012-10-04 Support for own CSS styles.<br />
-    BUGFIX: When you return from album to album selection the correct tab is preserved.
-    </li>
-    <li><strong>0.96</strong> 2012-06-14 Source codes were completely documented.<br />
-    Direct access to file in locked album is disabled without valid login/pass.
-    </li>
-    <li><strong>0.95</strong> 2012-04-13 Source codes were splitted into smaller parts and compiled before deploying.<br />
-    Build script inspired from Adminer and Nette. From now is all in one PHP script (including ceebox).<br />
-    Temporary removed support for own css.
-    </li>
-    <li><strong>0.9</strong> 2011-10-02 List of albums is tabbed by year of access time of curren album (css only).</li>
-    <li><strong>0.8</strong> 2011-10-02 Support for locked albums. (Needs -OptionIndexes or equivalent and some random string in photos filenames.)</li>
-    <li><strong>0.7</strong> 2011-09-20 Code optimalizations. Support for external CSS.</li>
-    <li><strong>0.6</strong> 2011-09-08 Nicer URLs for albums. Maps at photos with geotag are in tabs.</li>
-    <li><strong>0.5</strong> 2011-08-15 First public version.</li>
-  </ul>
-
-  <h2>License of SiGal:</h2>
-  <p>Modified BSD License (<a href="http://www.xfree86.org/3.3.6/COPYRIGHT2.html#5">http://www.xfree86.org/3.3.6/COPYRIGHT2.html#5</a>)</p>
-  <p>
-  Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-  </p>
-  <ol>
-    <li>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</li>
-    <li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</li>
-    <li>The name of the author may not be used to endorse or promote products derived from this software without specific prior written permission.</li>
-  </ol>
-  <p>
-  THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-  </p>
-
-  <div class="footer">Navigation:
-    <a href="?">Back to album selection</a>
-  </div>
-</div>
-<?php
-echo $gg->html_tail;  die();}if (isset($_GET['dlselected'])) {  $gg->downloadZippedImages();}if (isset($_GET['mkmid'])) {  $gg->makeMiddleImage($_GET['mkmid']);}if (isset($_GET['mkthumb'])) {  $gg->makeThumbImage($_GET['mkthumb']);}if (isset($_GET['foto'])) {  session_start();  if (isset($_POST['fakce']) && $_POST['fakce']=='addaccess') $gg->addAccess();  $gg->showImage($_GET['foto']);  die();}if (isset($_GET['alb'])) {  session_start();  if (isset($_POST['fakce']) && $_POST['fakce']=='addaccess') $gg->addAccess();  $gg->showAlbum($_GET['alb']);  die();}if (isset($_GET['salb'])) {  session_start();  if (isset($_POST['fakce']) && $_POST['fakce']=='addaccess') $gg->addAccess();  $gg->showAlbum(urlencode($gg->dir).$_GET['salb'].urlencode('/'));  die();}if (isset($_GET['static'])) {  header('Location: index.min.php?static='.$_GET['static']);}$gg->showGallery();
+$gg = new Sigal();    $conf = array();  if (file_exists('./config.php')) include './config.php';  $kws = array('dir', 'cache', 'defaultIcon', 'icotitlefname', 'lockfname', 'thumb_x', 'thumb_y', 'middle_x', 'imgTitleLen', 'galTitle', 'legal_notice',          'func_sortimages', 'func_sortalbums', 'func_scandir', 'func_albumname');  foreach ($kws as $item) {    if (isset($conf[$item])) $gg->$item = $conf[$item];  }      if (isset($_GET['credits'])) {    $gg->showCreditPage();    die();  }    if (isset($_GET['dlselected'])) {    $gg->downloadZippedImages();  }    if (isset($_GET['mkmid'])) {    $gg->makeMiddleImage($_GET['mkmid']);  }    if (isset($_GET['mkthumb'])) {    $gg->makeThumbImage($_GET['mkthumb']);  }    if (isset($_GET['foto'])) {    session_start();    if (isset($_POST['fakce']) && $_POST['fakce']==='addaccess') $gg->addAccess();    $gg->showImage($_GET['foto']);    die();  }    if (isset($_GET['alb'])) {    session_start();    if (isset($_POST['fakce']) && $_POST['fakce']==='addaccess') $gg->addAccess();    $gg->showAlbum($_GET['alb']);    die();  }    if (isset($_GET['salb'])) {    session_start();    if (isset($_POST['fakce']) && $_POST['fakce']==='addaccess') $gg->addAccess();    $gg->showAlbum(urlencode($gg->dir).$_GET['salb'].urlencode('/'));    die();  }      if (isset($_GET['static'])) {    header('Location: index.min.php?static='.$_GET['static']);  }    $gg->showGallery();

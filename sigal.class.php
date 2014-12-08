@@ -4,10 +4,10 @@
  *  
  * @author    Martin Šlapák [aka: Gimli2]
  * @brief     Simple gallery script provides single-file web gallery.
- * @date      2012-
+ * @date      2012-2014
  * @copyright http://www.xfree86.org/3.3.6/COPYRIGHT2.html#5 Modified BSD License
  * @details   SiGal project page: http://gimli2.gipix.net/sigal/
- * @version   1.1
+ * @version   1.2
  *   
  */
 
@@ -15,7 +15,7 @@
  * @brief      Simple gallery script provides single-file web gallery.
  */ 
 class Sigal {
-  public $version = '1.1';
+  public $version = '1.2';
 
   /** Directory with pictures. */
   public $dir = './pictures/';
