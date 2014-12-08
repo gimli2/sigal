@@ -69,6 +69,8 @@ class Sigal {
   public $func_sortalbums = NULL;
   /** Callback function for scanning directory for images. You can implement own filters tanks to this function. */
   public $func_scandir = NULL;
+  /** Callback function for mapping directory name to album name. */
+  public $func_albumname = NULL;
 
   /** Flag for browsing in locked albums. */
   private $islocked = false;
@@ -116,7 +118,7 @@ class Sigal {
   public function showGallery() {
     ob_start();
     ob_implicit_flush(true);
-    echo str_replace('{title}',$this->galTitle,$this->html_head);
+    echo str_replace('{title}', $this->galTitle, $this->html_head);
     echo '<div class="header">';
     echo '<h1>'.$this->galTitle.'</h1>';
     echo '</div>';
@@ -143,7 +145,7 @@ class Sigal {
     echo '</ul>';
     
     $tabs = 100;
-    foreach ($albs_by_year as $year=>$albs) {
+    foreach ($albs_by_year as $year => $albs) {
       echo '<div id="tab-'.$tabs.'" class="tab_content">';
       echo '<br class="clall" />';
       echo '<div class="tab_inner_content">';
@@ -638,7 +640,6 @@ class Sigal {
     return '<h2 title="'.$bn.'">'.mb_substr($bn,0,$this->imgTitleLen).$elipse.'</h2>';
   }
   /*========================================================================*/
-  // TODO: use own customizable callback function
   /**
    * @brief Gets title for album. It can reorder parts of dir name, add some infromation like a date of modification etc.
    * @param string $file The original album dir.
@@ -646,13 +647,19 @@ class Sigal {
    */
   private function getAlbumTitle($file){
     $bn = basename($file);
-    $patterns = array('~(19|20)(\d{2})-(\d{1,2})-(\d{1,2})_(.*)~si',
-                      '~(19|20)(\d{2})-(\d{1,2})-(\d{1,2})-(\d{1,2})_(.*)~si');
-    $replacements = array('\5 (\4. \3. \1\2)',
-                          '\6 (\4-\5. \3. \1\2)');
-    $bn = preg_replace($patterns, $replacements , $bn);
-    $elipse = (strlen($bn)>$this->imgTitleLen) ? '&hellip;':'';
-    return '<h2 title="'.$bn.'">'.substr($bn,0,$this->imgTitleLen).$elipse.'</h2>';
+
+    if (isset($this->func_albumname) && $this->func_albumname !== NULL && function_exists($this->func_albumname)) {
+      $title = call_user_func($this->func_albumname, $bn);
+    } else {
+      $patterns = array('~(19|20)(\d{2})-(\d{1,2})-(\d{1,2})_(.*)~si',
+                        '~(19|20)(\d{2})-(\d{1,2})-(\d{1,2})-(\d{1,2})_(.*)~si');
+      $replacements = array('\5 (\4. \3. \1\2)',
+                            '\6 (\4-\5. \3. \1\2)');
+      $bn = preg_replace($patterns, $replacements , $bn);
+      $elipse = (strlen($bn) > $this->imgTitleLen) ? '&hellip;':'';
+      $title = substr($bn, 0, $this->imgTitleLen).$elipse;
+    }
+    return '<h2 title="'.$bn.'">'.$title.'</h2>';
   }
   /*========================================================================*/
   /**

@@ -23,9 +23,18 @@
   $conf['legal_notice'] = 'No photos can be distributted without written permission of their author (<a href="http://gimli2.gipix.net">Gimli2</a>).';
 
   /*==========================================================================*/
-  $conf['func_sortalbums'] = 'myalbsort';
-  $conf['func_sortimages'] = 'myimgsort';
+  /** You can provide own callback function to sorting of albums. Function takes an array as 1st argument and returns sorted array. */
+  $conf['func_sortalbums'] = '';
+  /** You can provide own callback function to sorting of images. Function takes an array as 1st argument and returns sorted array. */
+  $conf['func_sortimages'] = '';
+  /** Callback function for scanning directory for images. You can implement own filters tanks to this function. */
+  $conf['func_scandir'] = '';
+  /** You can provide own callback function redefine mapping directory name to album name. Function takes a string as 1st argument and returns final string name. */
+  $conf['func_albumname'] = '';
 
+  function myalbumname($alb) {
+    return $alb;
+  }
   function myalbsort($array) {
     //shuffle($array);
     arsort($array);
