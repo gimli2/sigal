@@ -1,0 +1,4 @@
+<FilesMatch ".*\.(lock|nfo)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
