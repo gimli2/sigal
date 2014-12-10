@@ -1,5 +1,3 @@
 cache
 pictures
-/1.2_index.min.php.txt
-/1.1_index.min.php.txt
-/1.0_index.min.php.txt
+*.min.php*

@@ -8,8 +8,9 @@ echo "\n<pre>\n";
 	
 	include_once('sigal.class.php');
 	$gg  = new Sigal();
-	$out_downloadable = './'.$gg->version.'_index.min.php.txt'; 
-	
+	$out_downloadable = './'.$gg->version.'_index.min.php.txt';
+	$out_demo = './demo/index.php';
+
 	$nocomment = true;
 	if (isset($_GET['nocomment']) && $_GET['nocomment']===1) {
 		$nocomment = false;	// ve vystupu budou komentare
@@ -111,6 +112,7 @@ echo "\n<pre>\n";
 
 	file_put_contents($out, $ndata);
 	file_put_contents($out_downloadable, $ndata);
+  file_put_contents($out_demo, $ndata);
 	
 	/*
 	$shrink = new ShrinkPHP;
