@@ -1,7 +1,0 @@
-<FilesMatch ".*\.(lock|nfo)$">
-    Order Allow,Deny
-    Deny from all
-</FilesMatch>
-
-RewriteEngine on
-RewriteRule ^favicon\.ico$ /images/favicon.png [L]

@@ -2,3 +2,4 @@
 /pictures
 *.min.php*
 /demo/cache
+/.htaccess
