@@ -1,3 +1,4 @@
-cache
-pictures
+/cache
+/pictures
 *.min.php*
+/demo/cache
