@@ -17,6 +17,9 @@ root.lazy = {
 		
 	},
 	engine : function() {	
+		if(timer !== undefined) {
+			clearTimeout(timer);
+		}
 		timer = setTimeout(function(){
 			lazy.loadImage();
 		}, delay);
