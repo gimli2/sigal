@@ -235,7 +235,7 @@ class Sigal {
       if ($thumb === $this->defaultIcon || file_exists($thumb)) {
         echo '<img src="'.$thumb.'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
       } else {
-        echo '<img src="?mkthumb='.urlencode($f).'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
+        echo '<img src="?static=1px" data-lazy="?mkthumb='.urlencode($f).'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
       }
       echo '</a>';
       echo $this->getImageTitle($f);
@@ -248,6 +248,7 @@ class Sigal {
       ob_flush();
     }
     echo '</div>';
+    echo '<script src="?static=lazy"></script><script>lazy.init({delay:200});</script>';
     echo '<div class="footer">Navigation: <a href="?">Back to album selection</a></div>';
     echo $this->html_tail;
   }
