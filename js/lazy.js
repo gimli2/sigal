@@ -43,7 +43,7 @@ root.lazy = {
 	},
 	isVisible : function(elem) {
 		var viewport = elem.getBoundingClientRect();
-		return (viewport.top >=0 && viewport.left >=0 && viewport.right < window.innerWidth && viewport.bottom < window.innerHeight);
+		return (viewport.top >=0 && viewport.top < window.innerHeight || viewport.bottom >=0 && viewport.bottom < window.innerHeight) && (viewport.left >=0 && viewport.left < window.innerWidth || viewport.right >=0 && viewport.right < window.innerWidth);
 	},
 	releaseEvents : function() {
 		if (document.removeEventListener) {
