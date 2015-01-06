@@ -138,14 +138,19 @@ class Sigal {
   /**
    * @brief Shows complete gallery - the albums selection.
    */
-  public function showGallery() {
+  public function showGallery($albtop = NULL) {
     ob_start();
     ob_implicit_flush(true);
     echo str_replace('{title}', $this->galTitle, $this->html_head);
     echo '<div class="header">';
-    echo '<h1>'.$this->galTitle.'</h1>';
+    if(!is_null($albtop)) {
+      $aname = $this->basepathname($albtop);
+      echo '<h1>'.$this->galTitle.': '.$aname.'</h1>';
+    } else {
+      echo '<h1>'.$this->galTitle.'</h1>';
+    }
     echo '</div>';
-    $albs = $this->getAlbums();
+    $albs = $this->getAlbums($albtop);
 
     // prepare tabs
     $albs_by_group = array();
@@ -224,9 +229,17 @@ class Sigal {
    * @param string $alb Full path to album directory.
    */
   public function showAlbum($alb) {
+    $alb = $this->sanitizePath(urldecode($alb));
+    $fotos = $this->getImages($alb);
+
+    // fallback to show sub gallery
+    if(count($fotos) == 0) {
+      $this->showGallery($alb);
+      return;
+    }
+
     ob_start();
     ob_implicit_flush(true);
-    $alb = $this->sanitizePath(urldecode($alb));
     $aname = $this->basepathname($alb);
     echo str_replace('{title}', $aname, $this->html_head);
     echo '<div class="header">';
@@ -240,7 +253,6 @@ class Sigal {
     echo '</div>';
 
     // this automaticly check if album is locked an load usernames&passwords
-    $fotos = $this->getImages($alb);
 
     // is locked? and not set username&pass
     $this->readLock($alb);
@@ -439,13 +451,14 @@ class Sigal {
    * @brief Get sorted (by name reversed eg. 9->0, Z->A) array of all albums.
    * @returns An array of all albums in defined dir ($this->dir).
    */
-  public function getAlbums() {
+  public function getAlbums($top = NULL) {
+    if (is_null($top)) { $top = $this->dir; }
     if (isset($this->func_getalbums) && $this->func_getalbums !== NULL && function_exists($this->func_getalbums)) {
-      $files = call_user_func($this->func_getalbums, $this->dir, $this->exts);
+      $files = call_user_func($this->func_getalbums, $top, $this->exts);
       return $this->sortItems($files, 'func_sortalbums');
     }
 
-    $files = glob($this->dir.'/*');
+    $files = glob($top.'/*');
     foreach($files as $k => $v) {
       if (is_dir($v)) {
         $files[$k] = $v;
