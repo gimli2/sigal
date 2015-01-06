@@ -1,8 +1,8 @@
 <?php
   /** Directory with pictures. */
-  $conf['dir'] = './pictures/';
+  $conf['dir'] = 'pictures';
   /** Directory for caching thumbnails (must be writeable!).*/
-  $conf['cache'] = './cache/';
+  $conf['cache'] = 'cache';
   /** URL to default album and picture icon. May be absolute or relative. */
   $conf['defaultIcon'] = '?static=defico';
   /** Name of file with definition of title image. */

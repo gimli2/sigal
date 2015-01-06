@@ -56,7 +56,7 @@
   if (isset($_GET['salb'])) {
     session_start();
     if (isset($_POST['fakce']) && $_POST['fakce']==='addaccess') $gg->addAccess();
-    $gg->showAlbum(urlencode($gg->dir).$_GET['salb'].urlencode('/'));
+    $gg->showAlbum(urlencode($gg->dir).'/'.$_GET['salb']);
     die();
   }
   /*========================================================================*/
