@@ -437,6 +437,11 @@ class Sigal {
    * @returns An array of all albums in defined dir ($this->dir).
    */
   public function getAlbums() {
+    if (isset($this->func_getalbums) && $this->func_getalbums !== NULL && function_exists($this->func_getalbums)) {
+      $files = call_user_func($this->func_getalbums, $this->dir, $this->exts);
+      return $this->sortItems($files, 'func_sortalbums');
+    }
+
     $files = glob($this->dir.'/*');
     foreach($files as $k => $v) {
       if (is_dir($v)) {
