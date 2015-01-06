@@ -297,7 +297,10 @@ class Sigal {
       $bn = $this->basepathname($f);
       $middle = $this->getMiddleName($f);
       echo '<div class="foto-thumb">';
-      if ($middle===$this->defaultIcon || file_exists($middle)) {
+      $ext = strtolower($this->getExt($f));
+      if($ext !== "mp4" && isset($this->func_avfileplay) && in_array($ext, $this->extsVideo)) {
+          echo '<a href="?avfile='.$this->basepathname($f).'" title="'.$bn.'">';
+      } else if ($middle===$this->defaultIcon || file_exists($middle)) {
         if ($middle===$this->defaultIcon) {
           if (is_dir($f)) {
             echo '<a href="?alb='.urlencode($bn).'" title="'.$bn.'">';
@@ -461,6 +464,19 @@ class Sigal {
     echo '</div>';
     echo '</div>';
     echo $this->html_tail;
+  }
+  /*========================================================================*/
+  /**
+   * @brief Shows video.
+   * @param string $f path to video.
+   */
+  public function showVideo($f) {
+    $f = $this->dir . '/' . urldecode($f);
+    $f=$this->sanitizePath($f);
+    if (isset($this->func_avfileplay) && $this->func_avfileplay !== NULL && function_exists($this->func_avfileplay)) {
+        $group = call_user_func($this->func_avfileplay, $f);
+    }
+    header('Status: 404 Not Found');
   }
   /*========================================================================*/
   /**
