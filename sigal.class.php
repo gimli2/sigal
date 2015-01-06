@@ -287,7 +287,7 @@ class Sigal {
     echo '<div class="foto">';
     if (in_array($ext, $this->extsVideo)) {
       echo '<video height="480" width="854" src="'.$f.'" controls="controls">';
-      echo '<source src="'.$f.'" type="'.$this->videoMime[$ext].'" />';
+      echo '<source src="'.$f.'" type="'.$this->avMime[$ext].'" />';
       echo 'Your browser does not support the video tag.';
       echo '</video>';
     } elseif (in_array($ext, $this->extsAudio)) {
