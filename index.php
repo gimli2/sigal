@@ -14,9 +14,12 @@
   $conf = array();
   if (file_exists('./config.php')) include './config.php';
   $kws = array('dir', 'cache', 'defaultIcon', 'icotitlefname', 'lockfname', 'thumb_x', 'thumb_y', 'middle_x', 'imgTitleLen', 'galTitle', 'legal_notice', 'date_format',
-          'func_sortimages', 'func_sortalbums', 'func_scandir', 'func_albumname', 'func_groupname', 'func_getalbums');
+          'func_sortimages', 'func_sortalbums', 'func_scandir', 'func_albumname', 'func_groupname', 'func_getalbums', 'func_videoimage');
   foreach ($kws as $item) {
     if (isset($conf[$item])) $gg->$item = $conf[$item];
+  }
+  if(isset($gg->func_videoimage)) {
+    $gg->extsIcon = array_merge($gg->extsIcon, $gg->extsVideo);
   }
   /*========================================================================*/
   /**
