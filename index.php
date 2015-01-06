@@ -53,13 +53,6 @@
     die();
   }
   /*========================================================================*/
-  if (isset($_GET['salb'])) {
-    session_start();
-    if (isset($_POST['fakce']) && $_POST['fakce']==='addaccess') $gg->addAccess();
-    $gg->showAlbum(urlencode($gg->dir).'/'.$_GET['salb']);
-    die();
-  }
-  /*========================================================================*/
   // jen pro vyvoj neminifikovane verze
   if (isset($_GET['static'])) {
     header('Location: index.min.php?static='.$_GET['static']);

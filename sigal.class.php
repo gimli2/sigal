@@ -199,11 +199,11 @@ class Sigal {
         if (array_search($a.$this->lockfname, $content)!==FALSE) {
           echo '<img src="?static=lock" height="32" alt="locked" title="access restricted" class="lock" />';
         }
-        echo '<a href="?salb='.$this->urlpathencode($bn).'" title="'.$bn.'">';
+        echo '<a href="?alb='.$this->urlpathencode($bn).'" title="'.$bn.'">';
         if ($thumb===$this->defaultIcon || file_exists($thumb)) {
           echo '<img src="'.$thumb.'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
         } else {
-          echo '<img src="?mkthumb='.urlencode($titlefoto).'"  height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
+          echo '<img src="?mkthumb='.urlencode($this->basepathname($titlefoto)).'"  height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
         }
         echo '</a>';
         echo $this->getAlbumTitle($a);
@@ -226,6 +226,7 @@ class Sigal {
    * @param string $alb Full path to album directory.
    */
   public function showAlbum($alb) {
+    $alb = $this->dir . '/' . $alb;
     $alb = $this->sanitizePath(urldecode($alb));
     $fotos = $this->getImages($alb);
 
@@ -260,7 +261,7 @@ class Sigal {
     }
     echo '<div class="fotos">';
     foreach($fotos as $f) {
-      $bn = basename($f);
+      $bn = $this->basepathname($f);
       $middle = $this->getMiddleName($f);
       echo '<div class="foto-thumb">';
       if ($middle===$this->defaultIcon || file_exists($middle)) {
@@ -270,13 +271,13 @@ class Sigal {
           echo '<a href="'.$middle.'" title="'.$bn.'">';
         }
       } else {
-        echo '<a href="?mkmid='.urlencode($f).'" title="'.$bn.'">';
+        echo '<a href="?mkmid='.urlencode($bn).'" title="'.$bn.'">';
       }
       $thumb = $this->getThumbName($f);
       if ($thumb === $this->defaultIcon || file_exists($thumb)) {
         echo '<img src="'.$thumb.'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
       } else {
-        echo '<img src="?static=1px" data-lazy="?mkthumb='.urlencode($f).'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
+        echo '<img src="?static=1px" data-lazy="?mkthumb='.urlencode($bn).'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
       }
       echo '</a>';
       echo $this->getImageTitle($f);
@@ -299,8 +300,9 @@ class Sigal {
    * @param string $f Path to original image.
    */
   public function showImage($f) {
-    $f=$this->sanitizePath(urldecode($f));
-    $bn=basename($f);
+    $file = $this->dir . '/' . urldecode($f);
+    $f=$this->sanitizePath($f);
+    $bn=$this->basepathname($f);
 
     // zamykaci soubor
     $lf = substr($f, 0, -1*mb_strlen($bn)).$this->lockfname;
@@ -342,11 +344,11 @@ class Sigal {
       if (file_exists($middle)) {
         echo '<img src="'.$middle.'" alt="'.$bn.'" />';
       } else {
-        echo '<img src="?mkmid='.urlencode($f).'" alt="'.$bn.'" />';
+        echo '<img src="?mkmid='.urlencode($bn).'" alt="'.$bn.'" />';
       }
     }
     echo '<div class="desc">';
-    echo '<div>Navigation: <a href="?salb='.$this->urlpathencode($this->basepathname(substr($f,0,-1*strlen(basename($f))-1))).'">Back to album thumbnails</a></div><br />';
+    echo '<div>Navigation: <a href="?alb='.$this->urlpathencode($this->basepathname(substr($f,0,-1*strlen(basename($f))-1))).'">Back to album thumbnails</a></div><br />';
     
     echo '<ul class="tabs">';
     echo '  <li><a href="#tab-base">Base info</a></li>';
@@ -560,7 +562,8 @@ class Sigal {
    * @param string $file The original filename.
    */
   public function makeThumbImage($file) {
-    $f = $this->sanitizePath(urldecode($file));
+    $file = $this->dir . '/' . urldecode($file);
+    $f = $this->sanitizePath($file);
     $ext = strtolower($this->getExt($f));
     if (file_exists($f) && in_array($ext, $this->extsIcon)) {
       $thumb = $this->resizeImage($f, $this->thumb_x);
@@ -576,7 +579,8 @@ class Sigal {
    * @param string $file The original filename.
    */
   public function makeMiddleImage($file) {
-    $f = $this->sanitizePath(urldecode($file));
+    $file = $this->dir . '/' . urldecode($file);
+    $f = $this->sanitizePath($file);
     $ext = strtolower($this->getExt($f));
     if (file_exists($f) && in_array($ext, $this->extsIcon)) {
       $middle = $this->resizeImage($f, $this->middle_x);
@@ -604,13 +608,12 @@ class Sigal {
   }
   /*========================================================================*/
   /**
-   * @brief Sanitize path of file or album. No jumps to parent dirs, no wildcards for glob(), path must start in pictures directory.
+   * @brief Sanitize path of file or album. No jumps to parent dirs, no wildcards for glob().
    * @param string $p Path for sanitization.
    * @returns Sanitized path.
    */
   private function sanitizePath($p) {
     $p = trim($p);  // no whitespaces
-    if ($this->dir != mb_substr($p, 0, mb_strlen($this->dir))) return ''; // it must start in $dir
     $p = str_replace('..','',$p);   // no jumps to parent dirs
     $p = str_replace('*','',$p);     // no wildcards for glob
     $p = str_replace('://','',$p);     // no protocols
