@@ -33,6 +33,8 @@
   $conf['func_sortalbums'] = '';
   /** You can provide own callback function to sorting of images. Function takes an array as 1st argument and returns sorted array. */
   $conf['func_sortimages'] = '';
+  /** You can provide a callback function to get album/directories for given media extensions */
+  $conf['func_getalbums'] = '';
 
   /** Example implemantation of getting album name/title from name of directory. */
   function myalbumname($basename) {
@@ -71,5 +73,26 @@
   function mysortimages($array) {
     asort($array);
     return  $array;
+  }
+  /* recursive directory iterator handle exceptions. required below.
+     From: http://php.net/manual/en/class.recursivedirectoryiterator.php */
+  class IgnorantRecursiveDirectoryIterator extends RecursiveDirectoryIterator {
+    function getChildren() {
+      try {
+        return new IgnorantRecursiveDirectoryIterator($this->getPathname());
+      } catch(UnexpectedValueException $e) {
+        return new RecursiveArrayIterator(array());
+      }
+    }
+  }
+  /** Example implementation of getalbums. This one recursively finds image/media */
+  function mygetalbums($dir, $exts) {
+    $it = new RecursiveIteratorIterator(new IgnorantRecursiveDirectoryIterator($dir));
+    $it = new RegexIterator($it, '/^.+\.(?:' . join('|',$exts) . ')$/i', RecursiveRegexIterator::GET_MATCH);
+
+    $dirs = array_keys(iterator_to_array($it));
+    $dirs = array_unique(array_map('dirname', $dirs));
+
+    return $dirs;
   }
 ?>
