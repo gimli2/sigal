@@ -37,6 +37,10 @@
   $conf['func_sortimages'] = '';
   /** You can provide a callback function to get album/directories for given media extensions */
   $conf['func_getalbums'] = '';
+  /** Callback function to get image from video (for thumbnail or middle image) */
+  $conf['func_videoimage'] = '';
+  /** Callback function to play video indirectly, perhaps with convert/transcode */
+  $conf['func_avfileplay'] = '';
 
   /** Example implemantation of getting album name/title from name of directory. */
   function myalbumname($basename) {
@@ -96,5 +100,39 @@
     $dirs = array_unique(array_map('dirname', $dirs));
 
     return $dirs;
+  }
+
+  function get_videoimage($video, $image) {
+    exec("avconv -y -v quiet -itsoffset -4 -i $video -vcodec mjpeg -vframes 1 -an -f rawvideo $image");
+  }
+
+  include_once('range_download.php');
+
+  function avfile_play($file0) {
+    $file = "/dev/shm/avfile-".MD5($file0).".mp4";
+
+    foreach (glob("/dev/shm/avfile-*") as $f) {
+      if (0 != strcmp($f, $file) && filemtime($f) < time() - 360) {
+        unlink($f);
+      }
+    }
+
+    if(!file_exists($file)) {
+      exec("avconv -y -i $file0 -c:v copy -c:a aac -strict experimental $file");
+    }
+
+    header("Content-Type: video/mp4");
+
+    if (isset($_SERVER['HTTP_RANGE'])) {
+      touch($file);
+      rangeDownload($file);
+      touch($file);
+    } else {
+      header("Content-Length: ".filesize($file));
+      touch($file);
+      readfile($file);
+      touch($file);
+    }
+    exit;
   }
 ?>
