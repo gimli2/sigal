@@ -699,6 +699,8 @@ class Sigal {
       list($cit,$jmen) = explode('/', $lon[2]);
       if ($jmen == 0) return array(0,0);
       $gpslon += $cit/($jmen*3600);
+      if($exif['GPSLatitudeRef'] == 'S') { $gpslat = -$gpslat; }
+      if($exif['GPSLongitudeRef'] == 'W') { $gpslon = -$gpslon; }
       return array($gpslat,$gpslon);
     } else {
       return array(0,0);
