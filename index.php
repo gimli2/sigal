@@ -14,7 +14,7 @@
   $conf = array();
   if (file_exists('./config.php')) include './config.php';
   $kws = array('dir', 'cache', 'defaultIcon', 'icotitlefname', 'lockfname', 'thumb_x', 'thumb_y', 'middle_x', 'imgTitleLen', 'galTitle', 'legal_notice',
-          'func_sortimages', 'func_sortalbums', 'func_scandir', 'func_albumname');
+          'func_sortimages', 'func_sortalbums', 'func_scandir', 'func_albumname', 'func_groupname', 'func_getalbums');
   foreach ($kws as $item) {
     if (isset($conf[$item])) $gg->$item = $conf[$item];
   }
@@ -50,13 +50,6 @@
     session_start();
     if (isset($_POST['fakce']) && $_POST['fakce']==='addaccess') $gg->addAccess();
     $gg->showAlbum($_GET['alb']);
-    die();
-  }
-  /*========================================================================*/
-  if (isset($_GET['salb'])) {
-    session_start();
-    if (isset($_POST['fakce']) && $_POST['fakce']==='addaccess') $gg->addAccess();
-    $gg->showAlbum(urlencode($gg->dir).$_GET['salb'].urlencode('/'));
     die();
   }
   /*========================================================================*/
