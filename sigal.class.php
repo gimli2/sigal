@@ -127,37 +127,38 @@ class Sigal {
     $albs = $this->getAlbums();
 
     // prepare tabs
-    $albs_by_year = array();
+    $albs_by_group = array();
     // make array of albums by year of access time
     foreach($albs as $a) {
       $bn = basename($a);
       if (isset($this->func_groupname) && $this->func_groupname !== NULL && function_exists($this->func_groupname)) {
         $group = call_user_func($this->func_groupname, $bn);
       } else {
+        // default grouping is by chars before "-" or "_"
         $cutpos = strpos($bn, '-');
         if ($cutpos === FALSE) $cutpos = strpos($bn, '_');
         if ($cutpos === FALSE) $cutpos = strlen($bn);
         $group = substr($bn, 0,$cutpos);
       }
-      $albs_by_year[$group][] = $a;
+      $albs_by_group[$group][] = $a;
     }
     $tabs = 100; // counter for tabs IDs
-    if(count($albs_by_year) > 1 || count($albs_by_year) == 1 && strlen($albs_by_year[0]) > 0) {
-      $years = array_keys($albs_by_year);
+    if(count($albs_by_group) >= 1 && strlen($albs_by_group[0]) > 0) {
+      $groups = array_keys($albs_by_group);
       echo '<ul class="tabs">';
-      foreach ($years as $y) {
-        echo '<li><a href="#tab-'.$tabs.'">'.$y.'</a></li>';
+      foreach ($groups as $g) {
+        echo '<li><a href="#tab-'.$tabs.'">'.$g.'</a></li>';
         $tabs++;
       }
       echo '</ul>';
     }
     
     $tabs = 100;
-    foreach ($albs_by_year as $year => $albs) {
+    foreach ($albs_by_group as $group => $albs) {
       echo '<div id="tab-'.$tabs.'" class="tab_content">';
       echo '<br class="clall" />';
       echo '<div class="tab_inner_content">';
-      echo '<h2 class="subheader">'.$year.'</h2>';
+      echo '<h2 class="subheader">'.$group.'</h2>';
 
       // albums in given year
       foreach ($albs as $key=>$a) {
