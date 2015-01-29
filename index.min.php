@@ -262,7 +262,7 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
       }
       $albs_by_group[$group][] = $a;
     }
-    $tabs = 100;     if(count($albs_by_group) >= 1 && strlen($albs_by_group[0]) > 0) {
+    $tabs = 100;     if(count($albs_by_group) >= 1) {
       $groups = array_keys($albs_by_group);
       echo '<ul class="tabs">';
       foreach ($groups as $g) {

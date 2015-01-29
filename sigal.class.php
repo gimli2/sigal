@@ -143,7 +143,7 @@ class Sigal {
       $albs_by_group[$group][] = $a;
     }
     $tabs = 100; // counter for tabs IDs
-    if(count($albs_by_group) >= 1 && strlen($albs_by_group[0]) > 0) {
+    if(count($albs_by_group) >= 1) {
       $groups = array_keys($albs_by_group);
       echo '<ul class="tabs">';
       foreach ($groups as $g) {
