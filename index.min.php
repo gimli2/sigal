@@ -1,4 +1,7 @@
-<?php    
+<?php
+  
+
+  
 		if (isset($_GET["static"]) && $_GET["static"]==="favicon") {
   		header("Content-Type: text/plain"); header("Expires: Tue, 1 Jan 2030 05:00:00 GMT"); header("Cache-Control: max-age=8640000, public"); echo base64_decode("iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAIZSURBVDjLpZPPS1RRGIafe+feSccfacxACUFYDGaKlEmrqFVEi6Bdy7YmLqL6A1oEtQiCglZBtYhKKqiEFiGRUERQthhEjKi0UNSbkk73zjnfd1pMM2VpBB64i8OFh/flOa/nnGMtx7tzoq3g1HnqHKoOVUXUIaqoOkTK9+PXJtpXAgSq6vV0dyALBuOKWJdgBVSUb0lAfWMDz1++XjVBIOKMiebC8x2P8DxwDqxV5qOY6aklLtOHFf0HQNUPvVpMSfB9D3WOg0MH8iqKqPJeF8k113G9d+vMCrVygRXFqvI1igkCv/xThJ1dbdgFQ5qI2CzheakVawXWKsYIM9NF/JSHqqMkvitFkde7Z5I6r4i1isukqQnWka1t5uRjrdYKrIjGkDo1eWi7U0fFxuh4RN/Y7zaKWdElxs7mZ0OdwIpUABoOjxTYlGvk/2y0YIxg7XgZ0H/jczvAzf58YqK59LH2e2wJN5Cx8MnAlZ4L7M5+5NWld1hRMnWGIFisVvArOio2Utmj3He7iC1kgSdf9rNoNhNqhBXhyMAoSRIj+gegYqOplKGrYZ6p5jzWv8tAoZuGW6cxpgVrlcGHbxgcfotIeQJBFfDTRseO9XTW91HDDCPfz5Ekt2lt2kZwsRz7zIP53LKH9CuBaAwcvjqFF87Sum8je+nkw7MJCF6QJFKNvQpA08MjBUQVEcfToeWjqnx/rXGtc/4BfOeC6F88S7oAAAAASUVORK5CYII="); exit;
 		}
@@ -19,12 +22,20 @@
   		header("Content-Type: text/plain"); header("Expires: Tue, 1 Jan 2030 05:00:00 GMT"); header("Cache-Control: max-age=8640000, public"); echo base64_decode("iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAH+SURBVBgZBcE9i11VGAbQtc/sO0OCkqhghEREAwpWAWUg8aMVf4KFaJEqQtAipTZWViKiCGOh2Ap2gmJhlSIWFsFOxUK0EsUM3pl79n4f12qHb3z3Fh7D83gC95GOJsDe0ixLk5Qq/+xv/Lw9Xd+78/HLX3Y8fXTr2nWapy4eCFKxG7Fby97SnDlYtMbxthyfzHO//nl85fNvfvnk8MbX5xa8IHx1518Vkrj54Q+qQms2vVmWZjdiu5ZR2rT01166/NCZg/2PFjwSVMU6yjoC1oq+x6Y3VbHdlXWExPd379nf7Nmejv2Os6OC2O4KLK0RNn3RNCdr2Z5GJSpU4o+/TkhaJ30mEk5HwNuvX7Hpi76wzvjvtIwqVUSkyjqmpHS0mki8+9mPWmuWxqYvGkbFGCUAOH/+QevYI9GFSqmaHr5wkUYTAlGhqiRRiaqiNes6SOkwJwnQEqBRRRJEgkRLJGVdm6R0GLMQENE0EkmkSkQSVVMqopyuIaUTs0J455VLAAAAAODW0U/GiKT0pTWziEj44PZ1AAAAcPPqkTmH3QiJrlEVDXDt0qsAAAAAapa5BqUnyaw0Am7//gUAAAB49tEXzTmtM5KkV/y2G/X4M5fPao03n/sUAAAAwIX7y5yBv9vhjW/fT/IkuSp5gJKElKRISYoUiSRIyD1tufs/IXxui20QsKIAAAAASUVORK5CYII="); exit;
 		}
 		
+		if (isset($_GET["static"]) && $_GET["static"]==="1px") {
+  		header("Content-Type: text/plain"); header("Expires: Tue, 1 Jan 2030 05:00:00 GMT"); header("Cache-Control: max-age=8640000, public"); echo base64_decode("R0lGODlhAQABAPAAAAAAAAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="); exit;
+		}
+		
 		if (isset($_GET["static"]) && $_GET["static"]==="style") {
   		header("Content-Type: text/css"); header("Expires: Tue, 1 Jan 2030 05:00:00 GMT"); header("Cache-Control: max-age=8640000, public"); echo base64_decode("aHRtbCwgYm9keSB7DQogIGZvbnQtZmFtaWx5OiBDYWxpYnJpLCBWZXJkYW5hLCBzYW5zLXNlcmlmOw0KICBmb250LXNpemU6IDExcHQ7DQogIG1hcmdpbjogMDsNCiAgcGFkZGluZzogMDsNCiAgYmFja2dyb3VuZC1jb2xvcjogI2FhYTsNCn0NCi5oZWFkZXJ7DQoJcGFkZGluZzogMWV4Ow0KCWJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjNjY2Ow0KfQ0KLmhlYWRlciBoMXsNCglwYWRkaW5nLWxlZnQ6IDFleDsNCn0NCi5zdWJoZWFkZXIgew0KCXBhZGRpbmctbGVmdDogMWV4Ow0KfQ0KLmZvb3RlciB7DQoJY2xlYXI6IGJvdGg7DQoJcGFkZGluZzogMWV4Ow0KCWJvcmRlci10b3A6IDFweCBzb2xpZCAjNjY2Ow0KfQ0KLmZvb3RlciBhLCAuaGVhZGVyIGEgew0KCWNvbG9yOiAjNjY2Ow0KCXRleHQtZGVjb3JhdGlvbjogbm9uZTsNCn0NCiNjcmVkaXRzIHsNCgljbGVhcjogYm90aDsNCgl0ZXh0LWFsaWduOiByaWdodDsNCglwYWRkaW5nOiAxZXg7DQoJYm9yZGVyLXRvcDogMXB4IHNvbGlkICM2NjY7DQoJY29sb3I6ICM2NjY7DQp9DQojY3JlZGl0cyBhIHsNCgljb2xvcjogIzY2NjsNCgl0ZXh0LWRlY29yYXRpb246IG5vbmU7DQp9DQouYWxidW0tdGh1bWIsIC5mb3RvLXRodW1iIHsNCglib3JkZXI6IDJweCBzb2xpZCAjMjIyMjIyOw0KCWJhY2tncm91bmQtY29sb3I6ICMyMjIyMjI7DQoJdGV4dC1hbGlnbjogY2VudGVyOw0KCWNvbG9yOiBzaWx2ZXI7DQoJYm9yZGVyLXJhZGl1czogMTBweDsNCgltaW4td2lkdGg6IDE2MHB4Ow0KCW92ZXJmbG93OiBoaWRkZW47DQoJbWFyZ2luOiAxZXg7DQoJcGFkZGluZzogMWV4Ow0KCWxpbmUtaGVpZ2h0OiAxMDAlOw0KCWZsb2F0OiBsZWZ0Ow0KfQ0KLmFsYnVtLXRodW1iIGgyLCAuZm90by10aHVtYiBoMiB7DQoJZm9udC1zaXplOiAxMDAlOw0KfQ0KLmFsYnVtLXRodW1iIGltZywgLmZvdG8tdGh1bWIgaW1nIHsNCglib3JkZXI6IDBweDsNCglib3JkZXItcmFkaXVzOiA4cHg7DQoJb3ZlcmZsb3c6IGhpZGRlbjsNCn0NCmltZy5pdHsNCn0NCi5mb3RvLXRodW1iIC5pbmZidXR0b24gaW1nIHsNCglib3JkZXItcmFkaXVzOiAwOw0KfQ0KLmFsYnVtLXRodW1iIGEsIC5mb3RvLXRodW1iIGEgew0KCXRleHQtZGVjb3JhdGlvbjogbm9uZTsNCglib3JkZXI6IDBweDsNCn0NCi5hbGJ1bS10aHVtYiAuZGVzYywgLmZvdG8tdGh1bWIgLmRlc2Mgew0KCWZvbnQtc2l6ZTogODAlOw0KCW1hcmdpbi10b3A6IDFleDsNCn0NCi5mb3RvIC5kZXNjIHsNCglmbG9hdDogcmlnaHQ7DQoJd2lkdGg6IDMwMHB4Ow0KCWJhY2tncm91bmQtY29sb3I6IHNpbHZlcjsNCglwYWRkaW5nOiAxZXg7DQoJb3ZlcmZsb3c6IGhpZGRlbjsNCn0NCi5mb3RvIC5kZXNjIGgxIHsNCglmb250LXNpemU6IDExMCU7DQp9DQouZm90byAuZGVzYyBoMiB7DQoJZm9udC1zaXplOiAxMDUlOw0KfQ0KLmZvdG8gLmRlc2MgdWwgew0KCXBhZGRpbmc6IDA7DQoJbWFyZ2luOiAwOw0KfQ0KLmZvdG8gLmRlc2MgdWwgbGkgew0KCW1hcmdpbjogMDsNCglwYWRkaW5nOiAwOw0KCWxpc3Qtc3R5bGUtcG9zaXRpb246IGluc2lkZTsNCn0NCi5mb3RvIGltZyB7DQoJZmxvYXQ6IGxlZnQ7DQp9DQouaW5mYnV0dG9uIHsNCgl3aWR0aDogMTZweDsNCgl2ZXJ0aWNhbC1hbGlnbjogbWlkZGxlOw0KCWRpc3BsYXk6IGlubGluZTsNCgltYXJnaW46IDJweDsgDQp9DQouaW5mYnV0dG9uIGEgew0KCXRleHQtZGVjb3JhdGlvbjogbm9uZTsNCglib3JkZXI6IDA7DQp9DQouaW5mYnV0dG9uIGltZyB7DQoJdmVydGljYWwtYWxpZ246IG1pZGRsZTsNCn0NCi5jbGFsbHsNCgljbGVhcjogYm90aDsNCn0NCi5sb2NrIHsNCglwb3NpdGlvbjogYWJzb2x1dGU7DQp9DQovKiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09ICovDQp1bC50YWJzIHsNCgltYXJnaW46IDA7DQoJcGFkZGluZzogMDsNCglmbG9hdDogbGVmdDsNCglsaXN0LXN0eWxlOiBub25lOw0KCWhlaWdodDogMjZweDsNCglib3JkZXItYm90dG9tOiAxcHggc29saWQgIzk5OTsNCgl3aWR0aDogMTAwJTsNCn0NCnVsLnRhYnMgbGkgew0KCWZsb2F0OiBsZWZ0Ow0KCW1hcmdpbjogMDsNCglwYWRkaW5nOiAwOw0KCWhlaWdodDogMjVweDsgDQoJbGluZS1oZWlnaHQ6IDI1cHg7DQoJYm9yZGVyOiAxcHggc29saWQgIzk5OTsNCglib3JkZXItbGVmdDogbm9uZTsNCgltYXJnaW4tYm90dG9tOiAtMXB4Ow0KCW92ZXJmbG93OiBoaWRkZW47DQoJcG9zaXRpb246IHJlbGF0aXZlOw0KCWJhY2tncm91bmQ6ICNlMGUwZTA7DQp9DQp1bC50YWJzIGxpIGEgew0KCXRleHQtZGVjb3JhdGlvbjogbm9uZTsNCgljb2xvcjogIzAwMDsNCglkaXNwbGF5OiBibG9jazsNCglwYWRkaW5nOiAwIDFleDsNCglvdXRsaW5lOiBub25lOw0KfQ0KdWwudGFicyBsaSBhOmhvdmVyIHsNCgliYWNrZ3JvdW5kOiAjY2NjOw0KfQ0KaHRtbCB1bC50YWJzIGxpLmFjdGl2ZSwgaHRtbCB1bC50YWJzIGxpLmFjdGl2ZSBhOmhvdmVyICB7DQoJYmFja2dyb3VuZDogI2ZmZjsNCglib3JkZXItYm90dG9tOiAxcHggc29saWQgI2ZmZjsNCn0NCi50YWJfY29udGVudCB7DQoNCn0NCi50YWJfaW5uZXJfY29udGVudCB7DQoJY2xlYXI6IGJvdGg7DQoJcGFkZGluZzogMWV4Ow0KCWNvbG9yOiAjMDAwOw0KCWxpbmUtaGVpZ2h0OiAxNDAlOw0KfQ0KLnRhYl9pbm5lcl9jb250ZW50IGEgew0KCWNvbG9yOiAjMDA5Ow0KfQ0KLmNyZWRpdHNfY29udGVudCB7DQoJcGFkZGluZzogMWVtOyAgICAgICAgIA0KfQ0KLmNyZWRpdHNfY29udGVudCBsaXsNCgltYXJnaW4tbGVmdDogMWVtOyAgICAgDQp9DQpvbCBsaXsNCglsaXN0LXN0eWxlOiBpbnNpZGU7DQoJbGlzdC1zdHlsZS10eXBlOiBkZWNpbWFsOw0KfQ0KLmdwcy1jb250YWluZXIgew0KCWhlaWdodDogNTAwcHg7IA0KCW92ZXJmbG93OiBhdXRvOw0KfQ0KLm1zZ2JveCB7DQoJYm9yZGVyOiAycHggc29saWQgYmxhY2s7DQoJYmFja2dyb3VuZDogI2FhYTsNCglib3JkZXItcmFkaXVzOiAxMHB4OyAgICAgIA0KCXBhZGRpbmc6IDFleDsNCgltYXJnaW46IDJleCBhdXRvOw0KCW1pbi13aWR0aDogMjAwcHg7DQoJd2lkdGg6IDUwJTsgDQp9DQouY2VudGVyIHsNCgl0ZXh0LWFsaWduOiBjZW50ZXI7ICAgICAgICAgDQp9DQoubXNnYm94IGlucHV0IHsNCglwYWRkaW5nOiAwLjVleDsgICAgIA0KCXdpZHRoOiAxNTBweDsgICANCn0NCmxhYmVsIHsgIA0KfQ0K"); exit;
 		}
 		
 		if (isset($_GET["static"]) && $_GET["static"]==="sigal") {
   		header("Content-Type: text/javascript"); header("Expires: Tue, 1 Jan 2030 05:00:00 GMT"); header("Cache-Control: max-age=8640000, public"); echo base64_decode("ZnVuY3Rpb24gZG93bG9hZHNlbGVjdGVkKCkgew0KCWlmICh3aW5kb3cuc2VsZWN0ZWRQaWN0dXJlcyAmJiB3aW5kb3cuc2VsZWN0ZWRQaWN0dXJlcy5sZW5ndGg+MCkgew0KCQl2YXIgZGF0YSA9IHdpbmRvdy5zZWxlY3RlZFBpY3R1cmVzLmNvbmNhdChuZXcgQXJyYXkoKSk7DQoJCWRhdGFbJ2FsYnVtJ10gPSBkb2N1bWVudC5sb2NhdGlvbjsNCgkJcG9zdF90b191cmwoJz9kbHNlbGVjdGVkJywgZGF0YSwgInBvc3QiKTsNCgl9DQp9DQoNCmZ1bmN0aW9uIHBvc3RfdG9fdXJsKHBhdGgsIHBhcmFtcywgbWV0aG9kKSB7DQogICAgbWV0aG9kID0gbWV0aG9kIHx8ICJwb3N0IjsgLy8gU2V0IG1ldGhvZCB0byBwb3N0IGJ5IGRlZmF1bHQgaWYgbm90IHNwZWNpZmllZC4NCg0KICAgIC8vIFRoZSByZXN0IG9mIHRoaXMgY29kZSBhc3N1bWVzIHlvdSBhcmUgbm90IHVzaW5nIGEgbGlicmFyeS4NCiAgICAvLyBJdCBjYW4gYmUgbWFkZSBsZXNzIHdvcmR5IGlmIHlvdSB1c2Ugb25lLg0KICAgIHZhciBmb3JtID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgiZm9ybSIpOw0KICAgIGZvcm0uc2V0QXR0cmlidXRlKCJtZXRob2QiLCBtZXRob2QpOw0KICAgIGZvcm0uc2V0QXR0cmlidXRlKCJhY3Rpb24iLCBwYXRoKTsNCg0KICAgIGZvcih2YXIga2V5IGluIHBhcmFtcykgew0KICAgICAgICBpZihwYXJhbXMuaGFzT3duUHJvcGVydHkoa2V5KSkgew0KICAgICAgICAgICAgdmFyIGhpZGRlbkZpZWxkID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgiaW5wdXQiKTsNCiAgICAgICAgICAgIGhpZGRlbkZpZWxkLnNldEF0dHJpYnV0ZSgidHlwZSIsICJoaWRkZW4iKTsNCiAgICAgICAgICAgIGhpZGRlbkZpZWxkLnNldEF0dHJpYnV0ZSgibmFtZSIsICJpbWciK2tleSk7DQogICAgICAgICAgICBoaWRkZW5GaWVsZC5zZXRBdHRyaWJ1dGUoInZhbHVlIiwgcGFyYW1zW2tleV0pOw0KDQogICAgICAgICAgICBmb3JtLmFwcGVuZENoaWxkKGhpZGRlbkZpZWxkKTsNCiAgICAgICAgIH0NCiAgICB9DQoNCgkJLy9hbGVydChmb3JtLmlubmVySFRNTCk7DQogICAgZG9jdW1lbnQuYm9keS5hcHBlbmRDaGlsZChmb3JtKTsNCiAgICBmb3JtLnN1Ym1pdCgpOw0KfQ0KDQpmdW5jdGlvbiBhZGRUb0Rvd25sb2FkKGZpbGUpIHsNCglpZiAod2luZG93LnNlbGVjdGVkUGljdHVyZXM9PXVuZGVmaW5lZCkgew0KCQl3aW5kb3cuc2VsZWN0ZWRQaWN0dXJlcyA9IG5ldyBBcnJheSgpOw0KCX0gDQoJDQoJdmFyIHBvcyA9IHdpbmRvdy5zZWxlY3RlZFBpY3R1cmVzLmluZGV4T2YoZmlsZSk7DQoJaWYgKHBvcyA+PSAwKSB7DQoJCS8vIHJlbW92ZSBvbmUgaXRlbSBvbiBwb3MNCgkJd2luZG93LnNlbGVjdGVkUGljdHVyZXMuc3BsaWNlKHBvcywgMSk7IA0KCX0gZWxzZSB7DQoJCS8vIGFkZCBuZXcgdmFsdWUNCgkJd2luZG93LnNlbGVjdGVkUGljdHVyZXMucHVzaChmaWxlKTsNCgl9DQoJDQoJLy8gdXBkYXRlIGNvdW50ZXINCgl2YXIgbz1kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnbXVsdGlwbGVkb3dubG9hZGxpbmtjbnQnKTsNCglvLmlubmVySFRNTCA9IHdpbmRvdy5zZWxlY3RlZFBpY3R1cmVzLmxlbmd0aDsgDQp9DQoNCmZ1bmN0aW9uIHRvZ2dsZUFsbENoZWNrYm94ZXMoKSB7DQoJdmFyIGVsZW1zID0gZG9jdW1lbnQuZ2V0RWxlbWVudHNCeVRhZ05hbWUoJ2lucHV0JyksIGk7DQogIGZvciAoaSBpbiBlbGVtcykgew0KICAJLy9hbGVydChlbGVtc1tpXS52YWx1ZSArICI9IiArIGVsZW1zW2ldLmNoZWNrZWQpOw0KICAJZWxlbXNbaV0uY2hlY2tlZCA9ICFlbGVtc1tpXS5jaGVja2VkOw0KICAJYWRkVG9Eb3dubG9hZChlbGVtc1tpXS52YWx1ZSk7DQogIH0NCn0NCg=="); exit;
+		}
+		
+		if (isset($_GET["static"]) && $_GET["static"]==="lazy") {
+  		header("Content-Type: text/javascript"); header("Expires: Tue, 1 Jan 2030 05:00:00 GMT"); header("Cache-Control: max-age=8640000, public"); echo base64_decode("LyohIGxhenkuanMgdjEuMC4wIHwgKGMpIDIwMTQgQHZpc2hudXJzIHwgaHR0cHM6Ly9naXRodWIuY29tL3Zpc2hudXJzL2xhenkgKi8NCihmdW5jdGlvbihyb290KSB7DQondXNlIHN0cmljdCc7DQp2YXIgZGVsYXksIHRpbWVyLCBldmVudENvdW50ID0gMCwgY2FsbGJhY2sgPSBmdW5jdGlvbigpIHsgfTsNCnJvb3QubGF6eSA9IHsNCglpbml0IDogZnVuY3Rpb24ob3B0aW9ucykgew0KCQlvcHRpb25zID0gb3B0aW9ucyB8fCB7fTsNCgkJZGVsYXkgPSBvcHRpb25zLmRlbGF5IHx8IDA7DQoJCWNhbGxiYWNrID0gb3B0aW9ucy5jYWxsYmFjayB8fCBjYWxsYmFjazsNCgkJaWYoZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcikgew0KCQkJcm9vdC5hZGRFdmVudExpc3RlbmVyKCdzY3JvbGwnLCBsYXp5LmVuZ2luZSwgZmFsc2UpOw0KCQkJcm9vdC5hZGRFdmVudExpc3RlbmVyKCdsb2FkJywgbGF6eS5lbmdpbmUsIGZhbHNlKTsNCgkJfSBlbHNlIHsNCgkJCXJvb3QuYXR0YWNoRXZlbnQoJ29uc2Nyb2xsJywgbGF6eS5lbmdpbmUpOw0KCQkJcm9vdC5hdHRhY2hFdmVudCgnb25sb2FkJywgbGF6eS5lbmdpbmUpOw0KCQl9CQ0KCQkNCgl9LA0KCWVuZ2luZSA6IGZ1bmN0aW9uKCkgewkNCgkJaWYodGltZXIgIT09IHVuZGVmaW5lZCkgew0KCQkJY2xlYXJUaW1lb3V0KHRpbWVyKTsNCgkJfQ0KCQl0aW1lciA9IHNldFRpbWVvdXQoZnVuY3Rpb24oKXsNCgkJCWxhenkubG9hZEltYWdlKCk7DQoJCX0sIGRlbGF5KTsNCgl9LA0KCWxvYWRJbWFnZSA6IGZ1bmN0aW9uKCl7DQoJCXZhciBlbGVtZW50cyA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3JBbGwoJ2ltZ1tkYXRhLWxhenldJyk7DQoJCWZvcih2YXIgaSA9IDA7IGk8ZWxlbWVudHMubGVuZ3RoOyBpKyspIHsNCgkJCWlmKGxhenkuaXNWaXNpYmxlKGVsZW1lbnRzW2ldKSkgew0KCQkJCWlmKGVsZW1lbnRzW2ldLmdldEF0dHJpYnV0ZSgiZGF0YS1sYXp5IikgIT09IG51bGwpIHsNCgkJCQkJaWYoZWxlbWVudHNbaV0uZ2V0QXR0cmlidXRlKCJkYXRhLWxhenkiKSAhPT0gZWxlbWVudHNbaV0uZ2V0QXR0cmlidXRlKCJzcmMiKSkgew0KCQkJCQkJZWxlbWVudHNbaV0uc3JjID0gZWxlbWVudHNbaV0uZ2V0QXR0cmlidXRlKCJkYXRhLWxhenkiKTsNCgkJCQkJCWV2ZW50Q291bnQrKzsJDQoJCQkJCX0NCgkJCQl9DQoJCQkJY2FsbGJhY2soZWxlbWVudHNbaV0pOw0KCQkJfQ0KCQl9DQoJCWlmKCFlbGVtZW50cy5sZW5ndGggfHwgZXZlbnRDb3VudCA9PSBlbGVtZW50cy5sZW5ndGggKSB7DQoJCQlsYXp5LnJlbGVhc2VFdmVudHMoKTsNCgkJfQ0KCX0sDQoJaXNWaXNpYmxlIDogZnVuY3Rpb24oZWxlbSkgew0KCQl2YXIgdmlld3BvcnQgPSBlbGVtLmdldEJvdW5kaW5nQ2xpZW50UmVjdCgpOw0KCQlyZXR1cm4gKHZpZXdwb3J0LnRvcCA+PTAgJiYgdmlld3BvcnQudG9wIDwgd2luZG93LmlubmVySGVpZ2h0IHx8IHZpZXdwb3J0LmJvdHRvbSA+PTAgJiYgdmlld3BvcnQuYm90dG9tIDwgd2luZG93LmlubmVySGVpZ2h0KSAmJiAodmlld3BvcnQubGVmdCA+PTAgJiYgdmlld3BvcnQubGVmdCA8IHdpbmRvdy5pbm5lcldpZHRoIHx8IHZpZXdwb3J0LnJpZ2h0ID49MCAmJiB2aWV3cG9ydC5yaWdodCA8IHdpbmRvdy5pbm5lcldpZHRoKTsNCgl9LA0KCXJlbGVhc2VFdmVudHMgOiBmdW5jdGlvbigpIHsNCgkJaWYgKGRvY3VtZW50LnJlbW92ZUV2ZW50TGlzdGVuZXIpIHsNCgkJCXJvb3QucmVtb3ZlRXZlbnRMaXN0ZW5lcignc2Nyb2xsJywgbGF6eS5lbmdpbmUpOw0KCQl9IGVsc2Ugew0KCQkJcm9vdC5kZXRhY2hFdmVudCgnb25zY3JvbGwnLCBsYXp5LmVuZ2luZSk7DQoJCX0NCgkJY2xlYXJUaW1lb3V0KHRpbWVyKTsNCgl9IA0KfTsNCn0pKHRoaXMpDQo="); exit;
 		}
 		
 		if (isset($_GET["static"]) && $_GET["static"]==="ceebox-min-static-img") {
@@ -70,12 +81,17 @@
 		if (isset($_GET["static"]) && $_GET["static"]==="loader") {
   		header("Content-Type: text/plain"); header("Expires: Tue, 1 Jan 2030 05:00:00 GMT"); header("Cache-Control: max-age=8640000, public"); echo base64_decode("R0lGODlhKwALAPEAAP///wAAAIKCggAAACH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAKwALAAACMoSOCMuW2diD88UKG95W88uF4DaGWFmhZid93pq+pwxnLUnXh8ou+sSz+T64oCAyTBUAACH5BAkKAAAALAAAAAArAAsAAAI9xI4IyyAPYWOxmoTHrHzzmGHe94xkmJifyqFKQ0pwLLgHa82xrekkDrIBZRQab1jyfY7KTtPimixiUsevAAAh+QQJCgAAACwAAAAAKwALAAACPYSOCMswD2FjqZpqW9xv4g8KE7d54XmMpNSgqLoOpgvC60xjNonnyc7p+VKamKw1zDCMR8rp8pksYlKorgAAIfkECQoAAAAsAAAAACsACwAAAkCEjgjLltnYmJS6Bxt+sfq5ZUyoNJ9HHlEqdCfFrqn7DrE2m7Wdj/2y45FkQ13t5itKdshFExC8YCLOEBX6AhQAADsAAAAAAAAAAAA="); exit;
 		}
-		/*START-DO-NOT-REMOVE-THIS*/    @set_time_limit(120);  
+		/*START-DO-NOT-REMOVE-THIS*/
+
+  
+  @set_time_limit(120);
+
+  
 
 
  
 class Sigal {
-  public $version = '1.2';
+  public $version = '1.3';
 
   
   public $dir = './pictures/';
@@ -131,6 +147,8 @@ class Sigal {
   public $func_scandir = NULL;
   
   public $func_albumname = NULL;
+  
+  public $func_groupname = NULL;
 
   
   private $islocked = false;
@@ -231,29 +249,35 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
     echo '</div>';
     $albs = $this->getAlbums();
 
-        $albs_by_year = array();
+        $albs_by_group = array();
         foreach($albs as $a) {
       $bn = basename($a);
-      $cutpos = strpos($bn, '-');
-      if ($cutpos === FALSE) $cutpos = strpos($bn, '_');
-      if ($cutpos === FALSE) $cutpos = strlen($bn);
-      $group = substr($bn, 0,$cutpos);
-      $albs_by_year[$group][] = $a;
+      if (isset($this->func_groupname) && $this->func_groupname !== NULL && function_exists($this->func_groupname)) {
+        $group = call_user_func($this->func_groupname, $bn);
+      } else {
+                $cutpos = strpos($bn, '-');
+        if ($cutpos === FALSE) $cutpos = strpos($bn, '_');
+        if ($cutpos === FALSE) $cutpos = strlen($bn);
+        $group = substr($bn, 0,$cutpos);
+      }
+      $albs_by_group[$group][] = $a;
     }
-    $tabs = 100;     $years = array_keys($albs_by_year);
-    echo '<ul class="tabs">';
-    foreach ($years as $y) {
-      echo '<li><a href="#tab-'.$tabs.'">'.$y.'</a></li>';
-      $tabs++;
+    $tabs = 100;     if(count($albs_by_group) >= 1 && strlen($albs_by_group[0]) > 0) {
+      $groups = array_keys($albs_by_group);
+      echo '<ul class="tabs">';
+      foreach ($groups as $g) {
+        echo '<li><a href="#tab-'.$tabs.'">'.$g.'</a></li>';
+        $tabs++;
+      }
+      echo '</ul>';
     }
-    echo '</ul>';
     
     $tabs = 100;
-    foreach ($albs_by_year as $year => $albs) {
+    foreach ($albs_by_group as $group => $albs) {
       echo '<div id="tab-'.$tabs.'" class="tab_content">';
       echo '<br class="clall" />';
       echo '<div class="tab_inner_content">';
-      echo '<h2 class="subheader">'.$year.'</h2>';
+      echo '<h2 class="subheader">'.$group.'</h2>';
 
             foreach ($albs as $key=>$a) {
         $titlefoto = $this->getAlbumTitleFile($a);
@@ -332,7 +356,7 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
       if ($thumb === $this->defaultIcon || file_exists($thumb)) {
         echo '<img src="'.$thumb.'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
       } else {
-        echo '<img src="?mkthumb='.urlencode($f).'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
+        echo '<img src="?static=1px" data-lazy="?mkthumb='.urlencode($f).'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
       }
       echo '</a>';
       echo $this->getImageTitle($f);
@@ -345,6 +369,7 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
       ob_flush();
     }
     echo '</div>';
+    echo '<script src="?static=lazy"></script><script>lazy.init({delay:200});</script>';
     echo '<div class="footer">Navigation: <a href="?">Back to album selection</a></div>';
     echo $this->html_tail;
   }
@@ -378,7 +403,7 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
     echo '<div class="foto">';
     if (in_array($ext, $this->extsVideo)) {
       echo '<video height="480" width="854" src="'.$f.'" controls="controls">';
-      echo '<source src="'.$f.'" type="'.$this->videoMime[$ext].'" />';
+      echo '<source src="'.$f.'" type="'.$this->avMime[$ext].'" />';
       echo 'Your browser does not support the video tag.';
       echo '</video>';
     } elseif (in_array($ext, $this->extsAudio)) {
@@ -501,7 +526,7 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
   <ul>
     <li><a href="http://www.famfamfam.com/lab/icons/silk/">FamFamFam Silk Icons</a></li>
     <li><a href="http://catcubed.com/2009/11/19/ceebox-2-0/">CeeBox</a></li>
-    <li><a href="http://www.arwscripts.com/gallery-script-lite.html">Free Gallery Site Script</a></li>
+    <li><a href="http://www.arwscripts.com/gallery-script-lite.html">Free Gallery Site Script</a> (image resampling)</li>
     <li><a href="http://ojw.dev.openstreetmap.org/StaticMap/">OSM Static maps API by OJW</a></li>
     <li><a href="http://pafciu17.dev.openstreetmap.org/">Pawel's OSM Static maps API (pafciu17)</a></li>
   </ul>
@@ -512,34 +537,7 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
   </p>
 
   <h2>History:</h2>
-  <ul>
-    <li><strong>1.20</strong> 2014-12-08 Support for own callback function for scanning image directories with images, for mapping of directory names to albums, for own sorting mechanisms for images and albums separately.<br />
-    </li>
-    <li><strong>1.10</strong> 2014-09-10 Support for own Google analytics measurement code.<br />
-    Fixed  browsing details of image in locked albums.
-    </li>
-    <li><strong>1.00</strong> 2013-10-17 Mass download in one zip file.<br />
-    Fixed typo in some "a" tags.<br />
-    HTML5 validity check.
-    </li>
-    <li><strong>0.98</strong> 2013-07-15 Many small bugfixes and improvements.<br />
-    </li>
-    <li><strong>0.97</strong> 2012-10-04 Support for own CSS styles.<br />
-    BUGFIX: When you return from album to album selection the correct tab is preserved.
-    </li>
-    <li><strong>0.96</strong> 2012-06-14 Source codes were completely documented.<br />
-    Direct access to file in locked album is disabled without valid login/pass.
-    </li>
-    <li><strong>0.95</strong> 2012-04-13 Source codes were splitted into smaller parts and compiled before deploying.<br />
-    Build script inspired from Adminer and Nette. From now is all in one PHP script (including ceebox).<br />
-    Temporary removed support for own css.
-    </li>
-    <li><strong>0.9</strong> 2011-10-02 List of albums is tabbed by year of access time of curren album (css only).</li>
-    <li><strong>0.8</strong> 2011-10-02 Support for locked albums. (Needs -OptionIndexes or equivalent and some random string in photos filenames.)</li>
-    <li><strong>0.7</strong> 2011-09-20 Code optimalizations. Support for external CSS.</li>
-    <li><strong>0.6</strong> 2011-09-08 Nicer URLs for albums. Maps at photos with geotag are in tabs.</li>
-    <li><strong>0.5</strong> 2011-08-15 First public version.</li>
-  </ul>
+  <p>You can see it in changelog.txt in github repo: <a href="https://github.com/gimli2/sigal/">https://github.com/gimli2/sigal/</a></p>
 
   <h2>License of SiGal:</h2>
   <p>Modified BSD License (<a href="http://www.xfree86.org/3.3.6/COPYRIGHT2.html#5">http://www.xfree86.org/3.3.6/COPYRIGHT2.html#5</a>)</p>
@@ -785,6 +783,8 @@ echo $this->html_tail;
       list($cit,$jmen) = explode('/', $lon[2]);
       if ($jmen == 0) return array(0,0);
       $gpslon += $cit/($jmen*3600);
+      if($exif['GPSLatitudeRef'] == 'S') { $gpslat = -$gpslat; }
+      if($exif['GPSLongitudeRef'] == 'W') { $gpslon = -$gpslon; }
       return array($gpslat,$gpslon);
     } else {
       return array(0,0);
@@ -1386,4 +1386,58 @@ class ZipStream {
     }
 }
 
-$gg = new Sigal();    $conf = array();  if (file_exists('./config.php')) include './config.php';  $kws = array('dir', 'cache', 'defaultIcon', 'icotitlefname', 'lockfname', 'thumb_x', 'thumb_y', 'middle_x', 'imgTitleLen', 'galTitle', 'legal_notice',          'func_sortimages', 'func_sortalbums', 'func_scandir', 'func_albumname');  foreach ($kws as $item) {    if (isset($conf[$item])) $gg->$item = $conf[$item];  }      if (isset($_GET['credits'])) {    $gg->showCreditPage();    die();  }    if (isset($_GET['dlselected'])) {    $gg->downloadZippedImages();  }    if (isset($_GET['mkmid'])) {    $gg->makeMiddleImage($_GET['mkmid']);  }    if (isset($_GET['mkthumb'])) {    $gg->makeThumbImage($_GET['mkthumb']);  }    if (isset($_GET['foto'])) {    session_start();    if (isset($_POST['fakce']) && $_POST['fakce']==='addaccess') $gg->addAccess();    $gg->showImage($_GET['foto']);    die();  }    if (isset($_GET['alb'])) {    session_start();    if (isset($_POST['fakce']) && $_POST['fakce']==='addaccess') $gg->addAccess();    $gg->showAlbum($_GET['alb']);    die();  }    if (isset($_GET['salb'])) {    session_start();    if (isset($_POST['fakce']) && $_POST['fakce']==='addaccess') $gg->addAccess();    $gg->showAlbum(urlencode($gg->dir).$_GET['salb'].urlencode('/'));    die();  }      if (isset($_GET['static'])) {    header('Location: index.min.php?static='.$_GET['static']);  }    $gg->showGallery();
+$gg = new Sigal();
+
+  
+  $conf = array();
+  if (file_exists('./config.php')) include './config.php';
+  $kws = array('dir', 'cache', 'defaultIcon', 'icotitlefname', 'lockfname', 'thumb_x', 'thumb_y', 'middle_x', 'imgTitleLen', 'galTitle', 'legal_notice',
+          'func_sortimages', 'func_sortalbums', 'func_scandir', 'func_albumname', 'func_groupname');
+  foreach ($kws as $item) {
+    if (isset($conf[$item])) $gg->$item = $conf[$item];
+  }
+  
+  
+  if (isset($_GET['credits'])) {
+    $gg->showCreditPage();
+    die();
+  }
+  
+  if (isset($_GET['dlselected'])) {
+    $gg->downloadZippedImages();
+  }
+  
+  if (isset($_GET['mkmid'])) {
+    $gg->makeMiddleImage($_GET['mkmid']);
+  }
+  
+  if (isset($_GET['mkthumb'])) {
+    $gg->makeThumbImage($_GET['mkthumb']);
+  }
+  
+  if (isset($_GET['foto'])) {
+    session_start();
+    if (isset($_POST['fakce']) && $_POST['fakce']==='addaccess') $gg->addAccess();
+    $gg->showImage($_GET['foto']);
+    die();
+  }
+  
+  if (isset($_GET['alb'])) {
+    session_start();
+    if (isset($_POST['fakce']) && $_POST['fakce']==='addaccess') $gg->addAccess();
+    $gg->showAlbum($_GET['alb']);
+    die();
+  }
+  
+  if (isset($_GET['salb'])) {
+    session_start();
+    if (isset($_POST['fakce']) && $_POST['fakce']==='addaccess') $gg->addAccess();
+    $gg->showAlbum(urlencode($gg->dir).$_GET['salb'].urlencode('/'));
+    die();
+  }
+  
+    if (isset($_GET['static'])) {
+    header('Location: index.min.php?static='.$_GET['static']);
+  }
+  
+  $gg->showGallery();
