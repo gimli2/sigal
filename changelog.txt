@@ -1,0 +1,45 @@
+1.30 2015-01-29
+  Support for own callback function for grouping albums.
+  Lazy loading of thumbnails for faster loading.
+  Some cleanups of code.
+  FIX: GPS coordinates of W and S hemispheres.
+  Many thanks to Don Mahurin as 1st developer except me. ;-)
+
+1.20 2014-12-08 
+  Support for own callback function for scanning image directories with images, for mapping of directory names to albums, for own sorting mechanisms for images and albums separately.
+
+1.10 2014-09-10 
+  Support for own Google analytics measurement code.
+  Fixed browsing details of image in locked albums.
+
+1.00 2013-10-17 Mass download in one zip file.
+  Fixed typo in some "a" tags.
+  HTML5 validity check.
+
+0.98 2013-07-15
+  Many small bugfixes and improvements.
+
+0.97 2012-10-04 Support for own CSS styles.
+  FIX: When you return from album to album selection the correct tab is preserved.
+
+0.96 2012-06-14 Source codes were completely documented.
+  Direct access to file in locked album is disabled without valid login/pass.
+
+0.95 2012-04-13 Source codes were splitted into smaller parts and compiled before deploying.
+  Build script inspired from Adminer and Nette. From now is all in one PHP script (including ceebox).
+  Temporary removed support for own css.
+
+0.9 2011-10-02
+  List of albums is tabbed by year of access time of curren album (css only).
+
+0.8 2011-10-02
+  Support for locked albums. (Needs -OptionIndexes or equivalent and some random string in photos filenames.)
+
+0.7 2011-09-20
+  Code optimalizations. Support for external CSS.
+
+0.6 2011-09-08
+  Nicer URLs for albums. Maps at photos with geotag are in tabs.
+
+0.5 2011-08-15
+  First public version.
