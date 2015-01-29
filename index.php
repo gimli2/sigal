@@ -14,7 +14,7 @@
   $conf = array();
   if (file_exists('./config.php')) include './config.php';
   $kws = array('dir', 'cache', 'defaultIcon', 'icotitlefname', 'lockfname', 'thumb_x', 'thumb_y', 'middle_x', 'imgTitleLen', 'galTitle', 'legal_notice',
-          'func_sortimages', 'func_sortalbums', 'func_scandir', 'func_albumname');
+          'func_sortimages', 'func_sortalbums', 'func_scandir', 'func_albumname', 'func_groupname');
   foreach ($kws as $item) {
     if (isset($conf[$item])) $gg->$item = $conf[$item];
   }

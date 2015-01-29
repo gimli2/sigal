@@ -71,6 +71,8 @@ class Sigal {
   public $func_scandir = NULL;
   /** Callback function for mapping directory name to album name. */
   public $func_albumname = NULL;
+  /** Callback function for getting album/directory group name */
+  public $func_groupname = NULL;
 
   /** Flag for browsing in locked albums. */
   private $islocked = false;
@@ -129,20 +131,26 @@ class Sigal {
     // make array of albums by year of access time
     foreach($albs as $a) {
       $bn = basename($a);
-      $cutpos = strpos($bn, '-');
-      if ($cutpos === FALSE) $cutpos = strpos($bn, '_');
-      if ($cutpos === FALSE) $cutpos = strlen($bn);
-      $group = substr($bn, 0,$cutpos);
+      if (isset($this->func_groupname) && $this->func_groupname !== NULL && function_exists($this->func_groupname)) {
+        $group = call_user_func($this->func_groupname, $bn);
+      } else {
+        $cutpos = strpos($bn, '-');
+        if ($cutpos === FALSE) $cutpos = strpos($bn, '_');
+        if ($cutpos === FALSE) $cutpos = strlen($bn);
+        $group = substr($bn, 0,$cutpos);
+      }
       $albs_by_year[$group][] = $a;
     }
     $tabs = 100; // counter for tabs IDs
-    $years = array_keys($albs_by_year);
-    echo '<ul class="tabs">';
-    foreach ($years as $y) {
-      echo '<li><a href="#tab-'.$tabs.'">'.$y.'</a></li>';
-      $tabs++;
+    if(count($albs_by_year) > 1 || count($albs_by_year) == 1 && strlen($albs_by_year[0]) > 0) {
+      $years = array_keys($albs_by_year);
+      echo '<ul class="tabs">';
+      foreach ($years as $y) {
+        echo '<li><a href="#tab-'.$tabs.'">'.$y.'</a></li>';
+        $tabs++;
+      }
+      echo '</ul>';
     }
-    echo '</ul>';
     
     $tabs = 100;
     foreach ($albs_by_year as $year => $albs) {
