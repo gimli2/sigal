@@ -46,7 +46,7 @@
     return $title;
   }
   /** Example implementation of . */
-  function mygroupname($alb) {
+  function mygroupname($bn) {
     // default grouping is by chars before "-"
     $cutpos = strpos($bn, '-');
     if ($cutpos === FALSE) $cutpos = strlen($bn);
