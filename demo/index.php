@@ -262,8 +262,9 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
       }
       $albs_by_group[$group][] = $a;
     }
-    $tabs = 100;     if(count($albs_by_group) >= 1) {
-      $groups = array_keys($albs_by_group);
+
+    $tabs = 100;     $groups = array_keys($albs_by_group);
+        if(count($albs_by_group) > 1 || ( count($albs_by_group) == 1 && strlen($groups[0]) > 0) ) {
       echo '<ul class="tabs">';
       foreach ($groups as $g) {
         echo '<li><a href="#tab-'.$tabs.'">'.$g.'</a></li>';
@@ -571,6 +572,11 @@ echo $this->html_tail;
   
   
   public function getAlbums() {
+    if (isset($this->func_getalbums) && $this->func_getalbums !== NULL && function_exists($this->func_getalbums)) {
+      $files = call_user_func($this->func_getalbums, $this->dir, $this->exts);
+      return $this->sortItems($files, 'func_sortalbums');
+    }
+
     $files = glob($this->dir.'*');
     foreach($files as $k => $v) {
       if (is_dir($v)) {
@@ -1392,7 +1398,7 @@ $gg = new Sigal();
   $conf = array();
   if (file_exists('./config.php')) include './config.php';
   $kws = array('dir', 'cache', 'defaultIcon', 'icotitlefname', 'lockfname', 'thumb_x', 'thumb_y', 'middle_x', 'imgTitleLen', 'galTitle', 'legal_notice',
-          'func_sortimages', 'func_sortalbums', 'func_scandir', 'func_albumname', 'func_groupname');
+          'func_sortimages', 'func_sortalbums', 'func_scandir', 'func_albumname', 'func_groupname', 'func_getalbums');
   foreach ($kws as $item) {
     if (isset($conf[$item])) $gg->$item = $conf[$item];
   }

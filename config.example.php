@@ -53,6 +53,10 @@
     $group = substr($bn, 0, $cutpos);
     return $group;
   }
+  /** Example implementation of album grouping function to use with NO TABS - everything will be in group with empty string in name */
+  function onegroup($basename) {
+    return '';
+  }
   /** Example implementation of getting pictures from directory. Usefull eg. when you want to skip some of them. */
   function myscandir($dir) {
     $files = glob($dir.'*.tiff');

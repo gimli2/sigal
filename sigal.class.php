@@ -146,7 +146,7 @@ class Sigal {
     $tabs = 100; // counter for tabs IDs
     $groups = array_keys($albs_by_group);
     // if we have only one group with empty string in name, we will NOT display it as tab
-    if(count($albs_by_group) > 1 || ( count($albs_by_group) == 1 && strlen($albs_by_group[$groups[0]]) > 0) ) {
+    if(count($albs_by_group) > 1 || ( count($albs_by_group) == 1 && strlen($groups[0]) > 0) ) {
       echo '<ul class="tabs">';
       foreach ($groups as $g) {
         echo '<li><a href="#tab-'.$tabs.'">'.$g.'</a></li>';
