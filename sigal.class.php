@@ -35,6 +35,8 @@ class Sigal {
   public $middle_x = 800;
   /** Number of characters of shortened image title. */
   public $imgTitleLen = 16;
+  /** Date format for image/thumbnail display. */
+  public $date_format = 'Y-m-d';
   /** Title of whole gallery. */
   public $galTitle = 'SiGal gallery';
   /** String shown in bottom of each page. Designed to some words about legal use of photos. */
@@ -184,7 +186,7 @@ class Sigal {
         }
         echo '</a>';
         echo $this->getAlbumTitle($a);
-        echo '<div class="desc">'.date("d. m. Y", $date).' ('.$cnt.' files)</div>';
+        echo '<div class="desc">'.date($this->date_format, $date).' ('.$cnt.' files)</div>';
         echo '</div>'."\n";
         ob_flush();
       }
@@ -251,6 +253,7 @@ class Sigal {
       echo '</a>';
       echo $this->getImageTitle($f);
       echo '<div class="desc">';
+      echo date($this->date_format, filemtime($f));
       echo '<div class="infbutton"><a href="?foto='.urlencode($f).'#tab-base"><img src="?static=info" alt="Detailed info" title="Detailed info (EXIF, GPS)" /></a></div>';
       echo '<div class="infbutton"><a href="'.$f.'#t"><img src="?static=download" alt="Download" title="Download full size" /></a></div>';
       echo '<div class="infbutton"><input type="checkbox" name="i[]" value="'.$f.'" onClick="addToDownload(\''.$f.'\')" title="+/- to multiple download" /></div>';
