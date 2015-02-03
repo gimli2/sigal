@@ -7,11 +7,8 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
 <!--OWNCSS-->
 <link rel="stylesheet" href="./modules/ceebox/css/ceebox-min-static-img.css" type="text/css" media="screen" />
 <!--GAJS-->
-<script type="text/javascript" src="./js/sigal.js"></script>
-<script type="text/javascript" src="./modules/ceebox/js/jquery.js"></script>
-<script type="text/javascript" src="./modules/ceebox/js/jquery.metadata.js"></script>
-<script type="text/javascript" src="./modules/ceebox/js/jquery.swfobject.js"></script>
-<script type="text/javascript" src="./modules/ceebox/js/jquery.ceebox-min.js"></script>
+<script type="text/javascript" src="./js/sigal.min.js"></script>
+<script type="text/javascript" src="./modules/ceebox/js/ceeboxall.min.js"></script>
 <script type="text/javascript">
 
 	$(document).ready(

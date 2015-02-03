@@ -259,7 +259,7 @@ class Sigal {
       ob_flush();
     }
     echo '</div>';
-    echo '<script src="?static=lazy"></script><script>lazy.init({delay:200});</script>';
+    echo '<script src="?static=lazy.min"></script><script>lazy.init({delay:200});</script>';
     echo '<div class="footer">Navigation: <a href="?">Back to album selection</a></div>';
     echo $this->html_tail;
   }

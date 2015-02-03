@@ -79,13 +79,16 @@ echo "\n<pre>\n";
 		'./images/download.png',
 		'./images/1px.gif',
 		'./css/style.css',
-		'./js/sigal.js',
-		'./js/lazy.js',
+		'./js/sigal.min.js',
+		'./js/lazy.min.js',
 		'./modules/ceebox/css/ceebox-min-static-img.css',
+    /*
 		'./modules/ceebox/js/jquery.js',
-		'./modules/ceebox/js/jquery.metadata.js',
+		'./modules/ceebox/js/jquery.metadata.min.js',
 		'./modules/ceebox/js/jquery.swfobject.js',
 		'./modules/ceebox/js/jquery.ceebox-min.js',
+    */
+    './modules/ceebox/js/ceeboxall.min.js',
 		'./modules/ceebox/images/cee-close-btn.png',
 		'./modules/ceebox/images/cee-next-btn-gif.gif',
 		'./modules/ceebox/images/cee-next-btn.png',
@@ -103,10 +106,23 @@ echo "\n<pre>\n";
 		if (getExtension($sf) == 'css') $mime = 'text/css';
 		if (getExtension($sf) == 'js') $mime = 'text/javascript';
 		echo ' a mime type was recognized as <b>'.$mime."</b>\n";
+    /*
+    if ($mime == 'text/javascript') {
+      $content = addslashes(file_get_contents($sf));
+      $decodeIN = 'stripslashes(';
+      $decodeOUT = ')';
+    } else {
+    */
+      $content = base64_encode(file_get_contents($sf));
+      $decodeIN = 'base64_decode(';
+      $decodeOUT = ')';
+    /*
+    }
+    */
  		$ndata = str_replace($sf, '?static='.$key, $ndata);
 		$ndata = str_replace("/*START-DO-NOT-REMOVE-THIS*/", '
 		if (isset($_GET["static"]) && $_GET["static"]==="'.$key.'") {
-  		header("Content-Type: '.$mime.'"); header("Expires: Tue, 1 Jan 2030 05:00:00 GMT"); header("Cache-Control: max-age=8640000, public"); echo base64_decode("' . base64_encode(file_get_contents($sf)) . '"); exit;
+  		header("Content-Type: '.$mime.'"); header("Expires: Tue, 1 Jan 2030 05:00:00 GMT"); header("Cache-Control: max-age=8640000, public"); echo '.$decodeIN.'"' . $content . '"'.$decodeOUT.'; exit;
 		}
 		/*START-DO-NOT-REMOVE-THIS*/', $ndata);
  	}
@@ -116,14 +132,14 @@ echo "\n<pre>\n";
 	file_put_contents($out_downloadable, $ndata);
   file_put_contents($out_demo, $ndata);
 	
-	/*
+/*
 	$shrink = new ShrinkPHP;
 	$shrink->addFile($out);
 	$content = $shrink->getOutput();
 	$content = str_replace("\r\n", "\n", $content);
 	$content = trim(preg_replace("#[\t ]+(\r?\n)#", '$1', $content)); // right trim
-	file_put_contents($out, $content);	// save minified file
-	*/
+	file_put_contents($out."min2", $content);	// save minified file
+*/
 echo "\n</pre>\n";
 
 /*============================================================================*/
