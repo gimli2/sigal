@@ -1,6 +1,7 @@
 Components
 ==========
 https://github.com/Grandt/PHPZip
+https://github.com/colinaut/CeeBox
 
 Inspiration/concurrency
 =======================
