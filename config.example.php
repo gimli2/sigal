@@ -17,6 +17,8 @@
   $conf['middle_x'] = 800;
   /** Number of characters of shortened image title. */
   $conf['imgTitleLen'] = 16;
+  /** Date format for image/thumbnail display. */
+  $conf['date_format'] = 'Y-m-d';
   /** Title of whole gallery. */
   $conf['galTitle'] = 'SiGal gallery';
   /** String shown in bottom of each page. Designed to some words about legal use of photos. */
