@@ -18,9 +18,9 @@ class Sigal {
   public $version = '1.3';
 
   /** Directory with pictures. */
-  public $dir = './pictures/';
+  public $dir = 'pictures';
   /** Directory for caching thumbnails (must be writeable!).*/
-  public $cache = './cache/';
+  public $cache = 'cache';
   /** URL to default album and picture icon. May be absolute or relative. */
   public $defaultIcon = '?static=defico';
   /** Name of file with definition of title image. */
@@ -115,24 +115,50 @@ class Sigal {
     $_SESSION['givenaccess'][] = trim($user.':'.$pass);
     $_SESSION['givenaccess'] = array_unique($_SESSION['givenaccess']);
   }
+
+  /*========================================================================*/
+  /**
+   * @brief remove root dir from path
+   */
+  public function basepathname($path) {
+    $len = strlen($this->dir) + 1;
+    if(0 == strncmp($path, $this->dir . '/', $len)) {
+      $path = substr($path, $len);
+    }
+    return $path;
+  }
+
+  /*========================================================================*/
+  /**
+   * @brief encode path for url query argument. urlencode without slash encoding
+   */
+  function urlpathencode($path) {
+    return implode("/", array_map(function($s) { return urlencode($s); }, split("/", $path)));
+  }
+
   /*========================================================================*/
   /**
    * @brief Shows complete gallery - the albums selection.
    */
-  public function showGallery() {
+  public function showGallery($albtop = NULL) {
     ob_start();
     ob_implicit_flush(true);
     echo str_replace('{title}', $this->galTitle, $this->html_head);
     echo '<div class="header">';
-    echo '<h1>'.$this->galTitle.'</h1>';
+    if(!is_null($albtop)) {
+      $aname = $this->basepathname($albtop);
+      echo '<h1>'.$this->galTitle.': '.$aname.'</h1>';
+    } else {
+      echo '<h1>'.$this->galTitle.'</h1>';
+    }
     echo '</div>';
-    $albs = $this->getAlbums();
+    $albs = $this->getAlbums($albtop);
 
     // prepare tabs
     $albs_by_group = array();
     // make array of albums by year of access time
     foreach($albs as $a) {
-      $bn = basename($a);
+      $bn = $this->basepathname($a);
       if (isset($this->func_groupname) && $this->func_groupname !== NULL && function_exists($this->func_groupname)) {
         $group = call_user_func($this->func_groupname, $bn);
       } else {
@@ -168,8 +194,8 @@ class Sigal {
       foreach ($albs as $key=>$a) {
         $titlefoto = $this->getAlbumTitleFile($a);
         $thumb = $this->getThumbName($titlefoto);
-        $bn = basename($a);
-        $content = glob($a.'*');
+        $bn = $this->basepathname($a);
+        $content = glob($a.'/*');
         $cnt = count($content);
         $date = filemtime($a);
 
@@ -178,7 +204,7 @@ class Sigal {
         if (array_search($a.$this->lockfname, $content)!==FALSE) {
           echo '<img src="?static=lock" height="32" alt="locked" title="access restricted" class="lock" />';
         }
-        echo '<a href="?salb='.urlencode($bn).'" title="'.$bn.'">';
+        echo '<a href="?salb='.$this->urlpathencode($bn).'" title="'.$bn.'">';
         if ($thumb===$this->defaultIcon || file_exists($thumb)) {
           echo '<img src="'.$thumb.'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
         } else {
@@ -202,13 +228,21 @@ class Sigal {
   /*========================================================================*/
   /**
    * @brief Shows given album.
-   * @param string $alb Full path to album directory with terminating slash.
+   * @param string $alb Full path to album directory.
    */
   public function showAlbum($alb) {
+    $alb = $this->sanitizePath(urldecode($alb));
+    $fotos = $this->getImages($alb);
+
+    // fallback to show sub gallery
+    if(count($fotos) == 0) {
+      $this->showGallery($alb);
+      return;
+    }
+
     ob_start();
     ob_implicit_flush(true);
-    $alb = $this->sanitizePath(urldecode($alb));
-    $aname = basename($alb);
+    $aname = $this->basepathname($alb);
     echo str_replace('{title}', $aname, $this->html_head);
     echo '<div class="header">';
     echo '<h1>'.$this->galTitle.': '.$aname.'</h1>';
@@ -221,7 +255,6 @@ class Sigal {
     echo '</div>';
 
     // this automaticly check if album is locked an load usernames&passwords
-    $fotos = $this->getImages($alb);
 
     // is locked? and not set username&pass
     $this->readLock($alb);
@@ -319,7 +352,7 @@ class Sigal {
       }
     }
     echo '<div class="desc">';
-    echo '<div>Navigation: <a href="?alb='.urlencode(substr($f,0,-1*strlen(basename($f)))).'">Back to album thumbnails</a></div><br />';
+    echo '<div>Navigation: <a href="?salb='.$this->urlpathencode($this->basepathname(substr($f,0,-1*strlen(basename($f))-1))).'">Back to album thumbnails</a></div><br />';
     
     echo '<ul class="tabs">';
     echo '  <li><a href="#tab-base">Base info</a></li>';
@@ -421,16 +454,17 @@ class Sigal {
    * @brief Get sorted (by name reversed eg. 9->0, Z->A) array of all albums.
    * @returns An array of all albums in defined dir ($this->dir).
    */
-  public function getAlbums() {
+  public function getAlbums($top = NULL) {
+    if (is_null($top)) { $top = $this->dir; }
     if (isset($this->func_getalbums) && $this->func_getalbums !== NULL && function_exists($this->func_getalbums)) {
-      $files = call_user_func($this->func_getalbums, $this->dir, $this->exts);
+      $files = call_user_func($this->func_getalbums, $top, $this->exts);
       return $this->sortItems($files, 'func_sortalbums');
     }
 
-    $files = glob($this->dir.'*');
+    $files = glob($top.'/*');
     foreach($files as $k => $v) {
       if (is_dir($v)) {
-        $files[$k] = $v.'/';
+        $files[$k] = $v;
       } else {
         unset($files[$k]);
       }
@@ -459,7 +493,7 @@ class Sigal {
   /*========================================================================*/
   /**
    * @brief Returns all images from given directory sorted by name and read possible locks of album.
-   * @param string $dir Source directory for scan with terminating slash.
+   * @param string $dir Source directory for scan.
    * @returns An array of all images.
    */
   public function getImages($dir) {
@@ -470,7 +504,7 @@ class Sigal {
     if (isset($this->func_scandir) && $this->func_scandir !== NULL && function_exists($this->func_scandir)) {
       $files = call_user_func($this->func_scandir, $array);
     } else {
-      $r = glob($dir.'*');
+      $r = glob($dir.'/*');
       foreach($r as $file) {
         // filter to only permited extensions
         $ext = strtolower($this->getExt($file));
@@ -484,14 +518,14 @@ class Sigal {
   /*========================================================================*/
   /**
    * @brief Gets path to title image of given album. If there are no iconificable image, the $this->defaultIcon is used.
-   * @param string $album Path to album directory with terminating slash
+   * @param string $album Path to album directory
    * @returns URL of title image.
    */
   public function getAlbumTitleFile($album) {
     // if is title photo defined in specified file, we use it
     if (file_exists($album.$this->icotitlefname)) return $album.trim(file_get_contents($album.$this->icotitlefname));
     // else we, use the first iconificable image
-    $files = glob($album.'*');
+    $files = glob($album.'/*');
     foreach($files as $file) {
       $ext = strtolower($this->getExt($file));
       if (in_array($ext, $this->extsIcon)) return $file;
@@ -622,7 +656,7 @@ class Sigal {
     $ext = strtolower($this->getExt($file));
     if (in_array($ext, $this->extsIcon)) {
       $md5 = MD5($file.$this->middle_x);
-      $targetDir = $this->cache.substr($md5,0,1).'/';
+      $targetDir = $this->cache.'/'.substr($md5,0,1).'/';
       $targetImagePath = $targetDir.$md5.".jpg";
       return $targetImagePath;
     }
@@ -641,7 +675,7 @@ class Sigal {
     $ext = strtolower($this->getExt($file));
     if (in_array($ext, $this->extsIcon)) {
       $md5 = MD5($file.$this->thumb_x);
-      $targetDir = $this->cache.substr($md5,0,1).'/';
+      $targetDir = $this->cache.'/'.substr($md5,0,1).'/';
       $targetImagePath = $targetDir.$md5.".jpg";
       return $targetImagePath;
     }
@@ -666,7 +700,7 @@ class Sigal {
    * @returns HTML H2 tag with title of an album.
    */
   private function getAlbumTitle($file){
-    $bn = basename($file);
+    $bn = $this->basepathname($file);
 
     if (isset($this->func_albumname) && $this->func_albumname !== NULL && function_exists($this->func_albumname)) {
       $title = call_user_func($this->func_albumname, $bn);
@@ -752,7 +786,7 @@ class Sigal {
   public function resizeImage($path, $max_x) {
     $sourceImagePath = $path;
     $md5 = MD5($path.$max_x);
-    $targetDir = $this->cache.substr($md5,0,1).'/';
+    $targetDir = $this->cache.'/'.substr($md5,0,1).'/';
     $targetImagePath = $targetDir.$md5.".jpg";
     $outputImageQuality = 80;
 
