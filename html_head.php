@@ -15,23 +15,28 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
 	   function(){
 	       $(".fotos").ceebox({imageGallery:true,image:true,html:false,video:true,videoGallery:true});
 		
-            //When page loads...
+          //When page loads...
         	$(".tab_content").hide();
         	$("ul.tabs li:first").addClass("active").show();
         	$(".tab_content:first").show();
 
-            var activeTab = window.location.hash;
-            if (activeTab!="") {
-                $("ul.tabs li").removeClass("active");
-                $(".tab_content").hide();
-                $("ul.tabs li").each(function(index) {
-                    x = $(this).find("a").attr("href");
-                    if (x == activeTab) {
-                        $(this).addClass("active");
-                    }
-                });
-                $(activeTab).show();
+          var activeTab = window.location.hash;
+          if (activeTab=="") {
+            if(typeof(sessionStorage) !== "undefined") {
+                activeTab = sessionStorage.getItem("lasttab");
             }
+          }
+          if (activeTab!="") {
+              $("ul.tabs li").removeClass("active");
+              $(".tab_content").hide();
+              $("ul.tabs li").each(function(index) {
+                  x = $(this).find("a").attr("href");
+                  if (x == activeTab) {
+                      $(this).addClass("active");
+                  }
+              });
+              $(activeTab).show();
+          }
 
         	//On Click Event
         	$("ul.tabs li").click(function() {
@@ -40,7 +45,10 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
         		$(".tab_content").hide();
         		var activeTab = $(this).find("a").attr("href");
         		$(activeTab).show();
-                window.location.hash = activeTab;
+            window.location.hash = activeTab;
+            if(typeof(sessionStorage) !== "undefined") {
+              sessionStorage.setItem("lasttab", activeTab);
+            }
         		return false;
         	});
 		}
