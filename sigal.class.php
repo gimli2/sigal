@@ -132,7 +132,7 @@ class Sigal {
    * @brief get parent dir in hierarchy for correct upper navigation
    */
   public function getparentdir($path) {
-    return mb_substr($path, 0, -1 * (1 + mb_strlen(basename($path))));
+    return substr($path, 0, -1 * (1 + strlen(basename($path))));
   }
 
   /*========================================================================*/
@@ -177,9 +177,6 @@ class Sigal {
       $bn = $this->basepathname($a);
       //echo $bn."<br>";
       // for subgalleries group by actual dir, not common parent dir
-      if ($albtop!==NULL) {
-        //$bn = mb_substr($bn, mb_strpos($bn, '/')+1, mb_strlen($bn));
-      }
       if (isset($this->func_groupname) && $this->func_groupname !== NULL && function_exists($this->func_groupname)) {
         $group = call_user_func($this->func_groupname, $bn);
       } else {
@@ -337,7 +334,7 @@ class Sigal {
     $bn=basename($f);
 
     // zamykaci soubor
-    $lf = substr($f, 0, -1*mb_strlen($bn)).$this->lockfname;
+    $lf = substr($f, 0, -1*strlen($bn)).$this->lockfname;
     if (file_exists($lf)) {
       $this->islocked = true;
       $this->validusers = file($lf);
@@ -644,7 +641,7 @@ class Sigal {
    */
   private function sanitizePath($p) {
     $p = trim($p);  // no whitespaces
-    if ($this->dir != mb_substr($p, 0, mb_strlen($this->dir))) return ''; // it must start in $dir
+    if ($this->dir != substr($p, 0, strlen($this->dir))) return ''; // it must start in $dir
     $p = str_replace('..','',$p);   // no jumps to parent dirs
     $p = str_replace('*','',$p);     // no wildcards for glob
     $p = str_replace('://','',$p);     // no protocols
@@ -657,7 +654,7 @@ class Sigal {
    * @returns The last extension from given file.
    */
   private function getExt($file) {
-    return mb_substr($file,mb_strrpos($file, '.')+1);
+    return substr($file,strrpos($file, '.')+1);
   }
   /*========================================================================*/
   // TODO: use PECL extension if available
@@ -718,8 +715,8 @@ class Sigal {
    */
   private function getImageTitle($file){
     $bn = basename($file);
-    $elipse = (mb_strlen($bn)>$this->imgTitleLen) ? '&hellip;':'';
-    return '<h2 title="'.$bn.'">'.mb_substr($bn,0,$this->imgTitleLen).$elipse.'</h2>';
+    $elipse = (strlen($bn) > $this->imgTitleLen) ? '&hellip;':'';
+    return '<h2 title="'.$bn.'">'.substr($bn, 0, $this->imgTitleLen).$elipse.'</h2>';
   }
   /*========================================================================*/
   /**
