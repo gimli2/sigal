@@ -133,7 +133,7 @@ class Sigal {
    * @brief encode path for url query argument. urlencode without slash encoding
    */
   function urlpathencode($path) {
-    return implode("/", array_map(function($s) { return urlencode($s); }, split("/", $path)));
+    return implode("/", array_map(function($s) { return urlencode($s); }, explode("/", $path)));
   }
 
   /*========================================================================*/
