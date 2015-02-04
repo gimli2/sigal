@@ -145,7 +145,7 @@ class Sigal {
     ob_implicit_flush(true);
     echo str_replace('{title}', $this->galTitle, $this->html_head);
     echo '<div class="header">';
-    if(!is_null($albtop)) {
+    if($albtop!==NULL) {
       $aname = $this->basepathname($albtop);
       echo '<h1>'.$this->galTitle.': '.$aname.'</h1>';
     } else {
@@ -455,7 +455,7 @@ class Sigal {
    * @returns An array of all albums in defined dir ($this->dir).
    */
   public function getAlbums($top = NULL) {
-    if (is_null($top)) { $top = $this->dir; }
+    if ($top===NULL) $top = $this->dir;
     if (isset($this->func_getalbums) && $this->func_getalbums !== NULL && function_exists($this->func_getalbums)) {
       $files = call_user_func($this->func_getalbums, $top, $this->exts);
       return $this->sortItems($files, 'func_sortalbums');
