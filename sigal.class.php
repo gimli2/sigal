@@ -127,6 +127,13 @@ class Sigal {
     }
     return $path;
   }
+  /*========================================================================*/
+  /**
+   * @brief get parent dir in hierarchy for correct upper navigation
+   */
+  public function getparentdir($path) {
+    return mb_substr($path, 0, -1 * (1 + mb_strlen(basename($path))));
+  }
 
   /*========================================================================*/
   /**
@@ -145,6 +152,7 @@ class Sigal {
     ob_implicit_flush(true);
     echo str_replace('{title}', $this->galTitle, $this->html_head);
     echo '<div class="header">';
+    $aname='';
     if($albtop!==NULL) {
       $aname = $this->basepathname($albtop);
       echo '<h1>'.$this->galTitle.': '.$aname.'</h1>';
@@ -153,12 +161,25 @@ class Sigal {
     }
     echo '</div>';
     $albs = $this->getAlbums($albtop);
+    //print_r($albs);
+
+    if ($albtop!==NULL) {
+        echo '<div class="header">Navigation: ';
+        echo '<a href="?salb='.urlencode($this->getparentdir($aname)).'">Back to parent album</a>';
+        echo ' | <a href="?">Back to top level</a>';
+        echo '</div>';
+    }
 
     // prepare tabs
     $albs_by_group = array();
     // make array of albums by year of access time
     foreach($albs as $a) {
       $bn = $this->basepathname($a);
+      //echo $bn."<br>";
+      // for subgalleries group by actual dir, not common parent dir
+      if ($albtop!==NULL) {
+        //$bn = mb_substr($bn, mb_strpos($bn, '/')+1, mb_strlen($bn));
+      }
       if (isset($this->func_groupname) && $this->func_groupname !== NULL && function_exists($this->func_groupname)) {
         $group = call_user_func($this->func_groupname, $bn);
       } else {
@@ -222,6 +243,13 @@ class Sigal {
       echo '</div>'."\n";
       $tabs++;
     }
+
+    if ($albtop!==NULL) {
+        echo '<div class="footer">Navigation: ';
+        echo '<a href="?salb='.urlencode($this->getparentdir($aname)).'" onclick="history.back();">Back to parent album</a>';
+        echo ' | <a href="?">Back to top level</a>';
+        echo '</div>';
+    }
     
     echo $this->html_tail;
   }
@@ -234,7 +262,7 @@ class Sigal {
     $alb = $this->sanitizePath(urldecode($alb));
     $fotos = $this->getImages($alb);
 
-    // fallback to show sub gallery
+    // fallback to show sub gallery - assume that empty gallery contains sub galleries
     if(count($fotos) == 0) {
       $this->showGallery($alb);
       return;
@@ -248,7 +276,7 @@ class Sigal {
     echo '<h1>'.$this->galTitle.': '.$aname.'</h1>';
     echo '</div>';
     echo '<div class="header">Navigation: ';
-    echo '<a href="?#" onclick="history.back();">Back to album selection</a>';
+    echo '<a href="?salb='.urlencode($this->getparentdir($aname)).'">Back to album selection</a>';
     echo ' | Functions: ';
     echo '<a href="?#" onClick="javascript:dowloadselected(); return false;">Download selected images (<span id="multipledownloadlinkcnt">0</span>)</a>';
     echo ', <a href="?#" onClick="javascript:toggleAllCheckboxes(); return false;">toggle all</a>';
@@ -296,7 +324,7 @@ class Sigal {
     }
     echo '</div>';
     echo '<script src="?static=lazy.min"></script><script>lazy.init({delay:200});</script>';
-    echo '<div class="footer">Navigation: <a href="?">Back to album selection</a></div>';
+    echo '<div class="footer">Navigation: <a href="?salb='.urlencode($this->getparentdir($aname)).'">Back to album selection</a></div>';
     echo $this->html_tail;
   }
   /*========================================================================*/
