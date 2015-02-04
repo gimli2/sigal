@@ -15,7 +15,7 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
 	   function(){
 	       $(".fotos").ceebox({imageGallery:true,image:true,html:false,video:true,videoGallery:true});
 		
-          //When page loads...
+          //show first when page loads...
         	$(".tab_content").hide();
         	$("ul.tabs li:first").addClass("active").show();
         	$(".tab_content:first").show();
@@ -24,6 +24,7 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
           if (activeTab=="") {
             if(typeof(sessionStorage) !== "undefined") {
                 activeTab = sessionStorage.getItem("lasttab");
+                if (activeTab == null) activeTab = "";
             }
           }
           if (activeTab!="") {
@@ -46,9 +47,7 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
         		var activeTab = $(this).find("a").attr("href");
         		$(activeTab).show();
             window.location.hash = activeTab;
-            if(typeof(sessionStorage) !== "undefined") {
-              sessionStorage.setItem("lasttab", activeTab);
-            }
+            if(typeof(sessionStorage) !== "undefined") sessionStorage.setItem("lasttab", activeTab);
         		return false;
         	});
 		}
