@@ -119,6 +119,12 @@ echo "\n<pre>\n";
     /*
     }
     */
+    if ($sf == './modules/ceebox/js/ceeboxall.min.js') {
+      $content = base64_encode(gzdeflate(file_get_contents($sf), 9));
+      $decodeIN = 'gzinflate(base64_decode(';
+      $decodeOUT = '))';
+    }
+
  		$ndata = str_replace($sf, '?static='.$key, $ndata);
 		$ndata = str_replace("/*START-DO-NOT-REMOVE-THIS*/", '
 		if (isset($_GET["static"]) && $_GET["static"]==="'.$key.'") {
