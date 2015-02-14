@@ -15,14 +15,16 @@
  * @brief      Simple gallery script provides single-file web gallery.
  */ 
 class Sigal {
-  public $version = '1.3';
+  public $version = '1.4';
 
   /** Directory with pictures. */
   public $dir = 'pictures';
   /** Directory for caching thumbnails (must be writeable!).*/
   public $cache = 'cache';
-  /** URL to default album and picture icon. May be absolute or relative. */
+  /** URL to default picture icon. May be absolute or relative. */
   public $defaultIcon = '?static=defico';
+  /** URL to default album. May be absolute or relative. */
+  public $defaultDirIcon = '?static=defdirico';
   /** Name of file with definition of title image. */
   public $icotitlefname = '000.nfo';
   /** Name of file with defined usernames/passwords for locked/private albums. */
@@ -223,7 +225,7 @@ class Sigal {
           echo '<img src="?static=lock" height="32" alt="locked" title="access restricted" class="lock" />';
         }
         echo '<a href="?alb='.$this->urlpathencode($bn).'" title="'.$bn.'">';
-        if ($thumb===$this->defaultIcon || file_exists($thumb)) {
+        if ($thumb === $this->defaultIcon || $thumb === $this->defaultDirIcon || file_exists($thumb)) {
           echo '<img src="'.$thumb.'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
         } else {
           echo '<img src="?mkthumb='.urlencode($this->basepathname($titlefoto)).'"  height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
@@ -295,15 +297,23 @@ class Sigal {
       echo '<div class="foto-thumb">';
       if ($middle===$this->defaultIcon || file_exists($middle)) {
         if ($middle===$this->defaultIcon) {
-          echo '<a href="'.$f.'" title="'.$bn.'">';
+          if (is_dir($f)) {
+            echo '<a href="?alb='.urlencode($bn).'" title="'.$bn.'">';
+          } else {
+            echo '<a href="'.$f.'" title="'.$bn.'">';
+          }
         } else {
           echo '<a href="'.$middle.'" title="'.$bn.'">';
         }
       } else {
         echo '<a href="?mkmid='.urlencode($bn).'" title="'.$bn.'">';
       }
-      $thumb = $this->getThumbName($f);
-      if ($thumb === $this->defaultIcon || file_exists($thumb)) {
+      if (is_dir($f)) {
+        $thumb = $this->getThumbName($this->getAlbumTitleFile($f));
+      } else {
+        $thumb = $this->getThumbName($f);
+      }
+      if ($thumb === $this->defaultIcon || $thumb === $this->defaultDirIcon || file_exists($thumb)) {
         echo '<img src="'.$thumb.'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
       } else {
         echo '<img src="?static=1px" data-lazy="?mkthumb='.urlencode($bn).'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
@@ -533,7 +543,7 @@ class Sigal {
       foreach($r as $file) {
         // filter to only permited extensions
         $ext = strtolower($this->getExt($file));
-        if (in_array($ext, $this->exts)) $files[] = $file;
+        if (in_array($ext, $this->exts) || is_dir($file)) $files[] = $file;
       }
     }
     
@@ -556,7 +566,7 @@ class Sigal {
       if (in_array($ext, $this->extsIcon)) return $file;
     }
     // fallback - no suitable icon
-    return $this->defaultIcon;
+    return $this->defaultDirIcon;
   }
   /*========================================================================*/
   public function downloadZippedImages() {
@@ -695,6 +705,7 @@ class Sigal {
   private function getThumbName($file) {
     // default icon has itself as thumbnail
     if ($file === $this->defaultIcon) return $file;
+    if ($file === $this->defaultDirIcon) return $file;
     // is given file iconificable?
     $ext = strtolower($this->getExt($file));
     if (in_array($ext, $this->extsIcon)) {

@@ -75,6 +75,7 @@ echo "\n<pre>\n";
 		'./images/favicon.png',
 		'./images/lock.png',
 		'./images/defico.png',
+    './images/defdirico.png',
 		'./images/info.png',
 		'./images/download.png',
 		'./images/1px.gif',

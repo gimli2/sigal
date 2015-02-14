@@ -46,7 +46,7 @@
     die();
   }
   /*========================================================================*/
-  if (isset($_GET['alb'])) {
+  if (isset($_GET['alb']) && $_GET['alb']!=='') {
     session_start();
     if (isset($_POST['fakce']) && $_POST['fakce']==='addaccess') $gg->addAccess();
     $gg->showAlbum($_GET['alb']);

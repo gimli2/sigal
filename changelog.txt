@@ -1,3 +1,8 @@
+1.40 2015-02-15
+  Support for hierarchy in picture directories. Thanks to Don Mahurin.
+  FIX: in function getImages
+  Added default directory icon for directories without thumbnailable files.
+
 1.30 2015-01-29
   Support for own callback function for grouping albums.
   Lazy loading of thumbnails for faster loading.
