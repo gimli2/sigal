@@ -527,7 +527,7 @@ class Sigal {
 
     // if we have scanning callback defined, lets use it...
     if (isset($this->func_scandir) && $this->func_scandir !== NULL && function_exists($this->func_scandir)) {
-      $files = call_user_func($this->func_scandir, $array);
+      $files = call_user_func($this->func_scandir, $dir);
     } else {
       $r = glob($dir.'/*');
       foreach($r as $file) {

@@ -63,7 +63,7 @@
   }
   /** Example implementation of getting pictures from directory. Usefull eg. when you want to skip some of them. */
   function myscandir($dir) {
-    $files = glob($dir.'*.tiff');
+    $files = glob($dir.'/*.tiff');
     return $files;
   }
   /** Example implementation of album sorting. */
