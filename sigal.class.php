@@ -388,7 +388,7 @@ class Sigal {
       echo $this->getImageTitle($f);
       echo '<div class="desc">';
       echo date($this->date_format, filemtime($f));
-      echo '<div class="infbutton"><a href="?foto='.urlencode($f).'#tab-base"><img src="?static=info" alt="Detailed info" title="Detailed info (EXIF, GPS)" /></a></div>';
+      echo '<div class="infbutton"><a href="?foto='.urlencode($bn).'#tab-base"><img src="?static=info" alt="Detailed info" title="Detailed info (EXIF, GPS)" /></a></div>';
       echo '<div class="infbutton"><a href="'.$f.'#t"><img src="?static=download" alt="Download" title="Download full size" /></a></div>';
       if ($this->enable_mass_download) {
         echo '<div class="infbutton"><input type="checkbox" name="i[]" value="'.$f.'" onClick="addToDownload(\''.$f.'\')" title="+/- to multiple download" /></div>';
