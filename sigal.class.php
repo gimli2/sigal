@@ -49,13 +49,13 @@ class Sigal {
   public $html_tail = '</body></html>';
   /*========================================================================*/
   /** Array of file extensions for scanning in directiories. */
-  public $exts = array('jpg','jpeg','png','gif','bmp','tif','tiff','svg','swf','flv','mp4', 'mp3');
+  public $exts = array('jpg','jpeg','png','gif','bmp','tif','tiff','svg','swf','flv','mp4', 'mp3','mts','mov');
   /** Array of file extensions for which we are able to generate thumbnail. */
   public $extsIcon = array('jpg','jpeg','png', 'gif', 'bmp');
   /** Array of file extensions with EXIF informations. */
   public $extsExif = array('jpg','jpeg','tif','tiff');
   /** Array of file extensions for videofiles. */
-  public $extsVideo = array('swf','flv','mp4');
+  public $extsVideo = array('swf','flv','mp4','mts','mov');
   /** Array of file extensions for audio files. */
   public $extsAudio = array('mp3');
   /** Default mime type. It is used when automated recognition fails. */
@@ -64,6 +64,8 @@ class Sigal {
   public $avMime = array(
     'mp3' => 'audio/mpeg',
     'mp4' => 'video/mp4',
+    'mts' => 'video/mts',
+    'mov' => 'video/quicktime',
     'swf' => 'application/x-shockwave-flash',
     'flv' => 'video/x-flv'
   );
@@ -295,7 +297,10 @@ class Sigal {
       $bn = $this->basepathname($f);
       $middle = $this->getMiddleName($f);
       echo '<div class="foto-thumb">';
-      if ($middle===$this->defaultIcon || file_exists($middle)) {
+      $ext = strtolower($this->getExt($f));
+      if($ext !== "mp4" && isset($this->func_avfileplay) && in_array($ext, $this->extsVideo)) {
+          echo '<a href="?avfile='.$this->basepathname($f).'" title="'.$bn.'">';
+      } else if ($middle===$this->defaultIcon || file_exists($middle)) {
         if ($middle===$this->defaultIcon) {
           if (is_dir($f)) {
             echo '<a href="?alb='.urlencode($bn).'" title="'.$bn.'">';
@@ -459,6 +464,19 @@ class Sigal {
     echo '</div>';
     echo '</div>';
     echo $this->html_tail;
+  }
+  /*========================================================================*/
+  /**
+   * @brief Shows video.
+   * @param string $f path to video.
+   */
+  public function showVideo($f) {
+    $f = $this->dir . '/' . urldecode($f);
+    $f=$this->sanitizePath($f);
+    if (isset($this->func_avfileplay) && $this->func_avfileplay !== NULL && function_exists($this->func_avfileplay)) {
+        $group = call_user_func($this->func_avfileplay, $f);
+    }
+    header('Status: 404 Not Found');
   }
   /*========================================================================*/
   /**
@@ -688,7 +706,7 @@ class Sigal {
   private function getMiddleName($file) {
     // is given file iconificable?
     $ext = strtolower($this->getExt($file));
-    if (in_array($ext, $this->extsIcon)) {
+    if (in_array($ext, $this->extsIcon) && !in_array($ext, $this->extsVideo)) {
       $md5 = MD5($file.$this->middle_x);
       $targetDir = $this->cache.'/'.substr($md5,0,1).'/';
       $targetImagePath = $targetDir.$md5.".jpg";
@@ -823,12 +841,20 @@ class Sigal {
     $md5 = MD5($path.$max_x);
     $targetDir = $this->cache.'/'.substr($md5,0,1).'/';
     $targetImagePath = $targetDir.$md5.".jpg";
+    $targetImageTempPath = $targetDir.$md5."-tmp.jpg";
     $outputImageQuality = 80;
 
     if (!file_exists($targetDir)) mkdir($targetDir);
 
     /* Check if file is already cached, if so just deliver existing image */
     if(!file_exists($targetImagePath)) {
+      $ext = strtolower($this->getExt($sourceImagePath));
+
+      if(isset($this->func_videoimage) && $this->func_videoimage !== NULL && function_exists($this->func_videoimage) && in_array($ext, $this->extsVideo)) {
+        $group = call_user_func($this->func_videoimage, $path, $targetImageTempPath);
+        $sourceImagePath = $targetImageTempPath;
+        $ext = 'jpg';
+      }
 
       /* MAIN RESIZING SCRIPT */
 
@@ -937,7 +963,6 @@ class Sigal {
       }
 
       /* Do Conversion */
-      $ext = strtolower($this->getExt($path));
       switch ($ext) {
         case 'jpg':
         case 'jpeg':
@@ -955,6 +980,9 @@ class Sigal {
         default:
           $originalImage = imagecreatefromjpeg($sourceImagePath);
         break;
+      }
+      if($sourceImagePath === $targetImageTempPath) {
+        unlink($sourceImagePath);
       }
       $newImage = ImageCreateTrueColor($new_x, $new_y);
       ImageCopyResampled ($newImage, $originalImage, 0, 0, $srcx, $srcy, $new_x, $new_y, $srcw, $srch);
