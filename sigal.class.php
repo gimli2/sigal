@@ -42,11 +42,7 @@ class Sigal {
   /** Title of whole gallery. */
   public $galTitle = 'SiGal gallery';
   /** String shown in bottom of each page. Designed to some words about legal use of photos. */
-  public $legal_notice = 'No photos can be distributted without written permission of their author (<a href="http://gimli2.gipix.net">Gimli2</a>).';
-  /** HTML head of each page of gallery. You can use string "{title}" which will be replaced by title of gallery defined above. */
-  public $html_head = '<!DOCTYPE html><head><title>{title}</title></head><body>';
-  /** HTML tail of each page of galllery. */
-  public $html_tail = '</body></html>';
+  public $legal_notice = 'No photos can be distributted without written permission of their author.';
   /*========================================================================*/
   /** Array of file extensions for scanning in directiories. */
   public $exts = array('jpg','jpeg','png','gif','bmp','tif','tiff','svg','swf','flv','mp4', 'mp3','mts','mov');
@@ -85,6 +81,70 @@ class Sigal {
   /** Array of usernames which have access to given album. */
   private $validusers = array();
   /*========================================================================*/
+
+/** HTML head of each page of gallery. You can use string "{title}" which will be replaced by title of gallery defined above. */
+  public $html_head = '<!DOCTYPE html><head><title>{title}</title>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<meta name="author" content="Gimli2; http://gimli2.gipix.net" />
+<link rel="shotcut icon" href="./images/favicon.png" />
+<link rel="stylesheet" href="./css/style.css" type="text/css" />
+<!--OWNCSS-->
+<link rel="stylesheet" href="./modules/ceebox/css/ceebox-min-static-img.css" type="text/css" media="screen" />
+<!--GAJS-->
+<script type="text/javascript" src="./js/sigal.min.js"></script>
+<script type="text/javascript" src="./modules/ceebox/js/ceeboxall.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(
+	   function(){
+	       $(".fotos").ceebox({imageGallery:true,image:true,html:false,video:true,videoGallery:true});
+
+          //show first when page loads...
+        	$(".tab_content").hide();
+        	$("ul.tabs li:first").addClass("active").show();
+        	$(".tab_content:first").show();
+
+          var activeTab = window.location.hash;
+          if (activeTab=="") {
+            if(typeof(sessionStorage) !== "undefined") {
+                activeTab = sessionStorage.getItem("lasttab");
+                if (activeTab == null) activeTab = "";
+            }
+          }
+          if (activeTab!="") {
+              $("ul.tabs li").removeClass("active");
+              $(".tab_content").hide();
+              $("ul.tabs li").each(function(index) {
+                  x = $(this).find("a").attr("href");
+                  if (x == activeTab) {
+                      $(this).addClass("active");
+                  }
+              });
+              $(activeTab).show();
+          }
+
+        	//On Click Event
+        	$("ul.tabs li").click(function() {
+        		$("ul.tabs li").removeClass("active");
+        		$(this).addClass("active");
+        		$(".tab_content").hide();
+        		var activeTab = $(this).find("a").attr("href");
+        		$(activeTab).show();
+            window.location.hash = activeTab;
+            if(typeof(sessionStorage) !== "undefined") sessionStorage.setItem("lasttab", activeTab);
+        		return false;
+        	});
+		}
+	);
+</script></head><body>';
+
+  /*========================================================================*/
+  /** HTML tail of each page of galllery. */
+  public $html_tail = '<div id="credits"><!--LEGALNOTICE--><br />
+	Powered by <a href="http://gimli2.gipix.net/sigal/">SiGal</a> |
+	<a href="?credits">Credits &amp; info</a>
+	</div>
+	</body></html>';
+  /*========================================================================*/
   /*========================================================================*/
   /*========================================================================*/
   /**
@@ -92,9 +152,6 @@ class Sigal {
    * @returns An instance of SiGal class.
    */
   function __construct() {
-    // config of HTML head and tail
-    include_once 'html_head.php';
-    include_once 'html_tail.php';
     // check whether ownstyle.css exists, if yes - use it
     $ownstyle_replacement = '';
     if (file_exists('./ownstyle.css')) {
