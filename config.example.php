@@ -25,6 +25,10 @@
   $conf['legal_notice'] = 'No photos can be distributted without written permission of their author (<a href="http://gimli2.gipix.net">Gimli2</a>).';
   /** Flag to enable function of mass download. */
   $conf['enable_mass_download'] = false;
+  /** Flag to show EXIF info in image details. */
+  $conf['show_exif_tab'] = true;
+  /** Flag to show GPS info in image details. */
+  $conf['show_gps_tab'] = true;
   /*==========================================================================*/
   /** You can provide own callback function redefine mapping directory name to album name. Function takes a string as 1st argument and returns final string name. */
   $conf['func_albumname'] = '';

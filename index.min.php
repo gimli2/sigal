@@ -110,11 +110,13 @@ class Sigal {
   
   public $galTitle = 'SiGal gallery';
   
-  public $legal_notice = 'No photos can be distributted without written permission of their author (<a href="http://gimli2.gipix.net">Gimli2</a>).';
+  public $legal_notice = 'No photos can be distributted without written permission of their author.';
   
-  public $html_head = '<!DOCTYPE html><head><title>{title}</title></head><body>';
+  public $enable_mass_download = true;
   
-  public $html_tail = '</body></html>';
+  public $show_exif_tab = true;
+  
+  public $show_gps_tab = true;
   
   
   public $exts = array('jpg','jpeg','png','gif','bmp','tif','tiff','svg','swf','flv','mp4', 'mp3','mts','mov');
@@ -153,12 +155,9 @@ class Sigal {
   
   private $validusers = array();
   
-  
-  
-  
-  function __construct() {
-        
-$this->html_head = '<!DOCTYPE html><head><title>{title}</title>
+
+
+  public $html_head = '<!DOCTYPE html><head><title>{title}</title>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 <meta name="author" content="Gimli2; http://gimli2.gipix.net" />
 <link rel="shotcut icon" href="?static=favicon" />
@@ -169,11 +168,10 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
 <script type="text/javascript" src="?static=sigal.min"></script>
 <script type="text/javascript" src="?static=ceeboxall.min"></script>
 <script type="text/javascript">
-
 	$(document).ready(
 	   function(){
 	       $(".fotos").ceebox({imageGallery:true,image:true,html:false,video:true,videoGallery:true});
-		
+
           //show first when page loads...
         	$(".tab_content").hide();
         	$("ul.tabs li:first").addClass("active").show();
@@ -210,18 +208,22 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
         		return false;
         	});
 		}
-        
 	);
 </script></head><body>';
 
-
-	$this->html_tail = '<div id="credits"><!--LEGALNOTICE--><br /> 
-	Powered by <a href="http://gimli2.gipix.net/sigal/">SiGal</a> | 
+  
+  
+  public $html_tail = '<div id="credits"><!--LEGALNOTICE--><br />
+	Powered by <a href="http://gimli2.gipix.net/sigal/">SiGal</a> |
 	<a href="?credits">Credits &amp; info</a>
 	</div>
 	</body></html>';
-
-    $ownstyle_replacement = '';
+  
+  
+  
+  
+  function __construct() {
+        $ownstyle_replacement = '';
     if (file_exists('./ownstyle.css')) {
       $ownstyle_replacement =  '<link rel="stylesheet" href="./ownstyle.css" type="text/css" />'."\n";
       $this->html_head = str_replace('<!--OWNCSS-->', $ownstyle_replacement, $this->html_head);
@@ -377,9 +379,11 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
     echo '</div>';
     echo '<div class="header">Navigation: ';
     echo '<a href="?alb='.urlencode($this->getparentdir($aname)).'">Back to album selection</a>';
-    echo ' | Functions: ';
-    echo '<a href="?#" onClick="javascript:dowloadselected(); return false;">Download selected images (<span id="multipledownloadlinkcnt">0</span>)</a>';
-    echo ', <a href="?#" onClick="javascript:toggleAllCheckboxes(); return false;">toggle all</a>';
+    if ($this->enable_mass_download) {
+      echo ' | Functions: ';
+      echo '<a href="?#" onClick="javascript:dowloadselected(); return false;">Download selected images (<span id="multipledownloadlinkcnt">0</span>)</a>';
+      echo ', <a href="?#" onClick="javascript:toggleAllCheckboxes(); return false;">toggle all</a>';
+    }
     echo '</div>';
 
     
@@ -424,9 +428,11 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
       echo $this->getImageTitle($f);
       echo '<div class="desc">';
       echo date($this->date_format, filemtime($f));
-      echo '<div class="infbutton"><a href="?foto='.urlencode($f).'#tab-base"><img src="?static=info" alt="Detailed info" title="Detailed info (EXIF, GPS)" /></a></div>';
+      echo '<div class="infbutton"><a href="?foto='.urlencode($bn).'#tab-base"><img src="?static=info" alt="Detailed info" title="Detailed info (EXIF, GPS)" /></a></div>';
       echo '<div class="infbutton"><a href="'.$f.'#t"><img src="?static=download" alt="Download" title="Download full size" /></a></div>';
-      echo '<div class="infbutton"><input type="checkbox" name="i[]" value="'.$f.'" onClick="addToDownload(\''.$f.'\')" title="+/- to multiple download" /></div>';
+      if ($this->enable_mass_download) {
+        echo '<div class="infbutton"><input type="checkbox" name="i[]" value="'.$f.'" onClick="addToDownload(\''.$f.'\')" title="+/- to multiple download" /></div>';
+      }
       echo '</div>';
       echo '</div>'."\n";
       ob_flush();
@@ -440,7 +446,7 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
   
   public function showImage($f) {
     $f = $this->dir . '/' . $this->sanitizePath(urldecode($f));
-    $bn=$this->basepathname($f);
+    $bn = $this->basepathname($f);
 
         $lf = substr($f, 0, -1*strlen($bn)).$this->lockfname;
     if (file_exists($lf)) {
@@ -487,8 +493,8 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
     
     echo '<ul class="tabs">';
     echo '  <li><a href="#tab-base">Base info</a></li>';
-    echo '  <li><a href="#tab-exif">EXIF details</a></li>';
-    echo '  <li><a href="#tab-gps">GPS</a></li>';
+    if ($this->show_exif_tab) echo '  <li><a href="#tab-exif">EXIF details</a></li>';
+    if ($this->show_gps_tab)  echo '  <li><a href="#tab-gps">GPS</a></li>';
     echo '</ul>';
     
     echo '<div id="tab-base" class="tab_content">';
@@ -500,54 +506,61 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
 
         if (in_array($ext, $this->extsExif)) {
       $exif=exif_read_data($f);
-      echo '<div id="tab-exif" class="tab_content">';
-      echo '<div class="tab_inner_content">';
-      echo '<ul>';
-      echo '<li>date: <strong>'.$exif['DateTimeOriginal'].'</strong></li>';
-      echo '<li>orig. filesize: <strong>'.round($exif['FileSize']/(1024*1024),2).' MB</strong></li>';
-      echo '<li>orig. size: <strong>'.$exif['COMPUTED']['Width'].'*'.$exif['COMPUTED']['Height'].' px</strong></li>';
-      echo '<li>exposition: '.$exif['ExposureTime'].' s</li>';
-      echo '<li>ISO: '.$exif['ISOSpeedRatings'].'</li>';
-      echo '<li>Anum: '.$exif['COMPUTED']['ApertureFNumber'].'</li>';
-      echo '<li>FocalLength: '.$exif['FocalLength'].' mm</li>';
-      echo '<li>Orientation: '.$exif['Orientation'].'</li>';
-      echo '<li>Camera model: '.$exif['Model'].'</li>';
-      echo '</ul>';
-      echo '</div>';
-      echo '</div>';
-
-            echo '<div id="tab-gps" class="tab_content">';
-      echo '<div class="tab_inner_content">';
-      if ($this->hasGPSData($exif)) {
-        $gps = $this->getGPSLatLon($exif);
-        $hgps = $this->getHumanGPS($gps[0], $gps[1]);
-        echo '<h2>'.$hgps['lat'].', '.$hgps['lon'].'</h2>';
-        echo '<a href="http://mapy.cz/#t=s&q='.urlencode($gps[0].', '.$gps[1]).'">mapy.cz</a><br />';
-        echo '<a href="http://maps.google.cz/maps?q='.urlencode($gps[0].', '.$gps[1]).'">maps.google.com</a><br /><br />';
-        echo '<div class="gps-container">';
-        echo '<div>';
-        echo '<img src="http://pafciu17.dev.openstreetmap.org/?module=map&center='.$gps[1].','.$gps[0].',&zoom=13&type=mapnik&width=240&height=240&points='.$gps[1].','.$gps[0].',pointImagePattern:red" /><br class="clall">';
+      if ($this->show_exif_tab) {
+        echo '<div id="tab-exif" class="tab_content">';
+        echo '<div class="tab_inner_content">';
+        echo '<ul>';
+        echo '<li>date: <strong>'.$exif['DateTimeOriginal'].'</strong></li>';
+        echo '<li>orig. filesize: <strong>'.round($exif['FileSize']/(1024*1024),2).' MB</strong></li>';
+        echo '<li>orig. size: <strong>'.$exif['COMPUTED']['Width'].'*'.$exif['COMPUTED']['Height'].' px</strong></li>';
+        echo '<li>exposition: '.$exif['ExposureTime'].' s</li>';
+        echo '<li>ISO: '.$exif['ISOSpeedRatings'].'</li>';
+        echo '<li>Anum: '.$exif['COMPUTED']['ApertureFNumber'].'</li>';
+        echo '<li>FocalLength: '.$exif['FocalLength'].' mm</li>';
+        echo '<li>Orientation: '.$exif['Orientation'].'</li>';
+        echo '<li>Camera model: '.$exif['Model'].'</li>';
+        echo '</ul>';
         echo '</div>';
-        echo '<div>';
-        echo '<img src="http://ojw.dev.openstreetmap.org/StaticMap/?lat='.$gps[0].'&lon='.$gps[1].'&z=10&w=240&h=240&layer=hiking&mode=Add+icon&mlat0='.$gps[0].'&mlon0='.$gps[1].'&show=1" /><br class="clall">';
         echo '</div>';
-        echo '<div>';
-        echo '<img src="http://ojw.dev.openstreetmap.org/StaticMap/?lat='.$gps[0].'&lon='.$gps[1].'&z=13&w=240&h=240&layer=hiking&mode=Add+icon&mlat0='.$gps[0].'&mlon0='.$gps[1].'&show=1" /><br class="clall">';
-        echo '</div>';  
-        echo '</div>';
-      }  else {
-        echo 'No GPS data.';
       }
-      echo '</div>';
-      echo '</div>';
-      
+
+      if ($this->show_gps_tab) {
+                echo '<div id="tab-gps" class="tab_content">';
+        echo '<div class="tab_inner_content">';
+        if ($this->hasGPSData($exif)) {
+          $gps = $this->getGPSLatLon($exif);
+          $hgps = $this->getHumanGPS($gps[0], $gps[1]);
+          echo '<h2>'.$hgps['lat'].', '.$hgps['lon'].'</h2>';
+          echo '<a href="http://mapy.cz/#t=s&q='.urlencode($gps[0].', '.$gps[1]).'">mapy.cz</a><br />';
+          echo '<a href="http://maps.google.cz/maps?q='.urlencode($gps[0].', '.$gps[1]).'">maps.google.com</a><br /><br />';
+          echo '<div class="gps-container">';
+          echo '<div>';
+          echo '<img src="http://pafciu17.dev.openstreetmap.org/?module=map&center='.$gps[1].','.$gps[0].',&zoom=13&type=mapnik&width=240&height=240&points='.$gps[1].','.$gps[0].',pointImagePattern:red" /><br class="clall">';
+          echo '</div>';
+          echo '<div>';
+          echo '<img src="http://ojw.dev.openstreetmap.org/StaticMap/?lat='.$gps[0].'&lon='.$gps[1].'&z=10&w=240&h=240&layer=hiking&mode=Add+icon&mlat0='.$gps[0].'&mlon0='.$gps[1].'&show=1" /><br class="clall">';
+          echo '</div>';
+          echo '<div>';
+          echo '<img src="http://ojw.dev.openstreetmap.org/StaticMap/?lat='.$gps[0].'&lon='.$gps[1].'&z=13&w=240&h=240&layer=hiking&mode=Add+icon&mlat0='.$gps[0].'&mlon0='.$gps[1].'&show=1" /><br class="clall">';
+          echo '</div>';
+          echo '</div>';
+        }  else {
+          echo 'No GPS data.';
+        }
+        echo '</div>';
+        echo '</div>';
+      }
     } else {
-            echo '<div id="tab-exif" class="tab_content">';
-      echo 'No EXIF data.';
-      echo '</div>';
-      echo '<div id="tab-gps" class="tab_content">';
-      echo 'No GPS data.';
-      echo '</div>';
+            if ($this->show_exif_tab) {
+        echo '<div id="tab-exif" class="tab_content">';
+        echo 'No EXIF data.';
+        echo '</div>';
+      }
+      if ($this->show_gps_tab) {
+        echo '<div id="tab-gps" class="tab_content">';
+        echo 'No GPS data.';
+        echo '</div>';
+      }
     }
     echo '</div>';
     echo '</div>';
@@ -557,7 +570,7 @@ $this->html_head = '<!DOCTYPE html><head><title>{title}</title>
   
   public function showVideo($f) {
     $f = $this->dir . '/' . urldecode($f);
-    $f=$this->sanitizePath($f);
+    $f = $this->sanitizePath($f);
     if (isset($this->func_avfileplay) && $this->func_avfileplay !== NULL && function_exists($this->func_avfileplay)) {
         $group = call_user_func($this->func_avfileplay, $f);
     }
@@ -1482,6 +1495,7 @@ $gg = new Sigal();
   $conf = array();
   if (file_exists('./config.php')) include './config.php';
   $kws = array('dir', 'cache', 'defaultIcon', 'icotitlefname', 'lockfname', 'thumb_x', 'thumb_y', 'middle_x', 'imgTitleLen', 'galTitle', 'legal_notice', 'date_format',
+          'enable_mass_download', 'show_exif_tab', 'show_gps_tab',
           'func_sortimages', 'func_sortalbums', 'func_scandir', 'func_albumname', 'func_groupname', 'func_getalbums', 'func_videoimage', 'func_avfileplay');
   foreach ($kws as $item) {
     if (isset($conf[$item])) $gg->$item = $conf[$item];

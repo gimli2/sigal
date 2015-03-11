@@ -45,6 +45,10 @@ class Sigal {
   public $legal_notice = 'No photos can be distributted without written permission of their author.';
   /** Flag to enable function of mass download. */
   public $enable_mass_download = true;
+  /** Flag to show EXIF info in image details. */
+  public $show_exif_tab = true;
+  /** Flag to show GPS info in image details. */
+  public $show_gps_tab = true;
   /*========================================================================*/
   /** Array of file extensions for scanning in directiories. */
   public $exts = array('jpg','jpeg','png','gif','bmp','tif','tiff','svg','swf','flv','mp4', 'mp3','mts','mov');
@@ -459,8 +463,8 @@ class Sigal {
     
     echo '<ul class="tabs">';
     echo '  <li><a href="#tab-base">Base info</a></li>';
-    echo '  <li><a href="#tab-exif">EXIF details</a></li>';
-    echo '  <li><a href="#tab-gps">GPS</a></li>';
+    if ($this->show_exif_tab) echo '  <li><a href="#tab-exif">EXIF details</a></li>';
+    if ($this->show_gps_tab)  echo '  <li><a href="#tab-gps">GPS</a></li>';
     echo '</ul>';
     
     echo '<div id="tab-base" class="tab_content">';
@@ -473,56 +477,63 @@ class Sigal {
     // EXIF
     if (in_array($ext, $this->extsExif)) {
       $exif=exif_read_data($f);
-      echo '<div id="tab-exif" class="tab_content">';
-      echo '<div class="tab_inner_content">';
-      echo '<ul>';
-      echo '<li>date: <strong>'.$exif['DateTimeOriginal'].'</strong></li>';
-      echo '<li>orig. filesize: <strong>'.round($exif['FileSize']/(1024*1024),2).' MB</strong></li>';
-      echo '<li>orig. size: <strong>'.$exif['COMPUTED']['Width'].'*'.$exif['COMPUTED']['Height'].' px</strong></li>';
-      echo '<li>exposition: '.$exif['ExposureTime'].' s</li>';
-      echo '<li>ISO: '.$exif['ISOSpeedRatings'].'</li>';
-      echo '<li>Anum: '.$exif['COMPUTED']['ApertureFNumber'].'</li>';
-      echo '<li>FocalLength: '.$exif['FocalLength'].' mm</li>';
-      echo '<li>Orientation: '.$exif['Orientation'].'</li>';
-      echo '<li>Camera model: '.$exif['Model'].'</li>';
-      echo '</ul>';
-      echo '</div>';
-      echo '</div>';
-
-      // GPS
-      echo '<div id="tab-gps" class="tab_content">';
-      echo '<div class="tab_inner_content">';
-      if ($this->hasGPSData($exif)) {
-        $gps = $this->getGPSLatLon($exif);
-        $hgps = $this->getHumanGPS($gps[0], $gps[1]);
-        echo '<h2>'.$hgps['lat'].', '.$hgps['lon'].'</h2>';
-        echo '<a href="http://mapy.cz/#t=s&q='.urlencode($gps[0].', '.$gps[1]).'">mapy.cz</a><br />';
-        echo '<a href="http://maps.google.cz/maps?q='.urlencode($gps[0].', '.$gps[1]).'">maps.google.com</a><br /><br />';
-        echo '<div class="gps-container">';
-        echo '<div>';
-        echo '<img src="http://pafciu17.dev.openstreetmap.org/?module=map&center='.$gps[1].','.$gps[0].',&zoom=13&type=mapnik&width=240&height=240&points='.$gps[1].','.$gps[0].',pointImagePattern:red" /><br class="clall">';
+      if ($this->show_exif_tab) {
+        echo '<div id="tab-exif" class="tab_content">';
+        echo '<div class="tab_inner_content">';
+        echo '<ul>';
+        echo '<li>date: <strong>'.$exif['DateTimeOriginal'].'</strong></li>';
+        echo '<li>orig. filesize: <strong>'.round($exif['FileSize']/(1024*1024),2).' MB</strong></li>';
+        echo '<li>orig. size: <strong>'.$exif['COMPUTED']['Width'].'*'.$exif['COMPUTED']['Height'].' px</strong></li>';
+        echo '<li>exposition: '.$exif['ExposureTime'].' s</li>';
+        echo '<li>ISO: '.$exif['ISOSpeedRatings'].'</li>';
+        echo '<li>Anum: '.$exif['COMPUTED']['ApertureFNumber'].'</li>';
+        echo '<li>FocalLength: '.$exif['FocalLength'].' mm</li>';
+        echo '<li>Orientation: '.$exif['Orientation'].'</li>';
+        echo '<li>Camera model: '.$exif['Model'].'</li>';
+        echo '</ul>';
         echo '</div>';
-        echo '<div>';
-        echo '<img src="http://ojw.dev.openstreetmap.org/StaticMap/?lat='.$gps[0].'&lon='.$gps[1].'&z=10&w=240&h=240&layer=hiking&mode=Add+icon&mlat0='.$gps[0].'&mlon0='.$gps[1].'&show=1" /><br class="clall">';
         echo '</div>';
-        echo '<div>';
-        echo '<img src="http://ojw.dev.openstreetmap.org/StaticMap/?lat='.$gps[0].'&lon='.$gps[1].'&z=13&w=240&h=240&layer=hiking&mode=Add+icon&mlat0='.$gps[0].'&mlon0='.$gps[1].'&show=1" /><br class="clall">';
-        echo '</div>';  
-        echo '</div>';
-      }  else {
-        echo 'No GPS data.';
       }
-      echo '</div>';
-      echo '</div>';
-      
+
+      if ($this->show_gps_tab) {
+        // GPS
+        echo '<div id="tab-gps" class="tab_content">';
+        echo '<div class="tab_inner_content">';
+        if ($this->hasGPSData($exif)) {
+          $gps = $this->getGPSLatLon($exif);
+          $hgps = $this->getHumanGPS($gps[0], $gps[1]);
+          echo '<h2>'.$hgps['lat'].', '.$hgps['lon'].'</h2>';
+          echo '<a href="http://mapy.cz/#t=s&q='.urlencode($gps[0].', '.$gps[1]).'">mapy.cz</a><br />';
+          echo '<a href="http://maps.google.cz/maps?q='.urlencode($gps[0].', '.$gps[1]).'">maps.google.com</a><br /><br />';
+          echo '<div class="gps-container">';
+          echo '<div>';
+          echo '<img src="http://pafciu17.dev.openstreetmap.org/?module=map&center='.$gps[1].','.$gps[0].',&zoom=13&type=mapnik&width=240&height=240&points='.$gps[1].','.$gps[0].',pointImagePattern:red" /><br class="clall">';
+          echo '</div>';
+          echo '<div>';
+          echo '<img src="http://ojw.dev.openstreetmap.org/StaticMap/?lat='.$gps[0].'&lon='.$gps[1].'&z=10&w=240&h=240&layer=hiking&mode=Add+icon&mlat0='.$gps[0].'&mlon0='.$gps[1].'&show=1" /><br class="clall">';
+          echo '</div>';
+          echo '<div>';
+          echo '<img src="http://ojw.dev.openstreetmap.org/StaticMap/?lat='.$gps[0].'&lon='.$gps[1].'&z=13&w=240&h=240&layer=hiking&mode=Add+icon&mlat0='.$gps[0].'&mlon0='.$gps[1].'&show=1" /><br class="clall">';
+          echo '</div>';
+          echo '</div>';
+        }  else {
+          echo 'No GPS data.';
+        }
+        echo '</div>';
+        echo '</div>';
+      }
     } else {
       // no exif
-      echo '<div id="tab-exif" class="tab_content">';
-      echo 'No EXIF data.';
-      echo '</div>';
-      echo '<div id="tab-gps" class="tab_content">';
-      echo 'No GPS data.';
-      echo '</div>';
+      if ($this->show_exif_tab) {
+        echo '<div id="tab-exif" class="tab_content">';
+        echo 'No EXIF data.';
+        echo '</div>';
+      }
+      if ($this->show_gps_tab) {
+        echo '<div id="tab-gps" class="tab_content">';
+        echo 'No GPS data.';
+        echo '</div>';
+      }
     }
     echo '</div>';
     echo '</div>';
