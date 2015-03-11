@@ -286,7 +286,7 @@ class Sigal {
 
         echo '<div class="album-thumb">';
         // is locked?
-        if (array_search($a.$this->lockfname, $content)!==FALSE) {
+        if (array_search($a.'/'.$this->lockfname, $content)!==FALSE) {
           echo '<img src="?static=lock" height="32" alt="locked" title="access restricted" class="lock" />';
         }
         echo '<a href="?alb='.$this->urlpathencode($bn).'" title="'.$bn.'">';
@@ -364,12 +364,19 @@ class Sigal {
       echo '<div class="foto-thumb">';
       $ext = strtolower($this->getExt($f));
       if($ext !== "mp4" && isset($this->func_avfileplay) && in_array($ext, $this->extsVideo)) {
-          echo '<a href="?avfile='.$this->basepathname($f).'" title="'.$bn.'">';
+        // some video file may need reencoding if defined
+        echo '<a href="?avfile='.$this->basepathname($f).'" title="'.$bn.'">';
       } else if ($middle===$this->defaultIcon || file_exists($middle)) {
+        // middle size image cannot be obtained or middle size file exists
         if ($middle===$this->defaultIcon) {
           if (is_dir($f)) {
+            // handle hierarchy
+            if (file_exists($f.'/'.$this->lockfname)) {
+              echo '<img src="?static=lock" height="32" alt="locked" title="access restricted" class="lock" />';
+            }
             echo '<a href="?alb='.urlencode($bn).'" title="'.$bn.'">';
           } else {
+            // no middle? -> use full size
             echo '<a href="'.$f.'" title="'.$bn.'">';
           }
         } else {
