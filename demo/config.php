@@ -23,7 +23,8 @@
   $conf['galTitle'] = 'SiGal gallery';
   /** String shown in bottom of each page. Designed to some words about legal use of photos. */
   $conf['legal_notice'] = 'No photos can be distributted without written permission of their author (<a href="http://gimli2.gipix.net">Gimli2</a>).';
-
+  /** Flag to enable function of mass download. */
+  $conf['enable_mass_download'] = false;
   /*==========================================================================*/
   /** You can provide own callback function redefine mapping directory name to album name. Function takes a string as 1st argument and returns final string name. */
   $conf['func_albumname'] = '';
@@ -112,7 +113,7 @@
     $file = "/dev/shm/avfile-".MD5($file0).".mp4";
 
     foreach (glob("/dev/shm/avfile-*") as $f) {
-      if (0 != strcmp($f, $file) && filemtime($f) < time() - 360) {
+      if (($f !== $file) && filemtime($f) < time() - 360) {
         unlink($f);
       }
     }

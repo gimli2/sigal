@@ -43,6 +43,8 @@ class Sigal {
   public $galTitle = 'SiGal gallery';
   /** String shown in bottom of each page. Designed to some words about legal use of photos. */
   public $legal_notice = 'No photos can be distributted without written permission of their author.';
+  /** Flag to enable function of mass download. */
+  public $enable_mass_download = true;
   /*========================================================================*/
   /** Array of file extensions for scanning in directiories. */
   public $exts = array('jpg','jpeg','png','gif','bmp','tif','tiff','svg','swf','flv','mp4', 'mp3','mts','mov');
@@ -335,9 +337,11 @@ class Sigal {
     echo '</div>';
     echo '<div class="header">Navigation: ';
     echo '<a href="?alb='.urlencode($this->getparentdir($aname)).'">Back to album selection</a>';
-    echo ' | Functions: ';
-    echo '<a href="?#" onClick="javascript:dowloadselected(); return false;">Download selected images (<span id="multipledownloadlinkcnt">0</span>)</a>';
-    echo ', <a href="?#" onClick="javascript:toggleAllCheckboxes(); return false;">toggle all</a>';
+    if ($this->enable_mass_download) {
+      echo ' | Functions: ';
+      echo '<a href="?#" onClick="javascript:dowloadselected(); return false;">Download selected images (<span id="multipledownloadlinkcnt">0</span>)</a>';
+      echo ', <a href="?#" onClick="javascript:toggleAllCheckboxes(); return false;">toggle all</a>';
+    }
     echo '</div>';
 
     // this automaticly check if album is locked an load usernames&passwords
@@ -386,7 +390,9 @@ class Sigal {
       echo date($this->date_format, filemtime($f));
       echo '<div class="infbutton"><a href="?foto='.urlencode($f).'#tab-base"><img src="?static=info" alt="Detailed info" title="Detailed info (EXIF, GPS)" /></a></div>';
       echo '<div class="infbutton"><a href="'.$f.'#t"><img src="?static=download" alt="Download" title="Download full size" /></a></div>';
-      echo '<div class="infbutton"><input type="checkbox" name="i[]" value="'.$f.'" onClick="addToDownload(\''.$f.'\')" title="+/- to multiple download" /></div>';
+      if ($this->enable_mass_download) {
+        echo '<div class="infbutton"><input type="checkbox" name="i[]" value="'.$f.'" onClick="addToDownload(\''.$f.'\')" title="+/- to multiple download" /></div>';
+      }
       echo '</div>';
       echo '</div>'."\n";
       ob_flush();
@@ -403,7 +409,7 @@ class Sigal {
    */
   public function showImage($f) {
     $f = $this->dir . '/' . $this->sanitizePath(urldecode($f));
-    $bn=$this->basepathname($f);
+    $bn = $this->basepathname($f);
 
     // zamykaci soubor
     $lf = substr($f, 0, -1*strlen($bn)).$this->lockfname;
@@ -529,7 +535,7 @@ class Sigal {
    */
   public function showVideo($f) {
     $f = $this->dir . '/' . urldecode($f);
-    $f=$this->sanitizePath($f);
+    $f = $this->sanitizePath($f);
     if (isset($this->func_avfileplay) && $this->func_avfileplay !== NULL && function_exists($this->func_avfileplay)) {
         $group = call_user_func($this->func_avfileplay, $f);
     }
