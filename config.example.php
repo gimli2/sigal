@@ -112,7 +112,7 @@
     $file = "/dev/shm/avfile-".MD5($file0).".mp4";
 
     foreach (glob("/dev/shm/avfile-*") as $f) {
-      if (0 != strcmp($f, $file) && filemtime($f) < time() - 360) {
+      if (($f !== $file) && filemtime($f) < time() - 360) {
         unlink($f);
       }
     }

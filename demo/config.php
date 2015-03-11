@@ -1,8 +1,8 @@
 <?php
   /** Directory with pictures. */
-  $conf['dir'] = './pictures/';
+  $conf['dir'] = 'pictures';
   /** Directory for caching thumbnails (must be writeable!).*/
-  $conf['cache'] = './cache/';
+  $conf['cache'] = 'cache';
   /** URL to default album and picture icon. May be absolute or relative. */
   $conf['defaultIcon'] = '?static=defico';
   /** Name of file with definition of title image. */
@@ -17,6 +17,8 @@
   $conf['middle_x'] = 800;
   /** Number of characters of shortened image title. */
   $conf['imgTitleLen'] = 16;
+  /** Date format for image/thumbnail display. */
+  $conf['date_format'] = 'Y-m-d';
   /** Title of whole gallery. */
   $conf['galTitle'] = 'SiGal gallery';
   /** String shown in bottom of each page. Designed to some words about legal use of photos. */
@@ -26,17 +28,19 @@
   /** You can provide own callback function redefine mapping directory name to album name. Function takes a string as 1st argument and returns final string name. */
   $conf['func_albumname'] = '';
   /** You can provide own callback function to define your own grouping of albums. */
-  $conf['func_groupname'] = 'onegroup';
+  $conf['func_groupname'] = '';
   /** Callback function for scanning directory for images. You can implement own filters tanks to this function. */
   $conf['func_scandir'] = '';
   /** You can provide own callback function to sorting of albums. Function takes an array as 1st argument and returns sorted array. */
   $conf['func_sortalbums'] = '';
   /** You can provide own callback function to sorting of images. Function takes an array as 1st argument and returns sorted array. */
   $conf['func_sortimages'] = '';
-
-  function onegroup($basename) {
-    return '789';
-  }
+  /** You can provide a callback function to get album/directories for given media extensions */
+  $conf['func_getalbums'] = '';
+  /** Callback function to get image from video (for thumbnail or middle image) */
+  $conf['func_videoimage'] = '';
+  /** Callback function to play video indirectly, perhaps with convert/transcode */
+  $conf['func_avfileplay'] = '';
 
   /** Example implemantation of getting album name/title from name of directory. */
   function myalbumname($basename) {
@@ -57,6 +61,10 @@
     $group = substr($bn, 0, $cutpos);
     return $group;
   }
+  /** Example implementation of album grouping function to use with NO TABS - everything will be in group with empty string in name */
+  function onegroup($basename) {
+    return '';
+  }
   /** Example implementation of getting pictures from directory. Usefull eg. when you want to skip some of them. */
   function myscandir($dir) {
     $files = glob($dir.'/*.tiff');
@@ -71,5 +79,60 @@
   function mysortimages($array) {
     asort($array);
     return  $array;
+  }
+  /* recursive directory iterator handle exceptions. required below.
+     From: http://php.net/manual/en/class.recursivedirectoryiterator.php */
+  class IgnorantRecursiveDirectoryIterator extends RecursiveDirectoryIterator {
+    function getChildren() {
+      try {
+        return new IgnorantRecursiveDirectoryIterator($this->getPathname());
+      } catch(UnexpectedValueException $e) {
+        return new RecursiveArrayIterator(array());
+      }
+    }
+  }
+  /** Example implementation of getalbums. This one recursively finds image/media */
+  function mygetalbums($dir, $exts) {
+    $it = new RecursiveIteratorIterator(new IgnorantRecursiveDirectoryIterator($dir));
+    $it = new RegexIterator($it, '/^.+\.(?:' . join('|',$exts) . ')$/i', RecursiveRegexIterator::GET_MATCH);
+
+    $dirs = array_keys(iterator_to_array($it));
+    $dirs = array_unique(array_map('dirname', $dirs));
+
+    return $dirs;
+  }
+
+  function get_videoimage($video, $image) {
+    exec("avconv -y -v quiet -itsoffset -4 -i $video -vcodec mjpeg -vframes 1 -an -f rawvideo $image");
+  }
+
+  include_once('range_download.php');
+
+  function avfile_play($file0) {
+    $file = "/dev/shm/avfile-".MD5($file0).".mp4";
+
+    foreach (glob("/dev/shm/avfile-*") as $f) {
+      if (0 != strcmp($f, $file) && filemtime($f) < time() - 360) {
+        unlink($f);
+      }
+    }
+
+    if(!file_exists($file)) {
+      exec("avconv -y -i $file0 -c:v copy -c:a aac -strict experimental $file");
+    }
+
+    header("Content-Type: video/mp4");
+
+    if (isset($_SERVER['HTTP_RANGE'])) {
+      touch($file);
+      rangeDownload($file);
+      touch($file);
+    } else {
+      header("Content-Length: ".filesize($file));
+      touch($file);
+      readfile($file);
+      touch($file);
+    }
+    exit;
   }
 ?>

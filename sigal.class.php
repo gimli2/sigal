@@ -984,11 +984,11 @@ class Sigal {
       if($sourceImagePath === $targetImageTempPath) {
         unlink($sourceImagePath);
       }
-      $newImage = ImageCreateTrueColor($new_x, $new_y);
-      ImageCopyResampled ($newImage, $originalImage, 0, 0, $srcx, $srcy, $new_x, $new_y, $srcw, $srch);
-      ImageJPEG ($newImage, $targetImagePath, $outputImageQuality);
-      ImageDestroy($newImage);
-      ImageDestroy($originalImage);
+      $newImage = imagecreatetruecolor($new_x, $new_y);
+      imagecopyresampled($newImage, $originalImage, 0, 0, $srcx, $srcy, $new_x, $new_y, $srcw, $srch);
+      imagejpeg($newImage, $targetImagePath, $outputImageQuality);
+      imagedestroy($newImage);
+      imagedestroy($originalImage);
 
     }
 
