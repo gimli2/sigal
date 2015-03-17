@@ -5,27 +5,42 @@
 
   /*========================================================================*/
   @set_time_limit(120);
-
   include_once 'sigal.class.php';
   include_once 'zipstream.class.php';
+  include_once 'functions.php'; // olny for language switching combobox
+
+  // read $translations array
+  foreach (glob('lang/*.lang.php') as $filename) {
+    include $filename;
+  }
   $gg = new Sigal();
 
+  /*========================================================================*/
   /* load additional configuration */
   $conf = array();
   if (file_exists('./config.php')) include './config.php';
-  $kws = array('dir', 'cache', 'defaultIcon', 'icotitlefname', 'lockfname', 'thumb_x', 'thumb_y', 'middle_x', 'imgTitleLen', 'galTitle', 'legal_notice', 'date_format',
-          'enable_mass_download', 'show_exif_tab', 'show_gps_tab',
-          'func_sortimages', 'func_sortalbums', 'func_scandir', 'func_albumname', 'func_groupname', 'func_getalbums', 'func_videoimage', 'func_avfileplay');
+  $kws = array(
+    'dir', 'cache', 'defaultIcon', 'icotitlefname', 'lockfname', 'thumb_x', 'thumb_y', 'middle_x', 'imgTitleLen', 'galTitle', 'legal_notice', 'date_format',
+    'enable_mass_download', 'show_exif_tab', 'show_gps_tab',
+    'func_sortimages', 'func_sortalbums', 'func_scandir', 'func_albumname', 'func_groupname', 'func_getalbums', 'func_videoimage', 'func_avfileplay'
+  );
   foreach ($kws as $item) {
     if (isset($conf[$item])) $gg->$item = $conf[$item];
   }
-  if(isset($gg->func_videoimage)) {
+  // PROBABLY BROKES getThumb()
+  // assume, that we are capable to get thumbnails for video
+  if(isset($gg->func_videoimage) && $gg->func_videoimage!=='') {
     $gg->extsIcon = array_merge($gg->extsIcon, $gg->extsVideo);
   }
   /*========================================================================*/
-  /**
-   * Display credit page.
-   */
+  if (isset($_POST["lang"])) {
+  	$gg->cookie("sigal_lang", $_POST["lang"]);
+    $loc = $gg->remove_from_uri();
+    $loc = ($loc !== '') ? $loc : '.';
+  	header("Location: ".$loc);
+  	die();
+  }
+  /*========================================================================*/
   if (isset($_GET['credits'])) {
     $gg->showCreditPage();
     die();

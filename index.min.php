@@ -77,7 +77,6 @@
 
   
   @set_time_limit(120);
-
   
 
 
@@ -151,6 +150,12 @@ class Sigal {
   public $func_groupname = NULL;
 
   
+  public $langs = array(
+  	'en' => 'English',   	'cs' => 'Čeština',   );
+  
+  public $LANG = 'en';
+  
+  
   private $islocked = false;
   
   private $validusers = array();
@@ -215,14 +220,17 @@ class Sigal {
   
   public $html_tail = '<div id="credits"><!--LEGALNOTICE--><br />
 	Powered by <a href="http://gimli2.gipix.net/sigal/">SiGal</a> |
-	<a href="?credits">Credits &amp; info</a>
+	<a href="?credits">Settings &amp; info</a>
 	</div>
 	</body></html>';
   
   
   
   
+  
   function __construct() {
+    $this->detect_lang();
+
         $ownstyle_replacement = '';
     if (file_exists('./ownstyle.css')) {
       $ownstyle_replacement =  '<link rel="stylesheet" href="./ownstyle.css" type="text/css" />'."\n";
@@ -232,7 +240,7 @@ class Sigal {
       $gajs_replacement =  '<script type="text/javascript" src="./ga.js"></script>'."\n";
       $this->html_head = str_replace('<!--GAJS-->', $gajs_replacement, $this->html_head);
     }
-        $this->html_tail = str_replace('<!--LEGALNOTICE-->', $this->legal_notice, $this->html_tail);
+        $this->html_tail = str_replace('<!--LEGALNOTICE-->', $this->legal_notice.'<br/> lang='.$this->LANG, $this->html_tail);
   }
   
   
@@ -282,7 +290,7 @@ class Sigal {
     $albs = $this->getAlbums($albtop);
     
     if ($albtop!==NULL) {
-        echo '<div class="header">Navigation: ';
+        echo '<div class="header">'.lang('Navigation').': ';
         echo '<a href="?alb='.urlencode($this->getparentdir($aname)).'">Back to parent album</a>';
         echo ' | <a href="?">Back to top level</a>';
         echo '</div>';
@@ -351,7 +359,7 @@ class Sigal {
     }
 
     if ($albtop!==NULL) {
-        echo '<div class="footer">Navigation: ';
+        echo '<div class="footer">'.lang('Navigation').': ';
         echo '<a href="?alb='.urlencode($this->getparentdir($aname)).'" onclick="history.back();">Back to parent album</a>';
         echo ' | <a href="?">Back to top level</a>';
         echo '</div>';
@@ -377,8 +385,8 @@ class Sigal {
     echo '<div class="header">';
     echo '<h1>'.$this->galTitle.': '.$aname.'</h1>';
     echo '</div>';
-    echo '<div class="header">Navigation: ';
-    echo '<a href="?alb='.urlencode($this->getparentdir($aname)).'">Back to album selection</a>';
+    echo '<div class="header">'.$this->lang('Navigation').': ';
+    echo '<a href="?alb='.urlencode($this->getparentdir($aname)).'">'.$this->lang('Back to album selection').'</a>';
     if ($this->enable_mass_download) {
       echo ' | Functions: ';
       echo '<a href="?#" onClick="javascript:dowloadselected(); return false;">Download selected images (<span id="multipledownloadlinkcnt">0</span>)</a>';
@@ -442,7 +450,7 @@ class Sigal {
     }
     echo '</div>';
     echo '<script src="?static=lazy.min"></script><script>lazy.init({delay:200});</script>';
-    echo '<div class="footer">Navigation: <a href="?alb='.urlencode($this->getparentdir($aname)).'">Back to album selection</a></div>';
+    echo '<div class="footer">Navigation: <a href="?alb='.urlencode($this->getparentdir($aname)).'">'.$this->lang('Back to album selection').'</a></div>';
     echo $this->html_tail;
   }
   
@@ -601,28 +609,32 @@ class Sigal {
   
   public function showCreditPage() {
     echo str_replace('{title}', $this->galTitle, $this->html_head);
-    ?>
-<div class="header">
-<h1>Credits, info, license</h1>
-</div>
+    echo '<div class="header"><h1>Settings, info, credits and license</h1></div>';
 
+    echo '<div class="credits_content">';
+    echo '<h2>Settings</h2>';
+    $this->switch_lang();
+    echo '</div>';
+
+    ?>
 <div class="credits_content">
   <p>This script is inspired by simplicity of brilliant MySQL client
     <a href="http://adminer.org">Adminer</a> from Jakub Vrána. It is completely in only one file. It is very simple to upload it anywhere to hosting and use it in few seconds. And why don't use this idea for web photo gallery?
   </p>
 
-  <h2>Based on next works:</h2>
+  <h2>Based on following projects:</h2>
   <ul>
     <li><a href="http://www.famfamfam.com/lab/icons/silk/">FamFamFam Silk Icons</a></li>
     <li><a href="http://catcubed.com/2009/11/19/ceebox-2-0/">CeeBox</a></li>
     <li><a href="http://www.arwscripts.com/gallery-script-lite.html">Free Gallery Site Script</a> (image resampling)</li>
     <li><a href="http://ojw.dev.openstreetmap.org/StaticMap/">OSM Static maps API by OJW</a></li>
     <li><a href="http://pafciu17.dev.openstreetmap.org/">Pawel's OSM Static maps API (pafciu17)</a></li>
+    <li><a href="http://adminer.org">Adminer</a></li>
   </ul>
 
   <h2>Info:</h2>
   <p>Author:
-    <a href="http://gimli2.gipix.net">Gimli2</a>
+    Martin Šlapák [aka: <a href="http://gimli2.gipix.net">Gimli2</a>]
   </p>
 
   <h2>History:</h2>
@@ -641,13 +653,10 @@ class Sigal {
   <p>
   THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   </p>
-
-  <div class="footer">Navigation:
-    <a href="?">Back to album selection</a>
-  </div>
 </div>
 <?php
-echo $this->html_tail;
+echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->lang('Back to album selection').'</a></div>';
+    echo $this->html_tail;
   }
   
   private function sortItems($array, $callback_id) {
@@ -1059,6 +1068,79 @@ echo $this->html_tail;
     $imageSize = getimagesize($targetImagePath);
     return $targetImagePath;
   }
+  
+  
+  function cookie($name, $value, $lifetime = 2592000) {   	$HTTPS = isset($_SERVER["HTTPS"]) && strcasecmp($_SERVER["HTTPS"], "off");
+  	$params = array(
+  		$name,
+  		(preg_match("~\n~", $value) ? "" : $value),   		($lifetime ? time() + $lifetime : 0),
+  		preg_replace('~\\?.*~', '', $_SERVER["REQUEST_URI"]),
+  		"",
+  		$HTTPS
+  	);
+  	if (version_compare(PHP_VERSION, '5.2.0') >= 0) {
+  		$params[] = true;   	}
+  	return call_user_func_array('setcookie', $params);
+  }
+  
+  
+  function lang($idf, $number = null) {
+  	global $translations;
+  	$translation = (isset($translations[$idf]) ? $translations[$idf] : $idf);
+  	if (is_array($translation)) {
+  		$pos = ($number == 1 ? 0
+  			: ($this->LANG == 'cs' || $this->LANG == 'sk' ? ($number && $number < 5 ? 1 : 2)   			: ($this->LANG == 'fr' ? (!$number ? 0 : 1)   			: ($this->LANG == 'pl' ? ($number % 10 > 1 && $number % 10 < 5 && $number / 10 % 10 != 1 ? 1 : 2)   			: ($this->LANG == 'sl' ? ($number % 100 == 1 ? 0 : ($number % 100 == 2 ? 1 : ($number % 100 == 3 || $number % 100 == 4 ? 2 : 3)))   			: ($this->LANG == 'lt' ? ($number % 10 == 1 && $number % 100 != 11 ? 0 : ($number % 10 > 1 && $number / 10 % 10 != 1 ? 1 : 2))   			: ($this->LANG == 'ru' || $this->LANG == 'sr' || $this->LANG == 'uk' ? ($number % 10 == 1 && $number % 100 != 11 ? 0 : ($number % 10 > 1 && $number % 10 < 5 && $number / 10 % 10 != 1 ? 1 : 2))   			: 1
+  		)))))));   		$translation = $translation[$pos];
+  	}
+  	$args = func_get_args();
+  	array_shift($args);
+  	$format = str_replace("%d", "%s", $translation);
+  	if ($format != $translation) {
+  		$args[0] = format_number($number);
+  	}
+  	return vsprintf($format, $args);
+  }
+  
+  function detect_lang() {
+    $this->LANG = "en";
+    if (isset($_COOKIE["sigal_lang"]) && isset($this->langs[$_COOKIE["sigal_lang"]])) {
+    	$this->cookie("sigal_lang", $_COOKIE["sigal_lang"]);
+    	$this->LANG = $_COOKIE["sigal_lang"];
+    } else {
+    	$accept_language = array();
+    	preg_match_all('~([-a-z]+)(;q=([0-9.]+))?~', str_replace("_", "-", strtolower($_SERVER["HTTP_ACCEPT_LANGUAGE"])), $matches, PREG_SET_ORDER);
+    	foreach ($matches as $match) {
+    		$accept_language[$match[1]] = (isset($match[3]) ? $match[3] : 1);
+    	}
+    	arsort($accept_language);
+    	foreach ($accept_language as $key => $q) {
+    		if (isset($this->langs[$key])) {
+    			$this->LANG = $key;
+    			break;
+    		}
+    		$key = preg_replace('~-.*~', '', $key);
+    		if (!isset($accept_language[$key]) && isset($this->langs[$key])) {
+    			$this->LANG = $key;
+    			break;
+    		}
+    	}
+    }
+    return $this->LANG;
+  }
+  
+  function switch_lang() {
+  	echo "<form action='' method='post'>\n<div id='lang'>";
+  	echo $this->lang('Language') . ": " . html_select("lang", $this->langs, $this->LANG, "this.form.submit();");
+  	echo " <input type='submit' value='" . $this->lang('Use') . "' class='hidden'>\n";
+  	echo "</div>\n</form>\n";
+  }
+  
+  
+  function remove_from_uri($param = "") {
+  	return substr(preg_replace("~(?<=[?&])($param" . (SID ? "" : "|" . session_name()) . ")=[^&]*&~", '', "$_SERVER[REQUEST_URI]&"), 0, -1);
+  }
+  
+  
   
   
 }
@@ -1492,8 +1574,56 @@ class ZipStream {
     }
 }
 
-$gg = new Sigal();
 
+$translations = array(
+);
+
+
+
+
+function h($string) {
+	return str_replace("\0", "&#0;", htmlspecialchars($string, ENT_QUOTES, 'utf-8'));
+}
+
+
+function html_select($name, $options, $value = "", $onchange = true) {
+	if ($onchange) {
+		return "<select name='" . h($name) . "'" . (is_string($onchange) ? ' onchange="' . h($onchange) . '"' : "") . ">" . optionlist($options, $value) . "</select>";
+	}
+	$return = "";
+	foreach ($options as $key => $val) {
+		$return .= "<label><input type='radio' name='" . h($name) . "' value='" . h($key) . "'" . ($key == $value ? " checked" : "") . ">" . h($val) . "</label>";
+	}
+	return $return;
+}
+
+
+function optionlist($options, $selected = null, $use_keys = false) {
+	$return = "";
+	foreach ($options as $k => $v) {
+		$opts = array($k => $v);
+		if (is_array($v)) {
+			$return .= '<optgroup label="' . h($k) . '">';
+			$opts = $v;
+		}
+		foreach ($opts as $key => $val) {
+			$return .= '<option' . ($use_keys || is_string($key) ? ' value="' . h($key) . '"' : '') . (($use_keys || is_string($key) ? (string) $key : $val) === $selected ? ' selected' : '') . '>' . h($val);
+		}
+		if (is_array($v)) {
+			$return .= '</optgroup>';
+		}
+	}
+	return $return;
+}
+
+
+
+
+  $gg = new Sigal();
+    if (file_exists('lang/'.$gg->LANG.'.lang.php')) include 'lang/'.$gg->LANG.'.lang.php';
+  if (file_exists($gg->LANG.'.lang.php')) include $gg->LANG.'.lang.php';
+
+  
   
   $conf = array();
   if (file_exists('./config.php')) include './config.php';
@@ -1503,10 +1633,18 @@ $gg = new Sigal();
   foreach ($kws as $item) {
     if (isset($conf[$item])) $gg->$item = $conf[$item];
   }
-  if(isset($gg->func_videoimage)) {
+  
+  if(isset($gg->func_videoimage) && $gg->func_videoimage!='') {
     $gg->extsIcon = array_merge($gg->extsIcon, $gg->extsVideo);
   }
   
+  if (isset($_POST["lang"])) {
+  	$gg->cookie("sigal_lang", $_POST["lang"]);
+    $loc = $gg->remove_from_uri();
+    $loc = ($loc !== '') ? $loc : '.';
+  	header("Location: ".$loc);
+  	die();
+  }
   
   if (isset($_GET['credits'])) {
     $gg->showCreditPage();

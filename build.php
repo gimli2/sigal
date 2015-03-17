@@ -43,9 +43,8 @@ echo "\n<pre>\n";
 				$i++;
 			}		
 	
-
 			//if (in_array($tid, $comments)) echo $content."<br>";
-	
+
 			// sestavime novy obsah
 			if (is_array($tokens[$i])) {
 				 
@@ -54,10 +53,21 @@ echo "\n<pre>\n";
 					if (!$nocomment) $ndata .= $content;
 					if ($content == '/*START-DO-NOT-REMOVE-THIS*/') $ndata .= $content;
 				} else {
-					$ndata .= $content;
+          if ($tid === T_WHITESPACE) {
+          /*
+            if (strlen($content) > 1) {
+              $ndata .= "\n";
+            } else {
+              $ndata .= $content;
+            }
+            */
+            $ndata .= $content;
+          } else {
+            $ndata .= $content;
+          }
 				}
 			} else {
-				$ndata .= $tid;
+        $ndata .= $tid;
 			}
 			
 			$i++;

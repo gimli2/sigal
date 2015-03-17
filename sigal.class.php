@@ -7,7 +7,7 @@
  * @date      2012-2015
  * @copyright http://www.xfree86.org/3.3.6/COPYRIGHT2.html#5 Modified BSD License
  * @details   SiGal project page: http://gimli2.gipix.net/sigal/
- * @version   1.3
+ * @version   1.5
  *   
  */
 
@@ -82,6 +82,14 @@ class Sigal {
   /** Callback function for getting album/directory group name */
   public $func_groupname = NULL;
 
+  /** Available languages */
+  public $langs = array(
+  	'en' => 'English', // Martin Šlapák - http://gimli2.gipix.net
+  	'cs' => 'Čeština', // Martin Šlapák - http://gimli2.gipix.net
+  );
+  /** Default language */
+  public $LANG = 'en';
+  /*========================================================================*/
   /** Flag for browsing in locked albums. */
   private $islocked = false;
   /** Array of usernames which have access to given album. */
@@ -147,9 +155,10 @@ class Sigal {
   /** HTML tail of each page of galllery. */
   public $html_tail = '<div id="credits"><!--LEGALNOTICE--><br />
 	Powered by <a href="http://gimli2.gipix.net/sigal/">SiGal</a> |
-	<a href="?credits">Credits &amp; info</a>
+	<a href="?credits">Settings &amp; info</a>
 	</div>
 	</body></html>';
+  
   /*========================================================================*/
   /*========================================================================*/
   /*========================================================================*/
@@ -158,6 +167,8 @@ class Sigal {
    * @returns An instance of SiGal class.
    */
   function __construct() {
+    $this->detect_lang();
+
     // check whether ownstyle.css exists, if yes - use it
     $ownstyle_replacement = '';
     if (file_exists('./ownstyle.css')) {
@@ -170,7 +181,7 @@ class Sigal {
       $this->html_head = str_replace('<!--GAJS-->', $gajs_replacement, $this->html_head);
     }
     // replace copyright and license
-    $this->html_tail = str_replace('<!--LEGALNOTICE-->', $this->legal_notice, $this->html_tail);
+    $this->html_tail = str_replace('<!--LEGALNOTICE-->', $this->legal_notice.'<br/> lang='.$this->LANG, $this->html_tail);
   }
   /*========================================================================*/
   /**
@@ -231,7 +242,7 @@ class Sigal {
     //print_r($albs);
 
     if ($albtop!==NULL) {
-        echo '<div class="header">Navigation: ';
+        echo '<div class="header">'.$this->lang('Navigation').': ';
         echo '<a href="?alb='.urlencode($this->getparentdir($aname)).'">Back to parent album</a>';
         echo ' | <a href="?">Back to top level</a>';
         echo '</div>';
@@ -297,7 +308,7 @@ class Sigal {
         }
         echo '</a>';
         echo $this->getAlbumTitle($a);
-        echo '<div class="desc">'.date($this->date_format, $date).' ('.$cnt.' files)</div>';
+        echo '<div class="desc">'.date($this->date_format, $date).' ('.$this->lang('%d files',$cnt).')</div>';
         echo '</div>'."\n";
         ob_flush();
       }
@@ -309,7 +320,7 @@ class Sigal {
     }
 
     if ($albtop!==NULL) {
-        echo '<div class="footer">Navigation: ';
+        echo '<div class="footer">'.$this->lang('Navigation').': ';
         echo '<a href="?alb='.urlencode($this->getparentdir($aname)).'" onclick="history.back();">Back to parent album</a>';
         echo ' | <a href="?">Back to top level</a>';
         echo '</div>';
@@ -339,8 +350,8 @@ class Sigal {
     echo '<div class="header">';
     echo '<h1>'.$this->galTitle.': '.$aname.'</h1>';
     echo '</div>';
-    echo '<div class="header">Navigation: ';
-    echo '<a href="?alb='.urlencode($this->getparentdir($aname)).'">Back to album selection</a>';
+    echo '<div class="header">'.$this->lang('Navigation').': ';
+    echo '<a href="?alb='.urlencode($this->getparentdir($aname)).'">'.$this->lang('Back to album selection').'</a>';
     if ($this->enable_mass_download) {
       echo ' | Functions: ';
       echo '<a href="?#" onClick="javascript:dowloadselected(); return false;">Download selected images (<span id="multipledownloadlinkcnt">0</span>)</a>';
@@ -410,7 +421,7 @@ class Sigal {
     }
     echo '</div>';
     echo '<script src="?static=lazy.min"></script><script>lazy.init({delay:200});</script>';
-    echo '<div class="footer">Navigation: <a href="?alb='.urlencode($this->getparentdir($aname)).'">Back to album selection</a></div>';
+    echo '<div class="footer">Navigation: <a href="?alb='.urlencode($this->getparentdir($aname)).'">'.$this->lang('Back to album selection').'</a></div>';
     echo $this->html_tail;
   }
   /*========================================================================*/
@@ -572,7 +583,16 @@ class Sigal {
    */
   public function showCreditPage() {
     echo str_replace('{title}', $this->galTitle, $this->html_head);
+    echo '<div class="header"><h1>Settings, info, credits and license</h1></div>';
+
+    echo '<div class="credits_content">';
+    echo '<h2>Settings</h2>';
+    $this->switch_lang();
+    echo '</div>';
+
     require_once 'credits.html';
+
+    echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->lang('Back to album selection').'</a></div>';
     echo $this->html_tail;
   }
   /*========================================================================*/
@@ -1077,6 +1097,111 @@ class Sigal {
     $imageSize = getimagesize($targetImagePath);
     return $targetImagePath;
   }
+  /*========================================================================*/
+  /** Set cookie valid on current path
+  * @param string
+  * @param string
+  * @param int number of seconds, 0 for session cookie
+  * @return bool
+  */
+  function cookie($name, $value, $lifetime = 2592000) { // 2592000 - 30 days
+  	$HTTPS = isset($_SERVER["HTTPS"]) && strcasecmp($_SERVER["HTTPS"], "off");
+  	$params = array(
+  		$name,
+  		(preg_match("~\n~", $value) ? "" : $value), // HTTP Response Splitting protection in PHP < 5.1.2
+  		($lifetime ? time() + $lifetime : 0),
+  		preg_replace('~\\?.*~', '', $_SERVER["REQUEST_URI"]),
+  		"",
+  		$HTTPS
+  	);
+  	if (version_compare(PHP_VERSION, '5.2.0') >= 0) {
+  		$params[] = true; // HttpOnly
+  	}
+  	return call_user_func_array('setcookie', $params);
+  }
+  /*========================================================================*/
+  /** Translate string
+  * @param string
+  * @param int
+  * @return string
+  */
+  function lang($idf, $number = null) {
+  	global $translations;
+    //print_r($translations);
+    $translations_lang = $translations[$this->LANG];
+  	$translation = (isset($translations_lang[$idf]) ? $translations_lang[$idf] : $idf);
+  	if (is_array($translation)) {
+  		$pos = ($number == 1 ? 0
+  			: ($this->LANG == 'cs' || $this->LANG == 'sk' ? ($number && $number < 5 ? 1 : 2) // different forms for 1, 2-4, other
+  			: ($this->LANG == 'fr' ? (!$number ? 0 : 1) // different forms for 0-1, other
+  			: ($this->LANG == 'pl' ? ($number % 10 > 1 && $number % 10 < 5 && $number / 10 % 10 != 1 ? 1 : 2) // different forms for 1, 2-4, other
+  			: ($this->LANG == 'sl' ? ($number % 100 == 1 ? 0 : ($number % 100 == 2 ? 1 : ($number % 100 == 3 || $number % 100 == 4 ? 2 : 3))) // different forms for 1, 2, 3-4, other
+  			: ($this->LANG == 'lt' ? ($number % 10 == 1 && $number % 100 != 11 ? 0 : ($number % 10 > 1 && $number / 10 % 10 != 1 ? 1 : 2)) // different forms for 1, 12-19, other
+  			: ($this->LANG == 'ru' || $this->LANG == 'sr' || $this->LANG == 'uk' ? ($number % 10 == 1 && $number % 100 != 11 ? 0 : ($number % 10 > 1 && $number % 10 < 5 && $number / 10 % 10 != 1 ? 1 : 2)) // different forms for 1, 2-4, other
+  			: 1
+  		))))))); // http://www.gnu.org/software/gettext/manual/html_node/Plural-forms.html
+  		$translation = $translation[$pos];
+  	}
+  	$args = func_get_args();
+  	array_shift($args);
+  	$format = str_replace("%d", "%s", $translation);
+  	if ($format != $translation) {
+  		$args[0] = $this->format_number($number);
+  	}
+  	return vsprintf($format, $args);
+  }
+  /*========================================================================*/
+  /** Format decimal number
+  * @param int
+  * @return string
+  */
+  function format_number($val) {
+    return strtr(number_format($val, 0, ".", $this->lang(',')), preg_split('~~u', $this->lang('0123456789'), -1, PREG_SPLIT_NO_EMPTY));
+  }
+  /*========================================================================*/
+  function detect_lang() {
+    $this->LANG = "en";
+    if (isset($_COOKIE["sigal_lang"]) && isset($this->langs[$_COOKIE["sigal_lang"]])) {
+    	$this->cookie("sigal_lang", $_COOKIE["sigal_lang"]);
+    	$this->LANG = $_COOKIE["sigal_lang"];
+    } else {
+    	$accept_language = array();
+    	preg_match_all('~([-a-z]+)(;q=([0-9.]+))?~', str_replace("_", "-", strtolower($_SERVER["HTTP_ACCEPT_LANGUAGE"])), $matches, PREG_SET_ORDER);
+    	foreach ($matches as $match) {
+    		$accept_language[$match[1]] = (isset($match[3]) ? $match[3] : 1);
+    	}
+    	arsort($accept_language);
+    	foreach ($accept_language as $key => $q) {
+    		if (isset($this->langs[$key])) {
+    			$this->LANG = $key;
+    			break;
+    		}
+    		$key = preg_replace('~-.*~', '', $key);
+    		if (!isset($accept_language[$key]) && isset($this->langs[$key])) {
+    			$this->LANG = $key;
+    			break;
+    		}
+    	}
+    }
+    return $this->LANG;
+  }
+  /*========================================================================*/
+  function switch_lang() {
+  	echo "<form action='' method='post'>\n<div id='lang'>";
+  	echo $this->lang('Language') . ": " . html_select("lang", $this->langs, $this->LANG, "this.form.submit();");
+  	echo " <input type='submit' value='" . $this->lang('Use') . "' class='hidden'>\n";
+  	echo "</div>\n</form>\n";
+  }
+  /*========================================================================*/
+  /** Remove parameter from query string
+  * @param string
+  * @return string
+  */
+  function remove_from_uri($param = "") {
+  	return substr(preg_replace("~(?<=[?&])($param" . (SID ? "" : "|" . session_name()) . ")=[^&]*&~", '', "$_SERVER[REQUEST_URI]&"), 0, -1);
+  }
+  /*========================================================================*/
+  /*========================================================================*/
   /*========================================================================*/
   /*========================================================================*/
 }
