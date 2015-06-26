@@ -84,8 +84,8 @@ class Sigal {
 
   /** Available languages */
   public $langs = array(
-  	'en' => 'English', // Martin Šlapák - http://gimli2.gipix.net
-  	'cs' => 'Čeština', // Martin Šlapák - http://gimli2.gipix.net
+    'en' => 'English', // Martin Šlapák - http://gimli2.gipix.net
+    'cs' => 'Čeština', // Martin Šlapák - http://gimli2.gipix.net
   );
   /** Default language */
   public $LANG = 'en';
@@ -108,14 +108,14 @@ class Sigal {
 <script type="text/javascript" src="./js/sigal.min.js"></script>
 <script type="text/javascript" src="./modules/ceebox/js/ceeboxall.min.js"></script>
 <script type="text/javascript">
-	$(document).ready(
-	   function(){
-	       $(".fotos").ceebox({imageGallery:true,image:true,html:false,video:true,videoGallery:true});
+  $(document).ready(
+     function(){
+         $(".fotos").ceebox({imageGallery:true,image:true,html:false,video:true,videoGallery:true});
 
           //show first when page loads...
-        	$(".tab_content").hide();
-        	$("ul.tabs li:first").addClass("active").show();
-        	$(".tab_content:first").show();
+          $(".tab_content").hide();
+          $("ul.tabs li:first").addClass("active").show();
+          $(".tab_content:first").show();
 
           var activeTab = window.location.hash;
           if (activeTab=="") {
@@ -136,28 +136,28 @@ class Sigal {
               $(activeTab).show();
           }
 
-        	//On Click Event
-        	$("ul.tabs li").click(function() {
-        		$("ul.tabs li").removeClass("active");
-        		$(this).addClass("active");
-        		$(".tab_content").hide();
-        		var activeTab = $(this).find("a").attr("href");
-        		$(activeTab).show();
+          //On Click Event
+          $("ul.tabs li").click(function() {
+            $("ul.tabs li").removeClass("active");
+            $(this).addClass("active");
+            $(".tab_content").hide();
+            var activeTab = $(this).find("a").attr("href");
+            $(activeTab).show();
             window.location.hash = activeTab;
             if(typeof(sessionStorage) !== "undefined") sessionStorage.setItem("lasttab", activeTab);
-        		return false;
-        	});
-		}
-	);
+            return false;
+          });
+    }
+  );
 </script></head><body>';
 
   /*========================================================================*/
   /** HTML tail of each page of galllery. */
   public $html_tail = '<div id="credits"><!--LEGALNOTICE--><br />
-	Powered by <a href="http://gimli2.gipix.net/sigal/">SiGal</a> |
-	<a href="?credits">Settings &amp; info</a>
-	</div>
-	</body></html>';
+  Powered by <a href="http://gimli2.gipix.net/sigal/">SiGal</a> |
+  <a href="?credits">Settings &amp; info</a>
+  </div>
+  </body></html>';
   
   /*========================================================================*/
   /*========================================================================*/
@@ -1105,19 +1105,19 @@ class Sigal {
   * @return bool
   */
   function cookie($name, $value, $lifetime = 2592000) { // 2592000 - 30 days
-  	$HTTPS = isset($_SERVER["HTTPS"]) && strcasecmp($_SERVER["HTTPS"], "off");
-  	$params = array(
-  		$name,
-  		(preg_match("~\n~", $value) ? "" : $value), // HTTP Response Splitting protection in PHP < 5.1.2
-  		($lifetime ? time() + $lifetime : 0),
-  		preg_replace('~\\?.*~', '', $_SERVER["REQUEST_URI"]),
-  		"",
-  		$HTTPS
-  	);
-  	if (version_compare(PHP_VERSION, '5.2.0') >= 0) {
-  		$params[] = true; // HttpOnly
-  	}
-  	return call_user_func_array('setcookie', $params);
+    $HTTPS = isset($_SERVER["HTTPS"]) && strcasecmp($_SERVER["HTTPS"], "off");
+    $params = array(
+      $name,
+      (preg_match("~\n~", $value) ? "" : $value), // HTTP Response Splitting protection in PHP < 5.1.2
+      ($lifetime ? time() + $lifetime : 0),
+      preg_replace('~\\?.*~', '', $_SERVER["REQUEST_URI"]),
+      "",
+      $HTTPS
+    );
+    if (version_compare(PHP_VERSION, '5.2.0') >= 0) {
+      $params[] = true; // HttpOnly
+    }
+    return call_user_func_array('setcookie', $params);
   }
   /*========================================================================*/
   /** Translate string
@@ -1126,29 +1126,29 @@ class Sigal {
   * @return string
   */
   function lang($idf, $number = null) {
-  	global $translations;
+    global $translations;
     //print_r($translations);
     $translations_lang = $translations[$this->LANG];
-  	$translation = (isset($translations_lang[$idf]) ? $translations_lang[$idf] : $idf);
-  	if (is_array($translation)) {
-  		$pos = ($number == 1 ? 0
-  			: ($this->LANG == 'cs' || $this->LANG == 'sk' ? ($number && $number < 5 ? 1 : 2) // different forms for 1, 2-4, other
-  			: ($this->LANG == 'fr' ? (!$number ? 0 : 1) // different forms for 0-1, other
-  			: ($this->LANG == 'pl' ? ($number % 10 > 1 && $number % 10 < 5 && $number / 10 % 10 != 1 ? 1 : 2) // different forms for 1, 2-4, other
-  			: ($this->LANG == 'sl' ? ($number % 100 == 1 ? 0 : ($number % 100 == 2 ? 1 : ($number % 100 == 3 || $number % 100 == 4 ? 2 : 3))) // different forms for 1, 2, 3-4, other
-  			: ($this->LANG == 'lt' ? ($number % 10 == 1 && $number % 100 != 11 ? 0 : ($number % 10 > 1 && $number / 10 % 10 != 1 ? 1 : 2)) // different forms for 1, 12-19, other
-  			: ($this->LANG == 'ru' || $this->LANG == 'sr' || $this->LANG == 'uk' ? ($number % 10 == 1 && $number % 100 != 11 ? 0 : ($number % 10 > 1 && $number % 10 < 5 && $number / 10 % 10 != 1 ? 1 : 2)) // different forms for 1, 2-4, other
-  			: 1
-  		))))))); // http://www.gnu.org/software/gettext/manual/html_node/Plural-forms.html
-  		$translation = $translation[$pos];
-  	}
-  	$args = func_get_args();
-  	array_shift($args);
-  	$format = str_replace("%d", "%s", $translation);
-  	if ($format != $translation) {
-  		$args[0] = $this->format_number($number);
-  	}
-  	return vsprintf($format, $args);
+    $translation = (isset($translations_lang[$idf]) ? $translations_lang[$idf] : $idf);
+    if (is_array($translation)) {
+      $pos = ($number == 1 ? 0
+        : ($this->LANG == 'cs' || $this->LANG == 'sk' ? ($number && $number < 5 ? 1 : 2) // different forms for 1, 2-4, other
+        : ($this->LANG == 'fr' ? (!$number ? 0 : 1) // different forms for 0-1, other
+        : ($this->LANG == 'pl' ? ($number % 10 > 1 && $number % 10 < 5 && $number / 10 % 10 != 1 ? 1 : 2) // different forms for 1, 2-4, other
+        : ($this->LANG == 'sl' ? ($number % 100 == 1 ? 0 : ($number % 100 == 2 ? 1 : ($number % 100 == 3 || $number % 100 == 4 ? 2 : 3))) // different forms for 1, 2, 3-4, other
+        : ($this->LANG == 'lt' ? ($number % 10 == 1 && $number % 100 != 11 ? 0 : ($number % 10 > 1 && $number / 10 % 10 != 1 ? 1 : 2)) // different forms for 1, 12-19, other
+        : ($this->LANG == 'ru' || $this->LANG == 'sr' || $this->LANG == 'uk' ? ($number % 10 == 1 && $number % 100 != 11 ? 0 : ($number % 10 > 1 && $number % 10 < 5 && $number / 10 % 10 != 1 ? 1 : 2)) // different forms for 1, 2-4, other
+        : 1
+      ))))))); // http://www.gnu.org/software/gettext/manual/html_node/Plural-forms.html
+      $translation = $translation[$pos];
+    }
+    $args = func_get_args();
+    array_shift($args);
+    $format = str_replace("%d", "%s", $translation);
+    if ($format != $translation) {
+      $args[0] = $this->format_number($number);
+    }
+    return vsprintf($format, $args);
   }
   /*========================================================================*/
   /** Format decimal number
@@ -1162,35 +1162,35 @@ class Sigal {
   function detect_lang() {
     $this->LANG = "en";
     if (isset($_COOKIE["sigal_lang"]) && isset($this->langs[$_COOKIE["sigal_lang"]])) {
-    	$this->cookie("sigal_lang", $_COOKIE["sigal_lang"]);
-    	$this->LANG = $_COOKIE["sigal_lang"];
+      $this->cookie("sigal_lang", $_COOKIE["sigal_lang"]);
+      $this->LANG = $_COOKIE["sigal_lang"];
     } else {
-    	$accept_language = array();
-    	preg_match_all('~([-a-z]+)(;q=([0-9.]+))?~', str_replace("_", "-", strtolower($_SERVER["HTTP_ACCEPT_LANGUAGE"])), $matches, PREG_SET_ORDER);
-    	foreach ($matches as $match) {
-    		$accept_language[$match[1]] = (isset($match[3]) ? $match[3] : 1);
-    	}
-    	arsort($accept_language);
-    	foreach ($accept_language as $key => $q) {
-    		if (isset($this->langs[$key])) {
-    			$this->LANG = $key;
-    			break;
-    		}
-    		$key = preg_replace('~-.*~', '', $key);
-    		if (!isset($accept_language[$key]) && isset($this->langs[$key])) {
-    			$this->LANG = $key;
-    			break;
-    		}
-    	}
+      $accept_language = array();
+      preg_match_all('~([-a-z]+)(;q=([0-9.]+))?~', str_replace("_", "-", strtolower($_SERVER["HTTP_ACCEPT_LANGUAGE"])), $matches, PREG_SET_ORDER);
+      foreach ($matches as $match) {
+        $accept_language[$match[1]] = (isset($match[3]) ? $match[3] : 1);
+      }
+      arsort($accept_language);
+      foreach ($accept_language as $key => $q) {
+        if (isset($this->langs[$key])) {
+          $this->LANG = $key;
+          break;
+        }
+        $key = preg_replace('~-.*~', '', $key);
+        if (!isset($accept_language[$key]) && isset($this->langs[$key])) {
+          $this->LANG = $key;
+          break;
+        }
+      }
     }
     return $this->LANG;
   }
   /*========================================================================*/
   function switch_lang() {
-  	echo "<form action='' method='post'>\n<div id='lang'>";
-  	echo $this->lang('Language') . ": " . html_select("lang", $this->langs, $this->LANG, "this.form.submit();");
-  	echo " <input type='submit' value='" . $this->lang('Use') . "' class='hidden'>\n";
-  	echo "</div>\n</form>\n";
+    echo "<form action='' method='post'>\n<div id='lang'>";
+    echo $this->lang('Language') . ": " . html_select("lang", $this->langs, $this->LANG, "this.form.submit();");
+    echo " <input type='submit' value='" . $this->lang('Use') . "' class='hidden'>\n";
+    echo "</div>\n</form>\n";
   }
   /*========================================================================*/
   /** Remove parameter from query string
@@ -1198,7 +1198,7 @@ class Sigal {
   * @return string
   */
   function remove_from_uri($param = "") {
-  	return substr(preg_replace("~(?<=[?&])($param" . (SID ? "" : "|" . session_name()) . ")=[^&]*&~", '', "$_SERVER[REQUEST_URI]&"), 0, -1);
+    return substr(preg_replace("~(?<=[?&])($param" . (SID ? "" : "|" . session_name()) . ")=[^&]*&~", '', "$_SERVER[REQUEST_URI]&"), 0, -1);
   }
   /*========================================================================*/
   /*========================================================================*/
