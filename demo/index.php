@@ -151,7 +151,7 @@ class Sigal {
 
   
   public $langs = array(
-  	'en' => 'English',   	'cs' => 'Čeština',   );
+    'en' => 'English',     'cs' => 'Čeština',   );
   
   public $LANG = 'en';
   
@@ -173,14 +173,14 @@ class Sigal {
 <script type="text/javascript" src="?static=sigal.min"></script>
 <script type="text/javascript" src="?static=ceeboxall.min"></script>
 <script type="text/javascript">
-	$(document).ready(
-	   function(){
-	       $(".fotos").ceebox({imageGallery:true,image:true,html:false,video:true,videoGallery:true});
+  $(document).ready(
+     function(){
+         $(".fotos").ceebox({imageGallery:true,image:true,html:false,video:true,videoGallery:true});
 
           //show first when page loads...
-        	$(".tab_content").hide();
-        	$("ul.tabs li:first").addClass("active").show();
-        	$(".tab_content:first").show();
+          $(".tab_content").hide();
+          $("ul.tabs li:first").addClass("active").show();
+          $(".tab_content:first").show();
 
           var activeTab = window.location.hash;
           if (activeTab=="") {
@@ -201,28 +201,28 @@ class Sigal {
               $(activeTab).show();
           }
 
-        	//On Click Event
-        	$("ul.tabs li").click(function() {
-        		$("ul.tabs li").removeClass("active");
-        		$(this).addClass("active");
-        		$(".tab_content").hide();
-        		var activeTab = $(this).find("a").attr("href");
-        		$(activeTab).show();
+          //On Click Event
+          $("ul.tabs li").click(function() {
+            $("ul.tabs li").removeClass("active");
+            $(this).addClass("active");
+            $(".tab_content").hide();
+            var activeTab = $(this).find("a").attr("href");
+            $(activeTab).show();
             window.location.hash = activeTab;
             if(typeof(sessionStorage) !== "undefined") sessionStorage.setItem("lasttab", activeTab);
-        		return false;
-        	});
-		}
-	);
+            return false;
+          });
+    }
+  );
 </script></head><body>';
 
   
   
   public $html_tail = '<div id="credits"><!--LEGALNOTICE--><br />
-	Powered by <a href="http://gimli2.gipix.net/sigal/">SiGal</a> |
-	<a href="?credits">Settings &amp; info</a>
-	</div>
-	</body></html>';
+  Powered by <a href="http://gimli2.gipix.net/sigal/">SiGal</a> |
+  <a href="?credits">Settings &amp; info</a>
+  </div>
+  </body></html>';
   
   
   
@@ -290,7 +290,7 @@ class Sigal {
     $albs = $this->getAlbums($albtop);
     
     if ($albtop!==NULL) {
-        echo '<div class="header">'.lang('Navigation').': ';
+        echo '<div class="header">'.$this->lang('Navigation').': ';
         echo '<a href="?alb='.urlencode($this->getparentdir($aname)).'">Back to parent album</a>';
         echo ' | <a href="?">Back to top level</a>';
         echo '</div>';
@@ -347,7 +347,7 @@ class Sigal {
         }
         echo '</a>';
         echo $this->getAlbumTitle($a);
-        echo '<div class="desc">'.date($this->date_format, $date).' ('.$cnt.' files)</div>';
+        echo '<div class="desc">'.date($this->date_format, $date).' ('.$this->lang('%d files',$cnt).')</div>';
         echo '</div>'."\n";
         ob_flush();
       }
@@ -359,7 +359,7 @@ class Sigal {
     }
 
     if ($albtop!==NULL) {
-        echo '<div class="footer">'.lang('Navigation').': ';
+        echo '<div class="footer">'.$this->lang('Navigation').': ';
         echo '<a href="?alb='.urlencode($this->getparentdir($aname)).'" onclick="history.back();">Back to parent album</a>';
         echo ' | <a href="?">Back to top level</a>';
         echo '</div>';
@@ -721,7 +721,7 @@ echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->la
   
   
   public function getAlbumTitleFile($album) {
-        if (file_exists($album.$this->icotitlefname)) return $album.trim(file_get_contents($album.$this->icotitlefname));
+        if (file_exists($album.'/'.$this->icotitlefname)) return $album.'/'.trim(file_get_contents($album.'/'.$this->icotitlefname));
         $files = glob($album.'/*');
     foreach($files as $file) {
       $ext = strtolower($this->getExt($file));
@@ -1070,74 +1070,80 @@ echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->la
   }
   
   
-  function cookie($name, $value, $lifetime = 2592000) {   	$HTTPS = isset($_SERVER["HTTPS"]) && strcasecmp($_SERVER["HTTPS"], "off");
-  	$params = array(
-  		$name,
-  		(preg_match("~\n~", $value) ? "" : $value),   		($lifetime ? time() + $lifetime : 0),
-  		preg_replace('~\\?.*~', '', $_SERVER["REQUEST_URI"]),
-  		"",
-  		$HTTPS
-  	);
-  	if (version_compare(PHP_VERSION, '5.2.0') >= 0) {
-  		$params[] = true;   	}
-  	return call_user_func_array('setcookie', $params);
+  function cookie($name, $value, $lifetime = 2592000) {     $HTTPS = isset($_SERVER["HTTPS"]) && strcasecmp($_SERVER["HTTPS"], "off");
+    $params = array(
+      $name,
+      (preg_match("~\n~", $value) ? "" : $value),       ($lifetime ? time() + $lifetime : 0),
+      preg_replace('~\\?.*~', '', $_SERVER["REQUEST_URI"]),
+      "",
+      $HTTPS
+    );
+    if (version_compare(PHP_VERSION, '5.2.0') >= 0) {
+      $params[] = true;     }
+    return call_user_func_array('setcookie', $params);
   }
   
   
   function lang($idf, $number = null) {
-  	global $translations;
-  	$translation = (isset($translations[$idf]) ? $translations[$idf] : $idf);
-  	if (is_array($translation)) {
-  		$pos = ($number == 1 ? 0
-  			: ($this->LANG == 'cs' || $this->LANG == 'sk' ? ($number && $number < 5 ? 1 : 2)   			: ($this->LANG == 'fr' ? (!$number ? 0 : 1)   			: ($this->LANG == 'pl' ? ($number % 10 > 1 && $number % 10 < 5 && $number / 10 % 10 != 1 ? 1 : 2)   			: ($this->LANG == 'sl' ? ($number % 100 == 1 ? 0 : ($number % 100 == 2 ? 1 : ($number % 100 == 3 || $number % 100 == 4 ? 2 : 3)))   			: ($this->LANG == 'lt' ? ($number % 10 == 1 && $number % 100 != 11 ? 0 : ($number % 10 > 1 && $number / 10 % 10 != 1 ? 1 : 2))   			: ($this->LANG == 'ru' || $this->LANG == 'sr' || $this->LANG == 'uk' ? ($number % 10 == 1 && $number % 100 != 11 ? 0 : ($number % 10 > 1 && $number % 10 < 5 && $number / 10 % 10 != 1 ? 1 : 2))   			: 1
-  		)))))));   		$translation = $translation[$pos];
-  	}
-  	$args = func_get_args();
-  	array_shift($args);
-  	$format = str_replace("%d", "%s", $translation);
-  	if ($format != $translation) {
-  		$args[0] = format_number($number);
-  	}
-  	return vsprintf($format, $args);
+    global $translations;
+        $translations_lang = $translations[$this->LANG];
+    $translation = (isset($translations_lang[$idf]) ? $translations_lang[$idf] : $idf);
+    if (is_array($translation)) {
+      $pos = ($number == 1 ? 0
+        : ($this->LANG == 'cs' || $this->LANG == 'sk' ? ($number && $number < 5 ? 1 : 2)         : ($this->LANG == 'fr' ? (!$number ? 0 : 1)         : ($this->LANG == 'pl' ? ($number % 10 > 1 && $number % 10 < 5 && $number / 10 % 10 != 1 ? 1 : 2)         : ($this->LANG == 'sl' ? ($number % 100 == 1 ? 0 : ($number % 100 == 2 ? 1 : ($number % 100 == 3 || $number % 100 == 4 ? 2 : 3)))         : ($this->LANG == 'lt' ? ($number % 10 == 1 && $number % 100 != 11 ? 0 : ($number % 10 > 1 && $number / 10 % 10 != 1 ? 1 : 2))         : ($this->LANG == 'ru' || $this->LANG == 'sr' || $this->LANG == 'uk' ? ($number % 10 == 1 && $number % 100 != 11 ? 0 : ($number % 10 > 1 && $number % 10 < 5 && $number / 10 % 10 != 1 ? 1 : 2))         : 1
+      )))))));       $translation = $translation[$pos];
+    }
+    $args = func_get_args();
+    array_shift($args);
+    $format = str_replace("%d", "%s", $translation);
+    if ($format != $translation) {
+      $args[0] = $this->format_number($number);
+    }
+    return vsprintf($format, $args);
+  }
+  
+  
+  function format_number($val) {
+    return strtr(number_format($val, 0, ".", $this->lang(',')), preg_split('~~u', $this->lang('0123456789'), -1, PREG_SPLIT_NO_EMPTY));
   }
   
   function detect_lang() {
     $this->LANG = "en";
     if (isset($_COOKIE["sigal_lang"]) && isset($this->langs[$_COOKIE["sigal_lang"]])) {
-    	$this->cookie("sigal_lang", $_COOKIE["sigal_lang"]);
-    	$this->LANG = $_COOKIE["sigal_lang"];
+      $this->cookie("sigal_lang", $_COOKIE["sigal_lang"]);
+      $this->LANG = $_COOKIE["sigal_lang"];
     } else {
-    	$accept_language = array();
-    	preg_match_all('~([-a-z]+)(;q=([0-9.]+))?~', str_replace("_", "-", strtolower($_SERVER["HTTP_ACCEPT_LANGUAGE"])), $matches, PREG_SET_ORDER);
-    	foreach ($matches as $match) {
-    		$accept_language[$match[1]] = (isset($match[3]) ? $match[3] : 1);
-    	}
-    	arsort($accept_language);
-    	foreach ($accept_language as $key => $q) {
-    		if (isset($this->langs[$key])) {
-    			$this->LANG = $key;
-    			break;
-    		}
-    		$key = preg_replace('~-.*~', '', $key);
-    		if (!isset($accept_language[$key]) && isset($this->langs[$key])) {
-    			$this->LANG = $key;
-    			break;
-    		}
-    	}
+      $accept_language = array();
+      preg_match_all('~([-a-z]+)(;q=([0-9.]+))?~', str_replace("_", "-", strtolower($_SERVER["HTTP_ACCEPT_LANGUAGE"])), $matches, PREG_SET_ORDER);
+      foreach ($matches as $match) {
+        $accept_language[$match[1]] = (isset($match[3]) ? $match[3] : 1);
+      }
+      arsort($accept_language);
+      foreach ($accept_language as $key => $q) {
+        if (isset($this->langs[$key])) {
+          $this->LANG = $key;
+          break;
+        }
+        $key = preg_replace('~-.*~', '', $key);
+        if (!isset($accept_language[$key]) && isset($this->langs[$key])) {
+          $this->LANG = $key;
+          break;
+        }
+      }
     }
     return $this->LANG;
   }
   
   function switch_lang() {
-  	echo "<form action='' method='post'>\n<div id='lang'>";
-  	echo $this->lang('Language') . ": " . html_select("lang", $this->langs, $this->LANG, "this.form.submit();");
-  	echo " <input type='submit' value='" . $this->lang('Use') . "' class='hidden'>\n";
-  	echo "</div>\n</form>\n";
+    echo "<form action='' method='post'>\n<div id='lang'>";
+    echo $this->lang('Language') . ": " . html_select("lang", $this->langs, $this->LANG, "this.form.submit();");
+    echo " <input type='submit' value='" . $this->lang('Use') . "' class='hidden'>\n";
+    echo "</div>\n</form>\n";
   }
   
   
   function remove_from_uri($param = "") {
-  	return substr(preg_replace("~(?<=[?&])($param" . (SID ? "" : "|" . session_name()) . ")=[^&]*&~", '', "$_SERVER[REQUEST_URI]&"), 0, -1);
+    return substr(preg_replace("~(?<=[?&])($param" . (SID ? "" : "|" . session_name()) . ")=[^&]*&~", '', "$_SERVER[REQUEST_URI]&"), 0, -1);
   }
   
   
@@ -1575,10 +1581,6 @@ class ZipStream {
 }
 
 
-$translations = array(
-);
-
-
 
 
 function h($string) {
@@ -1619,22 +1621,24 @@ function optionlist($options, $selected = null, $use_keys = false) {
 
 
 
+    foreach (glob('lang/*.lang.php') as $filename) {
+    include $filename;
+  }
   $gg = new Sigal();
-    if (file_exists('lang/'.$gg->LANG.'.lang.php')) include 'lang/'.$gg->LANG.'.lang.php';
-  if (file_exists($gg->LANG.'.lang.php')) include $gg->LANG.'.lang.php';
 
   
   
   $conf = array();
   if (file_exists('./config.php')) include './config.php';
-  $kws = array('dir', 'cache', 'defaultIcon', 'icotitlefname', 'lockfname', 'thumb_x', 'thumb_y', 'middle_x', 'imgTitleLen', 'galTitle', 'legal_notice', 'date_format',
-          'enable_mass_download', 'show_exif_tab', 'show_gps_tab',
-          'func_sortimages', 'func_sortalbums', 'func_scandir', 'func_albumname', 'func_groupname', 'func_getalbums', 'func_videoimage', 'func_avfileplay');
+  $kws = array(
+    'dir', 'cache', 'defaultIcon', 'icotitlefname', 'lockfname', 'thumb_x', 'thumb_y', 'middle_x', 'imgTitleLen', 'galTitle', 'legal_notice', 'date_format',
+    'enable_mass_download', 'show_exif_tab', 'show_gps_tab',
+    'func_sortimages', 'func_sortalbums', 'func_scandir', 'func_albumname', 'func_groupname', 'func_getalbums', 'func_videoimage', 'func_avfileplay'
+  );
   foreach ($kws as $item) {
     if (isset($conf[$item])) $gg->$item = $conf[$item];
   }
-  
-  if(isset($gg->func_videoimage) && $gg->func_videoimage!='') {
+      if(isset($gg->func_videoimage) && $gg->func_videoimage!=='') {
     $gg->extsIcon = array_merge($gg->extsIcon, $gg->extsVideo);
   }
   
