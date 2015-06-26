@@ -677,7 +677,7 @@ class Sigal {
    */
   public function getAlbumTitleFile($album) {
     // if is title photo defined in specified file, we use it
-    if (file_exists($album.$this->icotitlefname)) return $album.trim(file_get_contents($album.$this->icotitlefname));
+    if (file_exists($album.'/'.$this->icotitlefname)) return $album.'/'.trim(file_get_contents($album.'/'.$this->icotitlefname));
     // else we, use the first iconificable image
     $files = glob($album.'/*');
     foreach($files as $file) {
