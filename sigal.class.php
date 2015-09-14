@@ -800,6 +800,10 @@ class Sigal {
     return $mime;
   }
   /*========================================================================*/
+  private function getCacheDir($md5) {
+    return $this->cache.'/'.substr($md5,0,1).'/'.substr($md5,1,1).'/';
+  }
+  /*========================================================================*/
   /**
    * @brief Creates a filename for middle size image.
    * @param string $file The original filename.
@@ -809,7 +813,7 @@ class Sigal {
     $ext = strtolower($this->getExt($file));
     if (in_array($ext, $this->extsIcon) && !in_array($ext, $this->extsVideo)) {
       $md5 = MD5($file.$this->middle_x);
-      $targetDir = $this->cache.'/'.substr($md5,0,1).'/';
+      $targetDir = $this->getCacheDir($md5);
       $targetImagePath = $targetDir.$md5.".jpg";
       return $targetImagePath;
     }
@@ -829,7 +833,7 @@ class Sigal {
     $ext = strtolower($this->getExt($file));
     if (in_array($ext, $this->extsIcon)) {
       $md5 = MD5($file.$this->thumb_x);
-      $targetDir = $this->cache.'/'.substr($md5,0,1).'/';
+      $targetDir = $this->getCacheDir($md5);
       $targetImagePath = $targetDir.$md5.".jpg";
       return $targetImagePath;
     }
@@ -940,12 +944,14 @@ class Sigal {
   public function resizeImage($path, $max_x) {
     $sourceImagePath = $path;
     $md5 = MD5($path.$max_x);
-    $targetDir = $this->cache.'/'.substr($md5,0,1).'/';
+    $targetDir = $this->getCacheDir($md5);
     $targetImagePath = $targetDir.$md5.".jpg";
     $targetImageTempPath = $targetDir.$md5."-tmp.jpg";
     $outputImageQuality = 80;
+    echo $targetDir;
 
-    if (!file_exists($targetDir)) mkdir($targetDir);
+
+    if (!file_exists($targetDir)) mkdir($targetDir, 0777, true);
 
     /* Check if file is already cached, if so just deliver existing image */
     if(!file_exists($targetImagePath)) {
