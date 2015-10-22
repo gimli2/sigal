@@ -52,7 +52,7 @@ function addToDownload(file) {
 
 function toggleAllCheckboxes() {
 	var elems = document.getElementsByTagName('input'), i;
-  for (i in elems) {
+  for (i = 0; i < elems.length; i++) {
   	//alert(elems[i].value + "=" + elems[i].checked);
   	elems[i].checked = !elems[i].checked;
   	addToDownload(elems[i].value);

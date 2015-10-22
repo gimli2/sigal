@@ -35,7 +35,7 @@
 		}
 		
 		if (isset($_GET["static"]) && $_GET["static"]==="sigal.min") {
-  		header("Content-Type: text/javascript"); header("Expires: Tue, 1 Jan 2030 05:00:00 GMT"); header("Cache-Control: max-age=8640000, public"); echo base64_decode("ZnVuY3Rpb24gZG93bG9hZHNlbGVjdGVkKCl7aWYod2luZG93LnNlbGVjdGVkUGljdHVyZXMmJjA8d2luZG93LnNlbGVjdGVkUGljdHVyZXMubGVuZ3RoKXt2YXIgYT13aW5kb3cuc2VsZWN0ZWRQaWN0dXJlcy5jb25jYXQoW10pO2EuYWxidW09ZG9jdW1lbnQubG9jYXRpb247cG9zdF90b191cmwoIj9kbHNlbGVjdGVkIixhLCJwb3N0Iil9fQpmdW5jdGlvbiBwb3N0X3RvX3VybChhLGIsZCl7ZD1kfHwicG9zdCI7dmFyIGM9ZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgiZm9ybSIpO2Muc2V0QXR0cmlidXRlKCJtZXRob2QiLGQpO2Muc2V0QXR0cmlidXRlKCJhY3Rpb24iLGEpO2Zvcih2YXIgZSBpbiBiKWIuaGFzT3duUHJvcGVydHkoZSkmJihhPWRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoImlucHV0IiksYS5zZXRBdHRyaWJ1dGUoInR5cGUiLCJoaWRkZW4iKSxhLnNldEF0dHJpYnV0ZSgibmFtZSIsImltZyIrZSksYS5zZXRBdHRyaWJ1dGUoInZhbHVlIixiW2VdKSxjLmFwcGVuZENoaWxkKGEpKTtkb2N1bWVudC5ib2R5LmFwcGVuZENoaWxkKGMpO2Muc3VibWl0KCl9CmZ1bmN0aW9uIGFkZFRvRG93bmxvYWQoYSl7dm9pZCAwPT13aW5kb3cuc2VsZWN0ZWRQaWN0dXJlcyYmKHdpbmRvdy5zZWxlY3RlZFBpY3R1cmVzPVtdKTt2YXIgYj13aW5kb3cuc2VsZWN0ZWRQaWN0dXJlcy5pbmRleE9mKGEpOzA8PWI/d2luZG93LnNlbGVjdGVkUGljdHVyZXMuc3BsaWNlKGIsMSk6d2luZG93LnNlbGVjdGVkUGljdHVyZXMucHVzaChhKTtkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgibXVsdGlwbGVkb3dubG9hZGxpbmtjbnQiKS5pbm5lckhUTUw9d2luZG93LnNlbGVjdGVkUGljdHVyZXMubGVuZ3RofWZ1bmN0aW9uIHRvZ2dsZUFsbENoZWNrYm94ZXMoKXt2YXIgYT1kb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgiaW5wdXQiKSxiO2ZvcihiIGluIGEpYVtiXS5jaGVja2VkPSFhW2JdLmNoZWNrZWQsYWRkVG9Eb3dubG9hZChhW2JdLnZhbHVlKX07Cg=="); exit;
+  		header("Content-Type: text/javascript"); header("Expires: Tue, 1 Jan 2030 05:00:00 GMT"); header("Cache-Control: max-age=8640000, public"); echo base64_decode("ZnVuY3Rpb24gZG93bG9hZHNlbGVjdGVkKCl7aWYod2luZG93LnNlbGVjdGVkUGljdHVyZXMmJjA8d2luZG93LnNlbGVjdGVkUGljdHVyZXMubGVuZ3RoKXt2YXIgYT13aW5kb3cuc2VsZWN0ZWRQaWN0dXJlcy5jb25jYXQoW10pO2EuYWxidW09ZG9jdW1lbnQubG9jYXRpb247cG9zdF90b191cmwoIj9kbHNlbGVjdGVkIixhLCJwb3N0Iil9fQpmdW5jdGlvbiBwb3N0X3RvX3VybChhLGIsZCl7ZD1kfHwicG9zdCI7dmFyIGM9ZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgiZm9ybSIpO2Muc2V0QXR0cmlidXRlKCJtZXRob2QiLGQpO2Muc2V0QXR0cmlidXRlKCJhY3Rpb24iLGEpO2Zvcih2YXIgZSBpbiBiKWIuaGFzT3duUHJvcGVydHkoZSkmJihhPWRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoImlucHV0IiksYS5zZXRBdHRyaWJ1dGUoInR5cGUiLCJoaWRkZW4iKSxhLnNldEF0dHJpYnV0ZSgibmFtZSIsImltZyIrZSksYS5zZXRBdHRyaWJ1dGUoInZhbHVlIixiW2VdKSxjLmFwcGVuZENoaWxkKGEpKTtkb2N1bWVudC5ib2R5LmFwcGVuZENoaWxkKGMpO2Muc3VibWl0KCl9CmZ1bmN0aW9uIGFkZFRvRG93bmxvYWQoYSl7dm9pZCAwPT13aW5kb3cuc2VsZWN0ZWRQaWN0dXJlcyYmKHdpbmRvdy5zZWxlY3RlZFBpY3R1cmVzPVtdKTt2YXIgYj13aW5kb3cuc2VsZWN0ZWRQaWN0dXJlcy5pbmRleE9mKGEpOzA8PWI/d2luZG93LnNlbGVjdGVkUGljdHVyZXMuc3BsaWNlKGIsMSk6d2luZG93LnNlbGVjdGVkUGljdHVyZXMucHVzaChhKTtkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgibXVsdGlwbGVkb3dubG9hZGxpbmtjbnQiKS5pbm5lckhUTUw9d2luZG93LnNlbGVjdGVkUGljdHVyZXMubGVuZ3RofWZ1bmN0aW9uIHRvZ2dsZUFsbENoZWNrYm94ZXMoKXt2YXIgYT1kb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgiaW5wdXQiKSxiO2ZvcihiPTA7YjxhLmxlbmd0aDtiKyspYVtiXS5jaGVja2VkPSFhW2JdLmNoZWNrZWQsYWRkVG9Eb3dubG9hZChhW2JdLnZhbHVlKX07Cg=="); exit;
 		}
 		
 		if (isset($_GET["static"]) && $_GET["static"]==="lazy.min") {
@@ -82,7 +82,7 @@
 
  
 class Sigal {
-  public $version = '1.4';
+  public $version = '1.4.1';
 
   
   public $dir = 'pictures';
@@ -809,12 +809,16 @@ echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->la
     return $mime;
   }
   
+  private function getCacheDir($md5) {
+    return $this->cache.'/'.substr($md5,0,1).'/'.substr($md5,1,1).'/';
+  }
+  
   
   private function getMiddleName($file) {
         $ext = strtolower($this->getExt($file));
     if (in_array($ext, $this->extsIcon) && !in_array($ext, $this->extsVideo)) {
       $md5 = MD5($file.$this->middle_x);
-      $targetDir = $this->cache.'/'.substr($md5,0,1).'/';
+      $targetDir = $this->getCacheDir($md5);
       $targetImagePath = $targetDir.$md5.".jpg";
       return $targetImagePath;
     }
@@ -828,7 +832,7 @@ echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->la
         $ext = strtolower($this->getExt($file));
     if (in_array($ext, $this->extsIcon)) {
       $md5 = MD5($file.$this->thumb_x);
-      $targetDir = $this->cache.'/'.substr($md5,0,1).'/';
+      $targetDir = $this->getCacheDir($md5);
       $targetImagePath = $targetDir.$md5.".jpg";
       return $targetImagePath;
     }
@@ -911,12 +915,14 @@ echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->la
   public function resizeImage($path, $max_x) {
     $sourceImagePath = $path;
     $md5 = MD5($path.$max_x);
-    $targetDir = $this->cache.'/'.substr($md5,0,1).'/';
+    $targetDir = $this->getCacheDir($md5);
     $targetImagePath = $targetDir.$md5.".jpg";
     $targetImageTempPath = $targetDir.$md5."-tmp.jpg";
     $outputImageQuality = 80;
+    echo $targetDir;
 
-    if (!file_exists($targetDir)) mkdir($targetDir);
+
+    if (!file_exists($targetDir)) mkdir($targetDir, 0777, true);
 
     
     if(!file_exists($targetImagePath)) {

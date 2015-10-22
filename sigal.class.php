@@ -7,7 +7,7 @@
  * @date      2012-2015
  * @copyright http://www.xfree86.org/3.3.6/COPYRIGHT2.html#5 Modified BSD License
  * @details   SiGal project page: http://gimli2.gipix.net/sigal/
- * @version   1.5
+ * @version   1.4.1
  *   
  */
 
@@ -15,7 +15,7 @@
  * @brief      Simple gallery script provides single-file web gallery.
  */ 
 class Sigal {
-  public $version = '1.4';
+  public $version = '1.4.1';
 
   /** Directory with pictures. */
   public $dir = 'pictures';
