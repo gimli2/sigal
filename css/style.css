@@ -194,3 +194,9 @@ ol li{
 }
 label {  
 }
+#tab-exif .tab_inner_content div {
+	border-bottom: 1px dashed #000;
+}
+#tab-exif .tab_inner_content strong{
+	float: right;
+}

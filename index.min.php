@@ -31,7 +31,7 @@
 		}
 		
 		if (isset($_GET["static"]) && $_GET["static"]==="style") {
-  		header("Content-Type: text/css"); header("Expires: Tue, 1 Jan 2030 05:00:00 GMT"); header("Cache-Control: max-age=8640000, public"); echo base64_decode("aHRtbCwgYm9keSB7DQogIGZvbnQtZmFtaWx5OiBDYWxpYnJpLCBWZXJkYW5hLCBzYW5zLXNlcmlmOw0KICBmb250LXNpemU6IDExcHQ7DQogIG1hcmdpbjogMDsNCiAgcGFkZGluZzogMDsNCiAgYmFja2dyb3VuZC1jb2xvcjogI2FhYTsNCn0NCi5oZWFkZXJ7DQoJcGFkZGluZzogMWV4Ow0KCWJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjNjY2Ow0KfQ0KLmhlYWRlciBoMXsNCglwYWRkaW5nLWxlZnQ6IDFleDsNCn0NCi5zdWJoZWFkZXIgew0KCXBhZGRpbmctbGVmdDogMWV4Ow0KfQ0KLmZvb3RlciB7DQoJY2xlYXI6IGJvdGg7DQoJcGFkZGluZzogMWV4Ow0KCWJvcmRlci10b3A6IDFweCBzb2xpZCAjNjY2Ow0KfQ0KLmZvb3RlciBhLCAuaGVhZGVyIGEgew0KCWNvbG9yOiAjNjY2Ow0KCXRleHQtZGVjb3JhdGlvbjogbm9uZTsNCn0NCiNjcmVkaXRzIHsNCgljbGVhcjogYm90aDsNCgl0ZXh0LWFsaWduOiByaWdodDsNCglwYWRkaW5nOiAxZXg7DQoJYm9yZGVyLXRvcDogMXB4IHNvbGlkICM2NjY7DQoJY29sb3I6ICM2NjY7DQp9DQojY3JlZGl0cyBhIHsNCgljb2xvcjogIzY2NjsNCgl0ZXh0LWRlY29yYXRpb246IG5vbmU7DQp9DQouYWxidW0tdGh1bWIsIC5mb3RvLXRodW1iIHsNCglib3JkZXI6IDJweCBzb2xpZCAjMjIyMjIyOw0KCWJhY2tncm91bmQtY29sb3I6ICMyMjIyMjI7DQoJdGV4dC1hbGlnbjogY2VudGVyOw0KCWNvbG9yOiBzaWx2ZXI7DQoJYm9yZGVyLXJhZGl1czogMTBweDsNCgltaW4td2lkdGg6IDE2MHB4Ow0KCW92ZXJmbG93OiBoaWRkZW47DQoJbWFyZ2luOiAxZXg7DQoJcGFkZGluZzogMWV4Ow0KCWxpbmUtaGVpZ2h0OiAxMDAlOw0KCWZsb2F0OiBsZWZ0Ow0KfQ0KLmFsYnVtLXRodW1iIGgyLCAuZm90by10aHVtYiBoMiB7DQoJZm9udC1zaXplOiAxMDAlOw0KfQ0KLmFsYnVtLXRodW1iIGltZywgLmZvdG8tdGh1bWIgaW1nIHsNCglib3JkZXI6IDBweDsNCglib3JkZXItcmFkaXVzOiA4cHg7DQoJb3ZlcmZsb3c6IGhpZGRlbjsNCn0NCmltZy5pdHsNCn0NCi5mb3RvLXRodW1iIC5pbmZidXR0b24gaW1nIHsNCglib3JkZXItcmFkaXVzOiAwOw0KfQ0KLmFsYnVtLXRodW1iIGEsIC5mb3RvLXRodW1iIGEgew0KCXRleHQtZGVjb3JhdGlvbjogbm9uZTsNCglib3JkZXI6IDBweDsNCn0NCi5hbGJ1bS10aHVtYiAuZGVzYywgLmZvdG8tdGh1bWIgLmRlc2Mgew0KCWZvbnQtc2l6ZTogODAlOw0KCW1hcmdpbi10b3A6IDFleDsNCn0NCi5mb3RvIC5kZXNjIHsNCglmbG9hdDogcmlnaHQ7DQoJd2lkdGg6IDMwMHB4Ow0KCWJhY2tncm91bmQtY29sb3I6IHNpbHZlcjsNCglwYWRkaW5nOiAxZXg7DQoJb3ZlcmZsb3c6IGhpZGRlbjsNCn0NCi5mb3RvIC5kZXNjIGgxIHsNCglmb250LXNpemU6IDExMCU7DQp9DQouZm90byAuZGVzYyBoMiB7DQoJZm9udC1zaXplOiAxMDUlOw0KfQ0KLmZvdG8gLmRlc2MgdWwgew0KCXBhZGRpbmc6IDA7DQoJbWFyZ2luOiAwOw0KfQ0KLmZvdG8gLmRlc2MgdWwgbGkgew0KCW1hcmdpbjogMDsNCglwYWRkaW5nOiAwOw0KCWxpc3Qtc3R5bGUtcG9zaXRpb246IGluc2lkZTsNCn0NCi5mb3RvIGltZyB7DQoJZmxvYXQ6IGxlZnQ7DQp9DQouaW5mYnV0dG9uIHsNCgl3aWR0aDogMTZweDsNCgl2ZXJ0aWNhbC1hbGlnbjogbWlkZGxlOw0KCWRpc3BsYXk6IGlubGluZTsNCgltYXJnaW46IDJweDsgDQp9DQouaW5mYnV0dG9uIGEgew0KCXRleHQtZGVjb3JhdGlvbjogbm9uZTsNCglib3JkZXI6IDA7DQp9DQouaW5mYnV0dG9uIGltZyB7DQoJdmVydGljYWwtYWxpZ246IG1pZGRsZTsNCn0NCi5jbGFsbHsNCgljbGVhcjogYm90aDsNCn0NCi5sb2NrIHsNCglwb3NpdGlvbjogYWJzb2x1dGU7DQp9DQovKiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09ICovDQp1bC50YWJzIHsNCgltYXJnaW46IDA7DQoJcGFkZGluZzogMDsNCglmbG9hdDogbGVmdDsNCglsaXN0LXN0eWxlOiBub25lOw0KCWhlaWdodDogMjZweDsNCglib3JkZXItYm90dG9tOiAxcHggc29saWQgIzk5OTsNCgl3aWR0aDogMTAwJTsNCn0NCnVsLnRhYnMgbGkgew0KCWZsb2F0OiBsZWZ0Ow0KCW1hcmdpbjogMDsNCglwYWRkaW5nOiAwOw0KCWhlaWdodDogMjVweDsgDQoJbGluZS1oZWlnaHQ6IDI1cHg7DQoJYm9yZGVyOiAxcHggc29saWQgIzk5OTsNCglib3JkZXItbGVmdDogbm9uZTsNCgltYXJnaW4tYm90dG9tOiAtMXB4Ow0KCW92ZXJmbG93OiBoaWRkZW47DQoJcG9zaXRpb246IHJlbGF0aXZlOw0KCWJhY2tncm91bmQ6ICNlMGUwZTA7DQp9DQp1bC50YWJzIGxpIGEgew0KCXRleHQtZGVjb3JhdGlvbjogbm9uZTsNCgljb2xvcjogIzAwMDsNCglkaXNwbGF5OiBibG9jazsNCglwYWRkaW5nOiAwIDFleDsNCglvdXRsaW5lOiBub25lOw0KfQ0KdWwudGFicyBsaSBhOmhvdmVyIHsNCgliYWNrZ3JvdW5kOiAjY2NjOw0KfQ0KaHRtbCB1bC50YWJzIGxpLmFjdGl2ZSwgaHRtbCB1bC50YWJzIGxpLmFjdGl2ZSBhOmhvdmVyICB7DQoJYmFja2dyb3VuZDogI2ZmZjsNCglib3JkZXItYm90dG9tOiAxcHggc29saWQgI2ZmZjsNCn0NCi50YWJfY29udGVudCB7DQoNCn0NCi50YWJfaW5uZXJfY29udGVudCB7DQoJY2xlYXI6IGJvdGg7DQoJcGFkZGluZzogMWV4Ow0KCWNvbG9yOiAjMDAwOw0KCWxpbmUtaGVpZ2h0OiAxNDAlOw0KfQ0KLnRhYl9pbm5lcl9jb250ZW50IGEgew0KCWNvbG9yOiAjMDA5Ow0KfQ0KLmNyZWRpdHNfY29udGVudCB7DQoJcGFkZGluZzogMWVtOyAgICAgICAgIA0KfQ0KLmNyZWRpdHNfY29udGVudCBsaXsNCgltYXJnaW4tbGVmdDogMWVtOyAgICAgDQp9DQpvbCBsaXsNCglsaXN0LXN0eWxlOiBpbnNpZGU7DQoJbGlzdC1zdHlsZS10eXBlOiBkZWNpbWFsOw0KfQ0KLmdwcy1jb250YWluZXIgew0KCWhlaWdodDogNTAwcHg7IA0KCW92ZXJmbG93OiBhdXRvOw0KfQ0KLm1zZ2JveCB7DQoJYm9yZGVyOiAycHggc29saWQgYmxhY2s7DQoJYmFja2dyb3VuZDogI2FhYTsNCglib3JkZXItcmFkaXVzOiAxMHB4OyAgICAgIA0KCXBhZGRpbmc6IDFleDsNCgltYXJnaW46IDJleCBhdXRvOw0KCW1pbi13aWR0aDogMjAwcHg7DQoJd2lkdGg6IDUwJTsgDQp9DQouY2VudGVyIHsNCgl0ZXh0LWFsaWduOiBjZW50ZXI7ICAgICAgICAgDQp9DQoubXNnYm94IGlucHV0IHsNCglwYWRkaW5nOiAwLjVleDsgICAgIA0KCXdpZHRoOiAxNTBweDsgICANCn0NCmxhYmVsIHsgIA0KfQ0K"); exit;
+  		header("Content-Type: text/css"); header("Expires: Tue, 1 Jan 2030 05:00:00 GMT"); header("Cache-Control: max-age=8640000, public"); echo base64_decode("aHRtbCwgYm9keSB7DQogIGZvbnQtZmFtaWx5OiBDYWxpYnJpLCBWZXJkYW5hLCBzYW5zLXNlcmlmOw0KICBmb250LXNpemU6IDExcHQ7DQogIG1hcmdpbjogMDsNCiAgcGFkZGluZzogMDsNCiAgYmFja2dyb3VuZC1jb2xvcjogI2FhYTsNCn0NCi5oZWFkZXJ7DQoJcGFkZGluZzogMWV4Ow0KCWJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjNjY2Ow0KfQ0KLmhlYWRlciBoMXsNCglwYWRkaW5nLWxlZnQ6IDFleDsNCn0NCi5zdWJoZWFkZXIgew0KCXBhZGRpbmctbGVmdDogMWV4Ow0KfQ0KLmZvb3RlciB7DQoJY2xlYXI6IGJvdGg7DQoJcGFkZGluZzogMWV4Ow0KCWJvcmRlci10b3A6IDFweCBzb2xpZCAjNjY2Ow0KfQ0KLmZvb3RlciBhLCAuaGVhZGVyIGEgew0KCWNvbG9yOiAjNjY2Ow0KCXRleHQtZGVjb3JhdGlvbjogbm9uZTsNCn0NCiNjcmVkaXRzIHsNCgljbGVhcjogYm90aDsNCgl0ZXh0LWFsaWduOiByaWdodDsNCglwYWRkaW5nOiAxZXg7DQoJYm9yZGVyLXRvcDogMXB4IHNvbGlkICM2NjY7DQoJY29sb3I6ICM2NjY7DQp9DQojY3JlZGl0cyBhIHsNCgljb2xvcjogIzY2NjsNCgl0ZXh0LWRlY29yYXRpb246IG5vbmU7DQp9DQouYWxidW0tdGh1bWIsIC5mb3RvLXRodW1iIHsNCglib3JkZXI6IDJweCBzb2xpZCAjMjIyMjIyOw0KCWJhY2tncm91bmQtY29sb3I6ICMyMjIyMjI7DQoJdGV4dC1hbGlnbjogY2VudGVyOw0KCWNvbG9yOiBzaWx2ZXI7DQoJYm9yZGVyLXJhZGl1czogMTBweDsNCgltaW4td2lkdGg6IDE2MHB4Ow0KCW92ZXJmbG93OiBoaWRkZW47DQoJbWFyZ2luOiAxZXg7DQoJcGFkZGluZzogMWV4Ow0KCWxpbmUtaGVpZ2h0OiAxMDAlOw0KCWZsb2F0OiBsZWZ0Ow0KfQ0KLmFsYnVtLXRodW1iIGgyLCAuZm90by10aHVtYiBoMiB7DQoJZm9udC1zaXplOiAxMDAlOw0KfQ0KLmFsYnVtLXRodW1iIGltZywgLmZvdG8tdGh1bWIgaW1nIHsNCglib3JkZXI6IDBweDsNCglib3JkZXItcmFkaXVzOiA4cHg7DQoJb3ZlcmZsb3c6IGhpZGRlbjsNCn0NCmltZy5pdHsNCn0NCi5mb3RvLXRodW1iIC5pbmZidXR0b24gaW1nIHsNCglib3JkZXItcmFkaXVzOiAwOw0KfQ0KLmFsYnVtLXRodW1iIGEsIC5mb3RvLXRodW1iIGEgew0KCXRleHQtZGVjb3JhdGlvbjogbm9uZTsNCglib3JkZXI6IDBweDsNCn0NCi5hbGJ1bS10aHVtYiAuZGVzYywgLmZvdG8tdGh1bWIgLmRlc2Mgew0KCWZvbnQtc2l6ZTogODAlOw0KCW1hcmdpbi10b3A6IDFleDsNCn0NCi5mb3RvIC5kZXNjIHsNCglmbG9hdDogcmlnaHQ7DQoJd2lkdGg6IDMwMHB4Ow0KCWJhY2tncm91bmQtY29sb3I6IHNpbHZlcjsNCglwYWRkaW5nOiAxZXg7DQoJb3ZlcmZsb3c6IGhpZGRlbjsNCn0NCi5mb3RvIC5kZXNjIGgxIHsNCglmb250LXNpemU6IDExMCU7DQp9DQouZm90byAuZGVzYyBoMiB7DQoJZm9udC1zaXplOiAxMDUlOw0KfQ0KLmZvdG8gLmRlc2MgdWwgew0KCXBhZGRpbmc6IDA7DQoJbWFyZ2luOiAwOw0KfQ0KLmZvdG8gLmRlc2MgdWwgbGkgew0KCW1hcmdpbjogMDsNCglwYWRkaW5nOiAwOw0KCWxpc3Qtc3R5bGUtcG9zaXRpb246IGluc2lkZTsNCn0NCi5mb3RvIGltZyB7DQoJZmxvYXQ6IGxlZnQ7DQp9DQouaW5mYnV0dG9uIHsNCgl3aWR0aDogMTZweDsNCgl2ZXJ0aWNhbC1hbGlnbjogbWlkZGxlOw0KCWRpc3BsYXk6IGlubGluZTsNCgltYXJnaW46IDJweDsgDQp9DQouaW5mYnV0dG9uIGEgew0KCXRleHQtZGVjb3JhdGlvbjogbm9uZTsNCglib3JkZXI6IDA7DQp9DQouaW5mYnV0dG9uIGltZyB7DQoJdmVydGljYWwtYWxpZ246IG1pZGRsZTsNCn0NCi5jbGFsbHsNCgljbGVhcjogYm90aDsNCn0NCi5sb2NrIHsNCglwb3NpdGlvbjogYWJzb2x1dGU7DQp9DQovKiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09ICovDQp1bC50YWJzIHsNCgltYXJnaW46IDA7DQoJcGFkZGluZzogMDsNCglmbG9hdDogbGVmdDsNCglsaXN0LXN0eWxlOiBub25lOw0KCWhlaWdodDogMjZweDsNCglib3JkZXItYm90dG9tOiAxcHggc29saWQgIzk5OTsNCgl3aWR0aDogMTAwJTsNCn0NCnVsLnRhYnMgbGkgew0KCWZsb2F0OiBsZWZ0Ow0KCW1hcmdpbjogMDsNCglwYWRkaW5nOiAwOw0KCWhlaWdodDogMjVweDsgDQoJbGluZS1oZWlnaHQ6IDI1cHg7DQoJYm9yZGVyOiAxcHggc29saWQgIzk5OTsNCglib3JkZXItbGVmdDogbm9uZTsNCgltYXJnaW4tYm90dG9tOiAtMXB4Ow0KCW92ZXJmbG93OiBoaWRkZW47DQoJcG9zaXRpb246IHJlbGF0aXZlOw0KCWJhY2tncm91bmQ6ICNlMGUwZTA7DQp9DQp1bC50YWJzIGxpIGEgew0KCXRleHQtZGVjb3JhdGlvbjogbm9uZTsNCgljb2xvcjogIzAwMDsNCglkaXNwbGF5OiBibG9jazsNCglwYWRkaW5nOiAwIDFleDsNCglvdXRsaW5lOiBub25lOw0KfQ0KdWwudGFicyBsaSBhOmhvdmVyIHsNCgliYWNrZ3JvdW5kOiAjY2NjOw0KfQ0KaHRtbCB1bC50YWJzIGxpLmFjdGl2ZSwgaHRtbCB1bC50YWJzIGxpLmFjdGl2ZSBhOmhvdmVyICB7DQoJYmFja2dyb3VuZDogI2ZmZjsNCglib3JkZXItYm90dG9tOiAxcHggc29saWQgI2ZmZjsNCn0NCi50YWJfY29udGVudCB7DQoNCn0NCi50YWJfaW5uZXJfY29udGVudCB7DQoJY2xlYXI6IGJvdGg7DQoJcGFkZGluZzogMWV4Ow0KCWNvbG9yOiAjMDAwOw0KCWxpbmUtaGVpZ2h0OiAxNDAlOw0KfQ0KLnRhYl9pbm5lcl9jb250ZW50IGEgew0KCWNvbG9yOiAjMDA5Ow0KfQ0KLmNyZWRpdHNfY29udGVudCB7DQoJcGFkZGluZzogMWVtOyAgICAgICAgIA0KfQ0KLmNyZWRpdHNfY29udGVudCBsaXsNCgltYXJnaW4tbGVmdDogMWVtOyAgICAgDQp9DQpvbCBsaXsNCglsaXN0LXN0eWxlOiBpbnNpZGU7DQoJbGlzdC1zdHlsZS10eXBlOiBkZWNpbWFsOw0KfQ0KLmdwcy1jb250YWluZXIgew0KCWhlaWdodDogNTAwcHg7IA0KCW92ZXJmbG93OiBhdXRvOw0KfQ0KLm1zZ2JveCB7DQoJYm9yZGVyOiAycHggc29saWQgYmxhY2s7DQoJYmFja2dyb3VuZDogI2FhYTsNCglib3JkZXItcmFkaXVzOiAxMHB4OyAgICAgIA0KCXBhZGRpbmc6IDFleDsNCgltYXJnaW46IDJleCBhdXRvOw0KCW1pbi13aWR0aDogMjAwcHg7DQoJd2lkdGg6IDUwJTsgDQp9DQouY2VudGVyIHsNCgl0ZXh0LWFsaWduOiBjZW50ZXI7ICAgICAgICAgDQp9DQoubXNnYm94IGlucHV0IHsNCglwYWRkaW5nOiAwLjVleDsgICAgIA0KCXdpZHRoOiAxNTBweDsgICANCn0NCmxhYmVsIHsgIA0KfQ0KI3RhYi1leGlmIC50YWJfaW5uZXJfY29udGVudCBkaXYgew0KCWJvcmRlci1ib3R0b206IDFweCBkYXNoZWQgIzAwMDsNCn0NCiN0YWItZXhpZiAudGFiX2lubmVyX2NvbnRlbnQgc3Ryb25new0KCWZsb2F0OiByaWdodDsNCn0="); exit;
 		}
 		
 		if (isset($_GET["static"]) && $_GET["static"]==="sigal.min") {
@@ -77,12 +77,12 @@
 
   
   @set_time_limit(120);
-  
+  error_reporting(6135);   
 
 
  
 class Sigal {
-  public $version = '1.4.1';
+  public $version = '1.4.5';
 
   
   public $dir = 'pictures';
@@ -218,11 +218,7 @@ class Sigal {
 
   
   
-  public $html_tail = '<div id="credits"><!--LEGALNOTICE--><br />
-  Powered by <a href="http://gimli2.gipix.net/sigal/">SiGal</a> |
-  <a href="?credits">Settings &amp; info</a>
-  </div>
-  </body></html>';
+  public $html_tail = '';
   
   
   
@@ -240,6 +236,13 @@ class Sigal {
       $gajs_replacement =  '<script type="text/javascript" src="./ga.js"></script>'."\n";
       $this->html_head = str_replace('<!--GAJS-->', $gajs_replacement, $this->html_head);
     }
+
+    $this->html_tail = '<div id="credits"><!--LEGALNOTICE--><br />
+    '.$this->lang('Powered by').' <a href="http://gimli2.gipix.net/sigal/">SiGal</a> |
+    <a href="?credits">'.$this->lang('Settings &amp; info').'</a>
+    </div>
+    </body></html>';
+
         $this->html_tail = str_replace('<!--LEGALNOTICE-->', $this->legal_notice.'<br/> lang='.$this->LANG, $this->html_tail);
   }
   
@@ -291,8 +294,8 @@ class Sigal {
     
     if ($albtop!==NULL) {
         echo '<div class="header">'.$this->lang('Navigation').': ';
-        echo '<a href="?alb='.urlencode($this->getparentdir($aname)).'">Back to parent album</a>';
-        echo ' | <a href="?">Back to top level</a>';
+        echo '<a href="?alb='.urlencode($this->getparentdir($aname)).'">'.$this->lang('Back to parent album').'</a>';
+        echo ' | <a href="?">'.$this->lang('Back to top level').'</a>';
         echo '</div>';
     }
 
@@ -337,7 +340,7 @@ class Sigal {
 
         echo '<div class="album-thumb">';
                 if (array_search($a.'/'.$this->lockfname, $content)!==FALSE) {
-          echo '<img src="?static=lock" height="32" alt="locked" title="access restricted" class="lock" />';
+          echo '<img src="?static=lock" height="32" alt="'.$this->lang('locked').'" title="'.$this->lang('access restricted').'" class="lock" />';
         }
         echo '<a href="?alb='.$this->urlpathencode($bn).'" title="'.$bn.'">';
         if ($thumb === $this->defaultIcon || $thumb === $this->defaultDirIcon || file_exists($thumb)) {
@@ -360,8 +363,8 @@ class Sigal {
 
     if ($albtop!==NULL) {
         echo '<div class="footer">'.$this->lang('Navigation').': ';
-        echo '<a href="?alb='.urlencode($this->getparentdir($aname)).'" onclick="history.back();">Back to parent album</a>';
-        echo ' | <a href="?">Back to top level</a>';
+        echo '<a href="?alb='.urlencode($this->getparentdir($aname)).'" onclick="history.back();">'.$this->lang('Back to parent album').'</a>';
+        echo ' | <a href="?">'.$this->lang('Back to top level').'</a>';
         echo '</div>';
     }
     
@@ -388,9 +391,9 @@ class Sigal {
     echo '<div class="header">'.$this->lang('Navigation').': ';
     echo '<a href="?alb='.urlencode($this->getparentdir($aname)).'">'.$this->lang('Back to album selection').'</a>';
     if ($this->enable_mass_download) {
-      echo ' | Functions: ';
-      echo '<a href="?#" onClick="javascript:dowloadselected(); return false;">Download selected images (<span id="multipledownloadlinkcnt">0</span>)</a>';
-      echo ', <a href="?#" onClick="javascript:toggleAllCheckboxes(); return false;">toggle all</a>';
+      echo ' | '.$this->lang('Functions').': ';
+      echo '<a href="?#" onClick="javascript:dowloadselected(); return false;">'.$this->lang('Download selected images').' (<span id="multipledownloadlinkcnt">0</span>)</a>';
+      echo ', <a href="?#" onClick="javascript:toggleAllCheckboxes(); return false;">'.$this->lang('toggle all').'</a>';
     }
     echo '</div>';
 
@@ -413,7 +416,7 @@ class Sigal {
                 if ($middle===$this->defaultIcon) {
           if (is_dir($f)) {
                         if (file_exists($f.'/'.$this->lockfname)) {
-              echo '<img src="?static=lock" height="32" alt="locked" title="access restricted" class="lock" />';
+              echo '<img src="?static=lock" height="32" alt="'.$this->lang('locked').'" title="'.$this->lang('access restricted').'" class="lock" />';
             }
             echo '<a href="?alb='.urlencode($bn).'" title="'.$bn.'">';
           } else {
@@ -439,10 +442,10 @@ class Sigal {
       echo $this->getImageTitle($f);
       echo '<div class="desc">';
       echo date($this->date_format, filemtime($f));
-      echo '<div class="infbutton"><a href="?foto='.urlencode($bn).'#tab-base"><img src="?static=info" alt="Detailed info" title="Detailed info (EXIF, GPS)" /></a></div>';
-      echo '<div class="infbutton"><a href="'.$f.'#t"><img src="?static=download" alt="Download" title="Download full size" /></a></div>';
+      echo '<div class="infbutton"><a href="?foto='.urlencode($bn).'#tab-base"><img src="?static=info" alt="'.$this->lang('Detailed info').'" title="'.$this->lang('Detailed info (EXIF, GPS)').'" /></a></div>';
+      echo '<div class="infbutton"><a href="'.$f.'#t"><img src="?static=download" alt="'.$this->lang('Download').'" title="'.$this->lang('Download full size').'" /></a></div>';
       if ($this->enable_mass_download) {
-        echo '<div class="infbutton"><input type="checkbox" name="i[]" value="'.$f.'" onClick="addToDownload(\''.$f.'\')" title="+/- to multiple download" /></div>';
+        echo '<div class="infbutton"><input type="checkbox" name="i[]" value="'.$f.'" onClick="addToDownload(\''.$f.'\')" title="'.$this->lang('+/- to multiple download').'" /></div>';
       }
       echo '</div>';
       echo '</div>'."\n";
@@ -450,7 +453,7 @@ class Sigal {
     }
     echo '</div>';
     echo '<script src="?static=lazy.min"></script><script>lazy.init({delay:200});</script>';
-    echo '<div class="footer">Navigation: <a href="?alb='.urlencode($this->getparentdir($aname)).'">'.$this->lang('Back to album selection').'</a></div>';
+    echo '<div class="footer">'.$this->lang('Navigation').': <a href="?alb='.urlencode($this->getparentdir($aname)).'">'.$this->lang('Back to album selection').'</a></div>';
     echo $this->html_tail;
   }
   
@@ -475,7 +478,7 @@ class Sigal {
     
         if ($this->islocked && !$this->isAccessible()) {
       $this->showPassForm();
-      echo '<div class="footer">Navigation: <a href="?">Back to album selection</a></div>';
+      echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->lang('Back to album selection').'</a></div>';
       echo $this->html_tail;
       die();
     }
@@ -484,12 +487,12 @@ class Sigal {
     if (in_array($ext, $this->extsVideo)) {
       echo '<video height="480" width="854" src="'.$f.'" controls="controls">';
       echo '<source src="'.$f.'" type="'.$this->avMime[$ext].'" />';
-      echo 'Your browser does not support the video tag.';
+      echo $this->lang('Your browser does not support the video tag.');
       echo '</video>';
     } elseif (in_array($ext, $this->extsAudio)) {
       echo '<audio src="'.$f.'" controls="controls">';
       echo '<source src="'.$f.'" type="'.$this->avMime[$ext].'" />';
-      echo 'Your browser does not support the audio tag.';
+      echo $this->lang('Your browser does not support the audio tag.');
       echo '</audio>';
     } else {
       $middle = $this->getMiddleName($f);
@@ -500,18 +503,20 @@ class Sigal {
       }
     }
     echo '<div class="desc">';
-    echo '<div>Navigation: <a href="?alb='.$this->urlpathencode($this->basepathname(substr($f,0,-1*strlen(basename($f))-1))).'">Back to album thumbnails</a></div><br />';
+    echo '<div>'.$this->lang('Navigation').': <a href="?alb='.$this->urlpathencode($this->basepathname(substr($f,0,-1*strlen(basename($f))-1))).'">'.$this->lang('Back to album thumbnails').'</a></div><br />';
     
     echo '<ul class="tabs">';
-    echo '  <li><a href="#tab-base">Base info</a></li>';
-    if ($this->show_exif_tab) echo '  <li><a href="#tab-exif">EXIF details</a></li>';
-    if ($this->show_gps_tab)  echo '  <li><a href="#tab-gps">GPS</a></li>';
+    echo '  <li><a href="#tab-base">'.$this->lang('Base info').'</a></li>';
+    if ($this->show_exif_tab) echo '  <li><a href="#tab-exif">'.$this->lang('EXIF details').'</a></li>';
+    if ($this->show_gps_tab)  echo '  <li><a href="#tab-gps">'.$this->lang('GPS').'</a></li>';
     echo '</ul>';
     
     echo '<div id="tab-base" class="tab_content">';
     echo '<div class="tab_inner_content">';
-    echo '<h1>'.$bn.'</h1>';
-    echo '<a href="'.$f.'">download full size</a> ('.round(filesize($f)/(1024*1024),2).' MB)';
+    echo '<p>'.$this->lang('File name').':</p>';
+    echo '<h1>'.basename($bn).'</h1>';
+    echo '<p>'.$this->lang('Links').':</p>';
+    echo '<a href="'.$f.'">'.$this->lang('download full size').'</a> ('.round(filesize($f)/(1024*1024),2).' MB)';
     echo '</div>';
     echo '</div>';
 
@@ -520,17 +525,15 @@ class Sigal {
       if ($this->show_exif_tab) {
         echo '<div id="tab-exif" class="tab_content">';
         echo '<div class="tab_inner_content">';
-        echo '<ul>';
-        echo '<li>date: <strong>'.$exif['DateTimeOriginal'].'</strong></li>';
-        echo '<li>orig. filesize: <strong>'.round($exif['FileSize']/(1024*1024),2).' MB</strong></li>';
-        echo '<li>orig. size: <strong>'.$exif['COMPUTED']['Width'].'*'.$exif['COMPUTED']['Height'].' px</strong></li>';
-        echo '<li>exposition: '.$exif['ExposureTime'].' s</li>';
-        echo '<li>ISO: '.$exif['ISOSpeedRatings'].'</li>';
-        echo '<li>Anum: '.$exif['COMPUTED']['ApertureFNumber'].'</li>';
-        echo '<li>FocalLength: '.$exif['FocalLength'].' mm</li>';
-        echo '<li>Orientation: '.$exif['Orientation'].'</li>';
-        echo '<li>Camera model: '.$exif['Model'].'</li>';
-        echo '</ul>';
+        echo '<div><label>'.$this->lang('date').': </label><strong>'.$exif['DateTimeOriginal'].'</strong></div>';
+        echo '<div><label>'.$this->lang('orig. filesize').': </label><strong>'.round($exif['FileSize']/(1024*1024),2).' MB</strong></div>';
+        echo '<div><label>'.$this->lang('orig. size').': </label><strong>'.$exif['COMPUTED']['Width'].'×'.$exif['COMPUTED']['Height'].' px</strong></div>';
+        echo '<div><label>'.$this->lang('exposition').': </label><strong>'.$exif['ExposureTime'].' s</strong></div>';
+        echo '<div><label>'.$this->lang('ISO').': </label><strong>'.$exif['ISOSpeedRatings'].'</strong></div>';
+        echo '<div><label>'.$this->lang('Anum').': </label><strong>'.$exif['COMPUTED']['ApertureFNumber'].'</strong></div>';
+        echo '<div><label>'.$this->lang('FocalLength').': </label><strong>'.$exif['FocalLength'].' mm</strong></div>';
+        echo '<div><label>'.$this->lang('Orientation').': </label><strong>'.$exif['Orientation'].'</strong></div>';
+        echo '<div><label>'.$this->lang('Camera model').': </label><strong>'.$exif['Model'].'</strong></div>';
         echo '</div>';
         echo '</div>';
       }
@@ -541,9 +544,12 @@ class Sigal {
         if ($this->hasGPSData($exif)) {
           $gps = $this->getGPSLatLon($exif);
           $hgps = $this->getHumanGPS($gps[0], $gps[1]);
+          echo '<p>'.$this->lang('Position').':</p>';
           echo '<h2>'.$hgps['lat'].', '.$hgps['lon'].'</h2>';
+          echo '<p>'.$this->lang('Links').':</p>';
           echo '<a href="http://mapy.cz/#t=s&q='.urlencode($gps[0].', '.$gps[1]).'">mapy.cz</a><br />';
-          echo '<a href="http://maps.google.cz/maps?q='.urlencode($gps[0].', '.$gps[1]).'">maps.google.com</a><br /><br />';
+          echo '<a href="http://maps.google.cz/maps?q='.urlencode($gps[0].', '.$gps[1]).'">maps.google.com</a><br />';
+          echo '<p>'.$this->lang('Maps').':</p>';
           echo '<div class="gps-container">';
           echo '<div>';
           echo '<img src="http://pafciu17.dev.openstreetmap.org/?module=map&center='.$gps[1].','.$gps[0].',&zoom=13&type=mapnik&width=240&height=240&points='.$gps[1].','.$gps[0].',pointImagePattern:red" /><br class="clall">';
@@ -556,7 +562,7 @@ class Sigal {
           echo '</div>';
           echo '</div>';
         }  else {
-          echo 'No GPS data.';
+          echo $this->lang('No GPS data.');
         }
         echo '</div>';
         echo '</div>';
@@ -564,12 +570,12 @@ class Sigal {
     } else {
             if ($this->show_exif_tab) {
         echo '<div id="tab-exif" class="tab_content">';
-        echo 'No EXIF data.';
+        echo $this->lang('No EXIF data.');
         echo '</div>';
       }
       if ($this->show_gps_tab) {
         echo '<div id="tab-gps" class="tab_content">';
-        echo 'No GPS data.';
+        echo $this->lang('No GPS data.');
         echo '</div>';
       }
     }
@@ -609,7 +615,7 @@ class Sigal {
   
   public function showCreditPage() {
     echo str_replace('{title}', $this->galTitle, $this->html_head);
-    echo '<div class="header"><h1>Settings, info, credits and license</h1></div>';
+    echo '<div class="header"><h1>'.$this->lang('Settings, info, credits and license').'</h1></div>';
 
     echo '<div class="credits_content">';
     echo '<h2>Settings</h2>';
@@ -748,8 +754,8 @@ echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->la
       }
     }
 
-        $data  = "Downloaded ".date("Y-m-d H:i")." from ".$_POST['imgalbum']."\r\n--\r\n";
-    $data .= "Simple gallery script SiGal: http://gimli2.gipix.net/sigal/ \r\n";
+        $data  = $this->lang('Downloaded').' '.date("Y-m-d H:i")." from ".$_POST['imgalbum']."\r\n--\r\n";
+    $data .= 'Simple gallery script SiGal: http://gimli2.gipix.net/sigal/ '."\r\n";
     $zip->addFile($data, $archive."/readme.txt");
 
     return $zip->finalize();

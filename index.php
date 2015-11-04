@@ -5,6 +5,7 @@
 
   /*========================================================================*/
   @set_time_limit(120);
+  error_reporting(6135); // errors and warnings
   include_once 'sigal.class.php';
   include_once 'zipstream.class.php';
   include_once 'functions.php'; // olny for language switching combobox

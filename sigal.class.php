@@ -15,7 +15,7 @@
  * @brief      Simple gallery script provides single-file web gallery.
  */ 
 class Sigal {
-  public $version = '1.4.1';
+  public $version = '1.4.5';
 
   /** Directory with pictures. */
   public $dir = 'pictures';
@@ -153,11 +153,7 @@ class Sigal {
 
   /*========================================================================*/
   /** HTML tail of each page of galllery. */
-  public $html_tail = '<div id="credits"><!--LEGALNOTICE--><br />
-  Powered by <a href="http://gimli2.gipix.net/sigal/">SiGal</a> |
-  <a href="?credits">Settings &amp; info</a>
-  </div>
-  </body></html>';
+  public $html_tail = '';
   
   /*========================================================================*/
   /*========================================================================*/
@@ -180,6 +176,13 @@ class Sigal {
       $gajs_replacement =  '<script type="text/javascript" src="./ga.js"></script>'."\n";
       $this->html_head = str_replace('<!--GAJS-->', $gajs_replacement, $this->html_head);
     }
+
+    $this->html_tail = '<div id="credits"><!--LEGALNOTICE--><br />
+    '.$this->lang('Powered by').' <a href="http://gimli2.gipix.net/sigal/">SiGal</a> |
+    <a href="?credits">'.$this->lang('Settings &amp; info').'</a>
+    </div>
+    </body></html>';
+
     // replace copyright and license
     $this->html_tail = str_replace('<!--LEGALNOTICE-->', $this->legal_notice.'<br/> lang='.$this->LANG, $this->html_tail);
   }
@@ -243,8 +246,8 @@ class Sigal {
 
     if ($albtop!==NULL) {
         echo '<div class="header">'.$this->lang('Navigation').': ';
-        echo '<a href="?alb='.urlencode($this->getparentdir($aname)).'">Back to parent album</a>';
-        echo ' | <a href="?">Back to top level</a>';
+        echo '<a href="?alb='.urlencode($this->getparentdir($aname)).'">'.$this->lang('Back to parent album').'</a>';
+        echo ' | <a href="?">'.$this->lang('Back to top level').'</a>';
         echo '</div>';
     }
 
@@ -298,7 +301,7 @@ class Sigal {
         echo '<div class="album-thumb">';
         // is locked?
         if (array_search($a.'/'.$this->lockfname, $content)!==FALSE) {
-          echo '<img src="?static=lock" height="32" alt="locked" title="access restricted" class="lock" />';
+          echo '<img src="?static=lock" height="32" alt="'.$this->lang('locked').'" title="'.$this->lang('access restricted').'" class="lock" />';
         }
         echo '<a href="?alb='.$this->urlpathencode($bn).'" title="'.$bn.'">';
         if ($thumb === $this->defaultIcon || $thumb === $this->defaultDirIcon || file_exists($thumb)) {
@@ -321,8 +324,8 @@ class Sigal {
 
     if ($albtop!==NULL) {
         echo '<div class="footer">'.$this->lang('Navigation').': ';
-        echo '<a href="?alb='.urlencode($this->getparentdir($aname)).'" onclick="history.back();">Back to parent album</a>';
-        echo ' | <a href="?">Back to top level</a>';
+        echo '<a href="?alb='.urlencode($this->getparentdir($aname)).'" onclick="history.back();">'.$this->lang('Back to parent album').'</a>';
+        echo ' | <a href="?">'.$this->lang('Back to top level').'</a>';
         echo '</div>';
     }
     
@@ -353,9 +356,9 @@ class Sigal {
     echo '<div class="header">'.$this->lang('Navigation').': ';
     echo '<a href="?alb='.urlencode($this->getparentdir($aname)).'">'.$this->lang('Back to album selection').'</a>';
     if ($this->enable_mass_download) {
-      echo ' | Functions: ';
-      echo '<a href="?#" onClick="javascript:dowloadselected(); return false;">Download selected images (<span id="multipledownloadlinkcnt">0</span>)</a>';
-      echo ', <a href="?#" onClick="javascript:toggleAllCheckboxes(); return false;">toggle all</a>';
+      echo ' | '.$this->lang('Functions').': ';
+      echo '<a href="?#" onClick="javascript:dowloadselected(); return false;">'.$this->lang('Download selected images').' (<span id="multipledownloadlinkcnt">0</span>)</a>';
+      echo ', <a href="?#" onClick="javascript:toggleAllCheckboxes(); return false;">'.$this->lang('toggle all').'</a>';
     }
     echo '</div>';
 
@@ -383,7 +386,7 @@ class Sigal {
           if (is_dir($f)) {
             // handle hierarchy
             if (file_exists($f.'/'.$this->lockfname)) {
-              echo '<img src="?static=lock" height="32" alt="locked" title="access restricted" class="lock" />';
+              echo '<img src="?static=lock" height="32" alt="'.$this->lang('locked').'" title="'.$this->lang('access restricted').'" class="lock" />';
             }
             echo '<a href="?alb='.urlencode($bn).'" title="'.$bn.'">';
           } else {
@@ -410,10 +413,10 @@ class Sigal {
       echo $this->getImageTitle($f);
       echo '<div class="desc">';
       echo date($this->date_format, filemtime($f));
-      echo '<div class="infbutton"><a href="?foto='.urlencode($bn).'#tab-base"><img src="?static=info" alt="Detailed info" title="Detailed info (EXIF, GPS)" /></a></div>';
-      echo '<div class="infbutton"><a href="'.$f.'#t"><img src="?static=download" alt="Download" title="Download full size" /></a></div>';
+      echo '<div class="infbutton"><a href="?foto='.urlencode($bn).'#tab-base"><img src="?static=info" alt="'.$this->lang('Detailed info').'" title="'.$this->lang('Detailed info (EXIF, GPS)').'" /></a></div>';
+      echo '<div class="infbutton"><a href="'.$f.'#t"><img src="?static=download" alt="'.$this->lang('Download').'" title="'.$this->lang('Download full size').'" /></a></div>';
       if ($this->enable_mass_download) {
-        echo '<div class="infbutton"><input type="checkbox" name="i[]" value="'.$f.'" onClick="addToDownload(\''.$f.'\')" title="+/- to multiple download" /></div>';
+        echo '<div class="infbutton"><input type="checkbox" name="i[]" value="'.$f.'" onClick="addToDownload(\''.$f.'\')" title="'.$this->lang('+/- to multiple download').'" /></div>';
       }
       echo '</div>';
       echo '</div>'."\n";
@@ -421,7 +424,7 @@ class Sigal {
     }
     echo '</div>';
     echo '<script src="?static=lazy.min"></script><script>lazy.init({delay:200});</script>';
-    echo '<div class="footer">Navigation: <a href="?alb='.urlencode($this->getparentdir($aname)).'">'.$this->lang('Back to album selection').'</a></div>';
+    echo '<div class="footer">'.$this->lang('Navigation').': <a href="?alb='.urlencode($this->getparentdir($aname)).'">'.$this->lang('Back to album selection').'</a></div>';
     echo $this->html_tail;
   }
   /*========================================================================*/
@@ -452,7 +455,7 @@ class Sigal {
     // je to zamcene?
     if ($this->islocked && !$this->isAccessible()) {
       $this->showPassForm();
-      echo '<div class="footer">Navigation: <a href="?">Back to album selection</a></div>';
+      echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->lang('Back to album selection').'</a></div>';
       echo $this->html_tail;
       die();
     }
@@ -461,12 +464,12 @@ class Sigal {
     if (in_array($ext, $this->extsVideo)) {
       echo '<video height="480" width="854" src="'.$f.'" controls="controls">';
       echo '<source src="'.$f.'" type="'.$this->avMime[$ext].'" />';
-      echo 'Your browser does not support the video tag.';
+      echo $this->lang('Your browser does not support the video tag.');
       echo '</video>';
     } elseif (in_array($ext, $this->extsAudio)) {
       echo '<audio src="'.$f.'" controls="controls">';
       echo '<source src="'.$f.'" type="'.$this->avMime[$ext].'" />';
-      echo 'Your browser does not support the audio tag.';
+      echo $this->lang('Your browser does not support the audio tag.');
       echo '</audio>';
     } else {
       $middle = $this->getMiddleName($f);
@@ -477,18 +480,20 @@ class Sigal {
       }
     }
     echo '<div class="desc">';
-    echo '<div>Navigation: <a href="?alb='.$this->urlpathencode($this->basepathname(substr($f,0,-1*strlen(basename($f))-1))).'">Back to album thumbnails</a></div><br />';
+    echo '<div>'.$this->lang('Navigation').': <a href="?alb='.$this->urlpathencode($this->basepathname(substr($f,0,-1*strlen(basename($f))-1))).'">'.$this->lang('Back to album thumbnails').'</a></div><br />';
     
     echo '<ul class="tabs">';
-    echo '  <li><a href="#tab-base">Base info</a></li>';
-    if ($this->show_exif_tab) echo '  <li><a href="#tab-exif">EXIF details</a></li>';
-    if ($this->show_gps_tab)  echo '  <li><a href="#tab-gps">GPS</a></li>';
+    echo '  <li><a href="#tab-base">'.$this->lang('Base info').'</a></li>';
+    if ($this->show_exif_tab) echo '  <li><a href="#tab-exif">'.$this->lang('EXIF details').'</a></li>';
+    if ($this->show_gps_tab)  echo '  <li><a href="#tab-gps">'.$this->lang('GPS').'</a></li>';
     echo '</ul>';
     
     echo '<div id="tab-base" class="tab_content">';
     echo '<div class="tab_inner_content">';
-    echo '<h1>'.$bn.'</h1>';
-    echo '<a href="'.$f.'">download full size</a> ('.round(filesize($f)/(1024*1024),2).' MB)';
+    echo '<p>'.$this->lang('File name').':</p>';
+    echo '<h1>'.basename($bn).'</h1>';
+    echo '<p>'.$this->lang('Links').':</p>';
+    echo '<a href="'.$f.'">'.$this->lang('download full size').'</a> ('.round(filesize($f)/(1024*1024),2).' MB)';
     echo '</div>';
     echo '</div>';
 
@@ -498,17 +503,15 @@ class Sigal {
       if ($this->show_exif_tab) {
         echo '<div id="tab-exif" class="tab_content">';
         echo '<div class="tab_inner_content">';
-        echo '<ul>';
-        echo '<li>date: <strong>'.$exif['DateTimeOriginal'].'</strong></li>';
-        echo '<li>orig. filesize: <strong>'.round($exif['FileSize']/(1024*1024),2).' MB</strong></li>';
-        echo '<li>orig. size: <strong>'.$exif['COMPUTED']['Width'].'*'.$exif['COMPUTED']['Height'].' px</strong></li>';
-        echo '<li>exposition: '.$exif['ExposureTime'].' s</li>';
-        echo '<li>ISO: '.$exif['ISOSpeedRatings'].'</li>';
-        echo '<li>Anum: '.$exif['COMPUTED']['ApertureFNumber'].'</li>';
-        echo '<li>FocalLength: '.$exif['FocalLength'].' mm</li>';
-        echo '<li>Orientation: '.$exif['Orientation'].'</li>';
-        echo '<li>Camera model: '.$exif['Model'].'</li>';
-        echo '</ul>';
+        echo '<div><label>'.$this->lang('date').': </label><strong>'.$exif['DateTimeOriginal'].'</strong></div>';
+        echo '<div><label>'.$this->lang('orig. filesize').': </label><strong>'.round($exif['FileSize']/(1024*1024),2).' MB</strong></div>';
+        echo '<div><label>'.$this->lang('orig. size').': </label><strong>'.$exif['COMPUTED']['Width'].'×'.$exif['COMPUTED']['Height'].' px</strong></div>';
+        echo '<div><label>'.$this->lang('exposition').': </label><strong>'.$exif['ExposureTime'].' s</strong></div>';
+        echo '<div><label>'.$this->lang('ISO').': </label><strong>'.$exif['ISOSpeedRatings'].'</strong></div>';
+        echo '<div><label>'.$this->lang('Anum').': </label><strong>'.$exif['COMPUTED']['ApertureFNumber'].'</strong></div>';
+        echo '<div><label>'.$this->lang('FocalLength').': </label><strong>'.$exif['FocalLength'].' mm</strong></div>';
+        echo '<div><label>'.$this->lang('Orientation').': </label><strong>'.$exif['Orientation'].'</strong></div>';
+        echo '<div><label>'.$this->lang('Camera model').': </label><strong>'.$exif['Model'].'</strong></div>';
         echo '</div>';
         echo '</div>';
       }
@@ -520,9 +523,12 @@ class Sigal {
         if ($this->hasGPSData($exif)) {
           $gps = $this->getGPSLatLon($exif);
           $hgps = $this->getHumanGPS($gps[0], $gps[1]);
+          echo '<p>'.$this->lang('Position').':</p>';
           echo '<h2>'.$hgps['lat'].', '.$hgps['lon'].'</h2>';
+          echo '<p>'.$this->lang('Links').':</p>';
           echo '<a href="http://mapy.cz/#t=s&q='.urlencode($gps[0].', '.$gps[1]).'">mapy.cz</a><br />';
-          echo '<a href="http://maps.google.cz/maps?q='.urlencode($gps[0].', '.$gps[1]).'">maps.google.com</a><br /><br />';
+          echo '<a href="http://maps.google.cz/maps?q='.urlencode($gps[0].', '.$gps[1]).'">maps.google.com</a><br />';
+          echo '<p>'.$this->lang('Maps').':</p>';
           echo '<div class="gps-container">';
           echo '<div>';
           echo '<img src="http://pafciu17.dev.openstreetmap.org/?module=map&center='.$gps[1].','.$gps[0].',&zoom=13&type=mapnik&width=240&height=240&points='.$gps[1].','.$gps[0].',pointImagePattern:red" /><br class="clall">';
@@ -535,7 +541,7 @@ class Sigal {
           echo '</div>';
           echo '</div>';
         }  else {
-          echo 'No GPS data.';
+          echo $this->lang('No GPS data.');
         }
         echo '</div>';
         echo '</div>';
@@ -544,12 +550,12 @@ class Sigal {
       // no exif
       if ($this->show_exif_tab) {
         echo '<div id="tab-exif" class="tab_content">';
-        echo 'No EXIF data.';
+        echo $this->lang('No EXIF data.');
         echo '</div>';
       }
       if ($this->show_gps_tab) {
         echo '<div id="tab-gps" class="tab_content">';
-        echo 'No GPS data.';
+        echo $this->lang('No GPS data.');
         echo '</div>';
       }
     }
@@ -583,7 +589,7 @@ class Sigal {
    */
   public function showCreditPage() {
     echo str_replace('{title}', $this->galTitle, $this->html_head);
-    echo '<div class="header"><h1>Settings, info, credits and license</h1></div>';
+    echo '<div class="header"><h1>'.$this->lang('Settings, info, credits and license').'</h1></div>';
 
     echo '<div class="credits_content">';
     echo '<h2>Settings</h2>';
@@ -708,8 +714,8 @@ class Sigal {
     }
 
     // add readme
-    $data  = "Downloaded ".date("Y-m-d H:i")." from ".$_POST['imgalbum']."\r\n--\r\n";
-    $data .= "Simple gallery script SiGal: http://gimli2.gipix.net/sigal/ \r\n";
+    $data  = $this->lang('Downloaded').' '.date("Y-m-d H:i")." from ".$_POST['imgalbum']."\r\n--\r\n";
+    $data .= 'Simple gallery script SiGal: http://gimli2.gipix.net/sigal/ '."\r\n";
     $zip->addFile($data, $archive."/readme.txt");
 
     return $zip->finalize();
