@@ -15,7 +15,7 @@
  * @brief      Simple gallery script provides single-file web gallery.
  */ 
 class Sigal {
-  public $version = '1.4.5';
+  public $version = '1.4.6';
 
   /** Directory with pictures. */
   public $dir = 'pictures';
@@ -98,7 +98,6 @@ class Sigal {
 
 /** HTML head of each page of gallery. You can use string "{title}" which will be replaced by title of gallery defined above. */
   public $html_head = '<!DOCTYPE html><head><title>{title}</title>
-<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 <meta name="author" content="Gimli2; http://gimli2.gipix.net" />
 <link rel="shotcut icon" href="./images/favicon.png" />
 <link rel="stylesheet" href="./css/style.css" type="text/css" />
@@ -173,7 +172,7 @@ class Sigal {
     }
     // check whether ga.js exists (google analytics), if yes - use it
     if (file_exists('./ga.js')) {
-      $gajs_replacement =  '<script type="text/javascript" src="./ga.js"></script>'."\n";
+      $gajs_replacement =  '<script async type="text/javascript" src="./ga.js"></script>'."\n";
       $this->html_head = str_replace('<!--GAJS-->', $gajs_replacement, $this->html_head);
     }
 
@@ -731,6 +730,7 @@ class Sigal {
     if (file_exists($f) && in_array($ext, $this->extsIcon)) {
       $thumb = $this->resizeImage($f, $this->thumb_x);
       header('Location: '.$thumb);
+      header('Content-type: image/jpeg');
       die();
     }
     header('Status: 404 Not Found');
