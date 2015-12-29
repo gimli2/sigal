@@ -255,7 +255,7 @@ class Sigal {
       $bn = $this->basepathname($a);
       //echo $bn."<br>";
       // for subgalleries group by actual dir, not common parent dir
-      if (isset($this->func_groupname) && $this->func_groupname !== NULL && function_exists($this->func_groupname)) {
+      if (isset($this->func_groupname) && $this->func_groupname !== NULL && is_callable($this->func_groupname)) {
         $group = call_user_func($this->func_groupname, $bn);
       } else {
         // default grouping is by chars before "-" or "_"
@@ -565,7 +565,7 @@ class Sigal {
   public function showVideo($f) {
     $f = $this->dir . '/' . urldecode($f);
     $f = $this->sanitizePath($f);
-    if (isset($this->func_avfileplay) && $this->func_avfileplay !== NULL && function_exists($this->func_avfileplay)) {
+    if (isset($this->func_avfileplay) && $this->func_avfileplay !== NULL && is_callable($this->func_avfileplay)) {
         $group = call_user_func($this->func_avfileplay, $f);
     }
     header('Status: 404 Not Found');
@@ -598,7 +598,7 @@ class Sigal {
   /*========================================================================*/
   private function sortItems($array, $callback_id) {
     $callback = $this->$callback_id;
-    if (isset($callback) && $callback !== NULL && function_exists($callback)) {
+    if (isset($callback) && $callback !== NULL && is_callabe($callback)) {
       return call_user_func($callback, $array);
     }
     return $array;
@@ -610,7 +610,7 @@ class Sigal {
    */
   public function getAlbums($top = NULL) {
     if ($top===NULL) $top = $this->dir;
-    if (isset($this->func_getalbums) && $this->func_getalbums !== NULL && function_exists($this->func_getalbums)) {
+    if (isset($this->func_getalbums) && $this->func_getalbums !== NULL && is_callable($this->func_getalbums)) {
       $files = call_user_func($this->func_getalbums, $top, $this->exts);
       return $this->sortItems($files, 'func_sortalbums');
     }
@@ -655,7 +655,7 @@ class Sigal {
     $files = array();
 
     // if we have scanning callback defined, lets use it...
-    if (isset($this->func_scandir) && $this->func_scandir !== NULL && function_exists($this->func_scandir)) {
+    if (isset($this->func_scandir) && $this->func_scandir !== NULL && is_callable($this->func_scandir)) {
       $files = call_user_func($this->func_scandir, $dir);
     } else {
       $r = glob($dir.'/*');
@@ -856,7 +856,7 @@ class Sigal {
   private function getAlbumTitle($file){
     $bn = $this->basepathname($file);
 
-    if (isset($this->func_albumname) && $this->func_albumname !== NULL && function_exists($this->func_albumname)) {
+    if (isset($this->func_albumname) && $this->func_albumname !== NULL && is_callable($this->func_albumname)) {
       $title = call_user_func($this->func_albumname, $bn);
     } else {
       $patterns = array('~(19|20)(\d{2})-(\d{1,2})-(\d{1,2})_(.*)~si',
@@ -951,7 +951,7 @@ class Sigal {
     if(!file_exists($targetImagePath)) {
       $ext = strtolower($this->getExt($sourceImagePath));
 
-      if(isset($this->func_videoimage) && $this->func_videoimage !== NULL && function_exists($this->func_videoimage) && in_array($ext, $this->extsVideo)) {
+      if(isset($this->func_videoimage) && $this->func_videoimage !== NULL && is_callable($this->func_videoimage) && in_array($ext, $this->extsVideo)) {
         $group = call_user_func($this->func_videoimage, $path, $targetImageTempPath);
         $sourceImagePath = $targetImageTempPath;
         $ext = 'jpg';
