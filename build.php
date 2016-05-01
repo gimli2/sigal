@@ -1,7 +1,6 @@
 <?php
 set_time_limit(0);
 date_default_timezone_set('Europe/Prague');
-echo "\n<pre>\n";
 
 	$in  = './index.php';
 	$out = './index.min.php';
@@ -15,7 +14,8 @@ echo "\n<pre>\n";
 	if (isset($_GET['nocomment']) && $_GET['nocomment']===1) {
 		$nocomment = false;	// ve vystupu budou komentare
 	}
-	$comments = array(T_COMMENT, T_ML_COMMENT, T_DOC_COMMENT);
+	// TODO: php 5.5.9 unknown constants (2nd + 3rd)
+	$comments = @array(T_COMMENT, T_ML_COMMENT, T_DOC_COMMENT);
 
 	copy($in, $out);
 	$loop = 0;
@@ -28,13 +28,16 @@ echo "\n<pre>\n";
 		$ndata = '';
 		$i = 0;
 		while($i < $cnt) {
-			list($tid, $content) = $tokens[$i];
-			//if ($tid===T_INCLUDE || $tid === T_INCLUDE_ONCE || $tid === T_REQUIRE || $tid === T_REQUIRE_ONCE) {
+			$tid='';
+			
+			@list($tid, $content) = $tokens[$i];
+			
+			// if ($tid===T_INCLUDE || $tid === T_INCLUDE_ONCE || $tid === T_REQUIRE || $tid === T_REQUIRE_ONCE) {
 			// samotne include si ponechame pro nacitani pridavneho konfigu, takze se nesmi prelozit pri kompilaci
 			if ($tid === T_INCLUDE_ONCE || $tid === T_REQUIRE || $tid === T_REQUIRE_ONCE) {
 				$expr = '';
 				while($tid !== ';') {
-					list($tid, $content) = $tokens[++$i];
+					 @list($tid, $content) = $tokens[++$i];
 					if ($tid === T_STRING || $tid === T_CONSTANT_ENCAPSED_STRING) $expr .= $content; 
 				}
 				//echo "expr=$expr<br>";
@@ -109,14 +112,14 @@ echo "\n<pre>\n";
 	);
 	
 	foreach ($sfiles as $sf) {
-		echo "Importing static file: ".$sf." ";
+		echo "INC static file: ".$sf." ";
 		$key = substr(basename($sf), 0, strrpos(basename($sf), '.'));
 		$mime = 'text/plain';
 		// rozpoznavani na widlich neni moc spolehlive
 		if (function_exists('mime_content_type')) $mime = mime_content_type($sf);
 		if (getExtension($sf) == 'css') $mime = 'text/css';
 		if (getExtension($sf) == 'js') $mime = 'text/javascript';
-		echo ' a mime type was recognized as <b>'.$mime."</b>\n";
+		echo ' a mime type was recognized as '.$mime."\n";
     /*
     if ($mime == 'text/javascript') {
       $content = addslashes(file_get_contents($sf));
@@ -157,7 +160,6 @@ echo "\n<pre>\n";
 	$content = trim(preg_replace("#[\t ]+(\r?\n)#", '$1', $content)); // right trim
 	file_put_contents($out."min2", $content);	// save minified file
 */
-echo "\n</pre>\n";
 
 /*============================================================================*/
 function getExtension($fname) {
