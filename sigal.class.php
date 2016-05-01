@@ -7,7 +7,7 @@
  * @date      2012-2015
  * @copyright http://www.xfree86.org/3.3.6/COPYRIGHT2.html#5 Modified BSD License
  * @details   SiGal project page: http://gimli2.gipix.net/sigal/
- * @version   1.4.1
+ * @version   1.5
  *   
  */
 
@@ -15,7 +15,7 @@
  * @brief      Simple gallery script provides single-file web gallery.
  */ 
 class Sigal {
-  public $version = '1.4.6';
+  public $version = '1.5.0';
 
   /** Directory with pictures. */
   public $dir = 'pictures';
@@ -1178,7 +1178,8 @@ class Sigal {
       $this->LANG = $_COOKIE["sigal_lang"];
     } else {
       $accept_language = array();
-      preg_match_all('~([-a-z]+)(;q=([0-9.]+))?~', str_replace("_", "-", strtolower($_SERVER["HTTP_ACCEPT_LANGUAGE"])), $matches, PREG_SET_ORDER);
+      $browserLang = (isset($_SERVER["HTTP_ACCEPT_LANGUAGE"])) ? $_SERVER["HTTP_ACCEPT_LANGUAGE"] : '';
+      preg_match_all('~([-a-z]+)(;q=([0-9.]+))?~', str_replace("_", "-", strtolower($browserLang)), $matches, PREG_SET_ORDER);
       foreach ($matches as $match) {
         $accept_language[$match[1]] = (isset($match[3]) ? $match[3] : 1);
       }
