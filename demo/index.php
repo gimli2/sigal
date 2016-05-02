@@ -148,6 +148,8 @@ class Sigal {
   public $func_albumname = NULL;
   
   public $func_groupname = NULL;
+  
+	public $func_sortgroups = NULL;
 
   
   public $langs = array(
@@ -301,7 +303,7 @@ class Sigal {
         $albs_by_group = array();
         foreach($albs as $a) {
       $bn = $this->basepathname($a);
-                  if (isset($this->func_groupname) && $this->func_groupname !== NULL && function_exists($this->func_groupname)) {
+                  if (isset($this->func_groupname) && $this->func_groupname !== NULL && is_callable($this->func_groupname)) {
         $group = call_user_func($this->func_groupname, $bn);
       } else {
                 $cutpos = strpos($bn, '-');
@@ -313,7 +315,10 @@ class Sigal {
     }
 
     $tabs = 100;     $groups = array_keys($albs_by_group);
-        if(count($albs_by_group) > 1 || ( count($albs_by_group) == 1 && strlen($groups[0]) > 0) ) {
+    if (isset($this->func_sortgroups) && $this->func_sortgroups !== NULL && is_callable($this->func_sortgroups)) {
+      $groups = call_user_func($this->func_sortgroups, $groups);
+    }
+        		if(count($groups) > 1 || ( count($groups) == 1 && strlen($groups[0]) > 0) ) {
       echo '<ul class="tabs">';
       foreach ($groups as $g) {
         echo '<li><a href="#tab-'.$tabs.'">'.$g.'</a></li>';
@@ -323,7 +328,8 @@ class Sigal {
     }
     
     $tabs = 100;
-    foreach ($albs_by_group as $group => $albs) {
+    		foreach ($groups as $group) {
+      $albs = $albs_by_group[$group];
       echo '<div id="tab-'.$tabs.'" class="tab_content">';
       echo '<br class="clall" />';
       echo '<div class="tab_inner_content">';
@@ -587,7 +593,7 @@ class Sigal {
   public function showVideo($f) {
     $f = $this->dir . '/' . urldecode($f);
     $f = $this->sanitizePath($f);
-    if (isset($this->func_avfileplay) && $this->func_avfileplay !== NULL && function_exists($this->func_avfileplay)) {
+    if (isset($this->func_avfileplay) && $this->func_avfileplay !== NULL && is_callable($this->func_avfileplay)) {
         $group = call_user_func($this->func_avfileplay, $f);
     }
     header('Status: 404 Not Found');
@@ -666,7 +672,7 @@ echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->la
   
   private function sortItems($array, $callback_id) {
     $callback = $this->$callback_id;
-    if (isset($callback) && $callback !== NULL && function_exists($callback)) {
+    if (isset($callback) && $callback !== NULL && is_callable($callback)) {
       return call_user_func($callback, $array);
     }
     return $array;
@@ -675,7 +681,7 @@ echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->la
   
   public function getAlbums($top = NULL) {
     if ($top===NULL) $top = $this->dir;
-    if (isset($this->func_getalbums) && $this->func_getalbums !== NULL && function_exists($this->func_getalbums)) {
+    if (isset($this->func_getalbums) && $this->func_getalbums !== NULL && is_callable($this->func_getalbums)) {
       $files = call_user_func($this->func_getalbums, $top, $this->exts);
       return $this->sortItems($files, 'func_sortalbums');
     }
@@ -710,7 +716,7 @@ echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->la
     
     $files = array();
 
-        if (isset($this->func_scandir) && $this->func_scandir !== NULL && function_exists($this->func_scandir)) {
+        if (isset($this->func_scandir) && $this->func_scandir !== NULL && is_callable($this->func_scandir)) {
       $files = call_user_func($this->func_scandir, $dir);
     } else {
       $r = glob($dir.'/*');
@@ -856,7 +862,7 @@ echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->la
   private function getAlbumTitle($file){
     $bn = $this->basepathname($file);
 
-    if (isset($this->func_albumname) && $this->func_albumname !== NULL && function_exists($this->func_albumname)) {
+    if (isset($this->func_albumname) && $this->func_albumname !== NULL && is_callable($this->func_albumname)) {
       $title = call_user_func($this->func_albumname, $bn);
     } else {
       $patterns = array('~(19|20)(\d{2})-(\d{1,2})-(\d{1,2})_(.*)~si',
@@ -934,7 +940,7 @@ echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->la
     if(!file_exists($targetImagePath)) {
       $ext = strtolower($this->getExt($sourceImagePath));
 
-      if(isset($this->func_videoimage) && $this->func_videoimage !== NULL && function_exists($this->func_videoimage) && in_array($ext, $this->extsVideo)) {
+      if(isset($this->func_videoimage) && $this->func_videoimage !== NULL && is_callable($this->func_videoimage) && in_array($ext, $this->extsVideo)) {
         $group = call_user_func($this->func_videoimage, $path, $targetImageTempPath);
         $sourceImagePath = $targetImageTempPath;
         $ext = 'jpg';

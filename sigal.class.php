@@ -81,6 +81,8 @@ class Sigal {
   public $func_albumname = NULL;
   /** Callback function for getting album/directory group name */
   public $func_groupname = NULL;
+  /** Callback function for sorting group names. */
+	public $func_sortgroups = NULL;
 
   /** Available languages */
   public $langs = array(
@@ -271,8 +273,12 @@ class Sigal {
 
     $tabs = 100; // counter for tabs IDs
     $groups = array_keys($albs_by_group);
+    if (isset($this->func_sortgroups) && $this->func_sortgroups !== NULL && is_callable($this->func_sortgroups)) {
+      $groups = call_user_func($this->func_sortgroups, $groups);
+    }
     // if we have only one group with empty string in name, we will NOT display it as tab
-    if(count($albs_by_group) > 1 || ( count($albs_by_group) == 1 && strlen($groups[0]) > 0) ) {
+    //if(count($albs_by_group) > 1 || ( count($albs_by_group) == 1 && strlen($groups[0]) > 0) ) {
+		if(count($groups) > 1 || ( count($groups) == 1 && strlen($groups[0]) > 0) ) {
       echo '<ul class="tabs">';
       foreach ($groups as $g) {
         echo '<li><a href="#tab-'.$tabs.'">'.$g.'</a></li>';
@@ -282,7 +288,9 @@ class Sigal {
     }
     
     $tabs = 100;
-    foreach ($albs_by_group as $group => $albs) {
+    //foreach ($albs_by_group as $group => $albs) {
+		foreach ($groups as $group) {
+      $albs = $albs_by_group[$group];
       echo '<div id="tab-'.$tabs.'" class="tab_content">';
       echo '<br class="clall" />';
       echo '<div class="tab_inner_content">';
