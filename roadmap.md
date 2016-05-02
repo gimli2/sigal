@@ -1,5 +1,6 @@
 roadmap of sigal project
 ========================
+- put language files in demo to show usage
 - fix: hierarchy is not respected by mass download (take care of locked items)
 - fix: hierarchy albums dont show thumbnails until they are generated in lower level
 - fix: hierarchy - subalbums are shown as images, not albums
