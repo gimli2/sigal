@@ -1,11 +1,12 @@
 <?php
-set_time_limit(0);
-date_default_timezone_set('Europe/Prague');
+	set_time_limit(0);
+	date_default_timezone_set('Europe/Prague');
 
 	$in  = './index.php';
 	$out = './index.min.php';
-	
+
 	include_once('sigal.class.php');
+
 	$gg  = new Sigal();
 	$out_downloadable = './'.$gg->version.'_index.min.php.txt';
 	$out_demo = './demo/index.php';
@@ -23,6 +24,7 @@ date_default_timezone_set('Europe/Prague');
 		$data = file_get_contents($out);
 		$md5 = md5($data); 
 		$tokens = token_get_all($data);
+		//print_r($tokens);
 		$cnt = count($tokens);
 		
 		$ndata = '';
@@ -30,22 +32,37 @@ date_default_timezone_set('Europe/Prague');
 		while($i < $cnt) {
 			$tid='';
 			
-			@list($tid, $content) = $tokens[$i];
+			// od PHP 7.0 se to nepopere s list($var1, $var2) = "string"
+			if (is_array($tokens[$i])) {
+				list($tid, $content) = $tokens[$i];	
+			} else {
+				$tid = $tokens[$i];
+				$content = NULL;
+			}
 			
 			// if ($tid===T_INCLUDE || $tid === T_INCLUDE_ONCE || $tid === T_REQUIRE || $tid === T_REQUIRE_ONCE) {
 			// samotne include si ponechame pro nacitani pridavneho konfigu, takze se nesmi prelozit pri kompilaci
 			if ($tid === T_INCLUDE_ONCE || $tid === T_REQUIRE || $tid === T_REQUIRE_ONCE) {
 				$expr = '';
 				while($tid !== ';') {
-					 @list($tid, $content) = $tokens[++$i];
+					$i++;
+					if (is_array($tokens[$i])) {
+						list($tid, $content) = $tokens[$i];	
+					} else {
+						$tid = $tokens[$i];
+						$content = NULL;
+					}
+					
+					//echo "IN: ".$tid." => ".token_name($tid)." | ".$content."\n";
 					if ($tid === T_STRING || $tid === T_CONSTANT_ENCAPSED_STRING) $expr .= $content; 
 				}
-				//echo "expr=$expr<br>";
+				//echo "expr=$expr\n";
+				//die();
 				$fn = substr($expr, 1, -1);
 				$ndata .= include_file($fn);
 				$i++;
 			}		
-	
+		
 			//if (in_array($tid, $comments)) echo $content."<br>";
 
 			// sestavime novy obsah
