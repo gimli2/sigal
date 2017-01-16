@@ -311,7 +311,6 @@ class Sigal {
         echo '<div class="overlay_icons">';
         if (count($subdirs) > 0) {
           echo '<img src="?static=defdirico" height="32" alt="'.$this->lang('Contain subdirs').'" title="'.$this->lang('Contain subdirs').'" class="overico" />';
-          $dircss_offset = ' dircss_offset';
         }
         // is locked?
         if (array_search($a.'/'.$this->lockfname, $content)!==FALSE) {
@@ -399,10 +398,15 @@ class Sigal {
         // middle size image cannot be obtained or middle size file exists
         if ($middle===$this->defaultIcon) {
           if (is_dir($f)) {
+				    echo '<div class="overlay_icons">';
             // handle hierarchy
+            // has subdirs?
+						echo '<img src="?static=defdirico" height="32" alt="'.$this->lang('Contain subdirs').'" title="'.$this->lang('Contain subdirs').'" class="overico" />';
+            // is locked?
             if (file_exists($f.'/'.$this->lockfname)) {
               echo '<img src="?static=lock" height="32" alt="'.$this->lang('locked').'" title="'.$this->lang('access restricted').'" class="lock" />';
             }
+            echo '</div>';
             echo '<a href="?alb='.urlencode($bn).'" title="'.$bn.'">';
           } else {
             // no middle? -> use full size
