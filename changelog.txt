@@ -1,3 +1,9 @@
+1.51 2017-01-17
+	Indication of subdirs in album as overlay icon similar to locked albums.
+
+1.50 2016-05-02
+	Support for language translations.
+	
 1.40 2015-02-15
   Support for hierarchy in picture directories. Thanks to Don Mahurin.
   FIX: in function getImages

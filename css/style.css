@@ -110,8 +110,14 @@ img.it{
 .clall{
 	clear: both;
 }
-.lock {
+.overlay_icons {
 	position: absolute;
+}
+.overico {
+	top: 0px;
+	left: 0px;
+	float: left;
+	clear: both;
 }
 /* ================================================================ */
 ul.tabs {

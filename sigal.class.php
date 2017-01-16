@@ -15,7 +15,7 @@
  * @brief      Simple gallery script provides single-file web gallery.
  */ 
 class Sigal {
-  public $version = '1.5.0';
+  public $version = '1.5.1';
 
   /** Directory with pictures. */
   public $dir = 'pictures';
@@ -302,15 +302,23 @@ class Sigal {
         $thumb = $this->getThumbName($titlefoto);
         $bn = $this->basepathname($a);
         $content = glob($a.'/*');
+        $subdirs = glob($a.'/*', GLOB_ONLYDIR);
         $cnt = count($content);
         $date = filemtime($a);
 
         echo '<div class="album-thumb">';
+        // has subdirs?
+        echo '<div class="overlay_icons">';
+        if (count($subdirs) > 0) {
+          echo '<img src="?static=defdirico" height="32" alt="'.$this->lang('Contain subdirs').'" title="'.$this->lang('Contain subdirs').'" class="overico" />';
+          $dircss_offset = ' dircss_offset';
+        }
         // is locked?
         if (array_search($a.'/'.$this->lockfname, $content)!==FALSE) {
-          echo '<img src="?static=lock" height="32" alt="'.$this->lang('locked').'" title="'.$this->lang('access restricted').'" class="lock" />';
+          echo '<img src="?static=lock" height="32" alt="'.$this->lang('locked').'" title="'.$this->lang('access restricted').'" class="overico" />';
         }
-        echo '<a href="?alb='.$this->urlpathencode($bn).'" title="'.$bn.'">';
+        echo '</div>';
+        echo '<a href="?alb='.$this->urlpathencode($bn).'" title="'.$bn.'" class="clall">';
         if ($thumb === $this->defaultIcon || $thumb === $this->defaultDirIcon || file_exists($thumb)) {
           echo '<img src="'.$thumb.'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
         } else {

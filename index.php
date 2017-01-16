@@ -5,7 +5,9 @@
 
   /*========================================================================*/
   @set_time_limit(120);
-  error_reporting(6135); // errors and warnings
+  //error_reporting(6135); // errors and warnings
+  error_reporting(E_ERROR | E_WARNING | E_PARSE);
+  
   include_once 'sigal.class.php';
   include_once 'zipstream.class.php';
   include_once 'functions.php'; // olny for language switching combobox

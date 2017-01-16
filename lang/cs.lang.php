@@ -45,5 +45,6 @@ $translations['cs'] = array(
 	'Links' => 'Odkazy',
 	'Position' => 'Poloha',
 	'Maps' => 'Mapy',
+	'Contain subdirs' => 'Obsahuje podadresáře',
 );
 ?>
