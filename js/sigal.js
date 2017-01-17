@@ -58,3 +58,28 @@ function toggleAllCheckboxes() {
   	addToDownload(elems[i].value);
   }
 }
+
+/* preloads the next middle size image */
+function preload_next(){
+	var current = $("#cee_img")[0];			
+	var imgs = $(".fotos a.i");
+	var next = -1;
+	var nexthref = null;
+	imgs.each(function(k,i) {
+		var gallery = $(i).data("ceebox").gallery;
+		if (gallery.gNum === next) {
+			nexthref = i.href;
+			return false; // break
+		}
+		if (i.href === current.src) {
+			next = gallery.gNum + 1;
+			return true; // continue
+		}
+	});		
+	
+	if (nexthref !== null) {
+		var imgPreload = new Image();
+		imgPreload.src = nexthref;
+	}
+	
+}

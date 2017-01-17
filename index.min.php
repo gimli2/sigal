@@ -35,7 +35,7 @@
 		}
 		
 		if (isset($_GET["static"]) && $_GET["static"]==="sigal.min") {
-  		header("Content-Type: text/javascript"); header("Expires: Tue, 1 Jan 2030 05:00:00 GMT"); header("Cache-Control: max-age=8640000, public"); echo base64_decode("ZnVuY3Rpb24gZG93bG9hZHNlbGVjdGVkKCl7aWYod2luZG93LnNlbGVjdGVkUGljdHVyZXMmJjA8d2luZG93LnNlbGVjdGVkUGljdHVyZXMubGVuZ3RoKXt2YXIgYT13aW5kb3cuc2VsZWN0ZWRQaWN0dXJlcy5jb25jYXQoW10pO2EuYWxidW09ZG9jdW1lbnQubG9jYXRpb247cG9zdF90b191cmwoIj9kbHNlbGVjdGVkIixhLCJwb3N0Iil9fQpmdW5jdGlvbiBwb3N0X3RvX3VybChhLGIsZCl7ZD1kfHwicG9zdCI7dmFyIGM9ZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgiZm9ybSIpO2Muc2V0QXR0cmlidXRlKCJtZXRob2QiLGQpO2Muc2V0QXR0cmlidXRlKCJhY3Rpb24iLGEpO2Zvcih2YXIgZSBpbiBiKWIuaGFzT3duUHJvcGVydHkoZSkmJihhPWRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoImlucHV0IiksYS5zZXRBdHRyaWJ1dGUoInR5cGUiLCJoaWRkZW4iKSxhLnNldEF0dHJpYnV0ZSgibmFtZSIsImltZyIrZSksYS5zZXRBdHRyaWJ1dGUoInZhbHVlIixiW2VdKSxjLmFwcGVuZENoaWxkKGEpKTtkb2N1bWVudC5ib2R5LmFwcGVuZENoaWxkKGMpO2Muc3VibWl0KCl9CmZ1bmN0aW9uIGFkZFRvRG93bmxvYWQoYSl7dm9pZCAwPT13aW5kb3cuc2VsZWN0ZWRQaWN0dXJlcyYmKHdpbmRvdy5zZWxlY3RlZFBpY3R1cmVzPVtdKTt2YXIgYj13aW5kb3cuc2VsZWN0ZWRQaWN0dXJlcy5pbmRleE9mKGEpOzA8PWI/d2luZG93LnNlbGVjdGVkUGljdHVyZXMuc3BsaWNlKGIsMSk6d2luZG93LnNlbGVjdGVkUGljdHVyZXMucHVzaChhKTtkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgibXVsdGlwbGVkb3dubG9hZGxpbmtjbnQiKS5pbm5lckhUTUw9d2luZG93LnNlbGVjdGVkUGljdHVyZXMubGVuZ3RofWZ1bmN0aW9uIHRvZ2dsZUFsbENoZWNrYm94ZXMoKXt2YXIgYT1kb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgiaW5wdXQiKSxiO2ZvcihiPTA7YjxhLmxlbmd0aDtiKyspYVtiXS5jaGVja2VkPSFhW2JdLmNoZWNrZWQsYWRkVG9Eb3dubG9hZChhW2JdLnZhbHVlKX07Cg=="); exit;
+  		header("Content-Type: text/javascript"); header("Expires: Tue, 1 Jan 2030 05:00:00 GMT"); header("Cache-Control: max-age=8640000, public"); echo base64_decode("ZnVuY3Rpb24gZG93bG9hZHNlbGVjdGVkKCl7aWYod2luZG93LnNlbGVjdGVkUGljdHVyZXMmJjA8d2luZG93LnNlbGVjdGVkUGljdHVyZXMubGVuZ3RoKXt2YXIgYT13aW5kb3cuc2VsZWN0ZWRQaWN0dXJlcy5jb25jYXQoW10pO2EuYWxidW09ZG9jdW1lbnQubG9jYXRpb247cG9zdF90b191cmwoIj9kbHNlbGVjdGVkIixhLCJwb3N0Iil9fQpmdW5jdGlvbiBwb3N0X3RvX3VybChhLGIsYyl7Yz1jfHwicG9zdCI7dmFyIGU9ZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgiZm9ybSIpO2Uuc2V0QXR0cmlidXRlKCJtZXRob2QiLGMpO2Uuc2V0QXR0cmlidXRlKCJhY3Rpb24iLGEpO2Zvcih2YXIgZCBpbiBiKWIuaGFzT3duUHJvcGVydHkoZCkmJihhPWRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoImlucHV0IiksYS5zZXRBdHRyaWJ1dGUoInR5cGUiLCJoaWRkZW4iKSxhLnNldEF0dHJpYnV0ZSgibmFtZSIsImltZyIrZCksYS5zZXRBdHRyaWJ1dGUoInZhbHVlIixiW2RdKSxlLmFwcGVuZENoaWxkKGEpKTtkb2N1bWVudC5ib2R5LmFwcGVuZENoaWxkKGUpO2Uuc3VibWl0KCl9CmZ1bmN0aW9uIGFkZFRvRG93bmxvYWQoYSl7dm9pZCAwPT13aW5kb3cuc2VsZWN0ZWRQaWN0dXJlcyYmKHdpbmRvdy5zZWxlY3RlZFBpY3R1cmVzPVtdKTt2YXIgYj13aW5kb3cuc2VsZWN0ZWRQaWN0dXJlcy5pbmRleE9mKGEpOzA8PWI/d2luZG93LnNlbGVjdGVkUGljdHVyZXMuc3BsaWNlKGIsMSk6d2luZG93LnNlbGVjdGVkUGljdHVyZXMucHVzaChhKTtkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgibXVsdGlwbGVkb3dubG9hZGxpbmtjbnQiKS5pbm5lckhUTUw9d2luZG93LnNlbGVjdGVkUGljdHVyZXMubGVuZ3RofWZ1bmN0aW9uIHRvZ2dsZUFsbENoZWNrYm94ZXMoKXt2YXIgYT1kb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgiaW5wdXQiKSxiO2ZvcihiPTA7YjxhLmxlbmd0aDtiKyspYVtiXS5jaGVja2VkPSFhW2JdLmNoZWNrZWQsYWRkVG9Eb3dubG9hZChhW2JdLnZhbHVlKX0KZnVuY3Rpb24gcHJlbG9hZF9uZXh0KCl7dmFyIGE9JCgiI2NlZV9pbWciKVswXSxiPS0xLGM9bnVsbDskKCIuZm90b3MgYS5pIikuZWFjaChmdW5jdGlvbihlLGQpe3ZhciBmPSQoZCkuZGF0YSgiY2VlYm94IikuZ2FsbGVyeTtpZihmLmdOdW09PT1iKXJldHVybiBjPWQuaHJlZiwhMTtpZihkLmhyZWY9PT1hLnNyYylyZXR1cm4gYj1mLmdOdW0rMSwhMH0pO251bGwhPT1jJiYoKG5ldyBJbWFnZSkuc3JjPWMpfTsK"); exit;
 		}
 		
 		if (isset($_GET["static"]) && $_GET["static"]==="lazy.min") {
@@ -84,7 +84,7 @@
 
  
 class Sigal {
-  public $version = '1.5.1';
+  public $version = '1.5.2';
 
   
   public $dir = 'pictures';
@@ -178,7 +178,7 @@ class Sigal {
 <script type="text/javascript">
   $(document).ready(
      function(){
-         $(".fotos").ceebox({imageGallery:true,image:true,html:false,video:true,videoGallery:true});
+         $(".fotos").ceebox({imageGallery:true,image:true,html:false,video:true,videoGallery:true,onload:preload_next});
 
           //show first when page loads...
           $(".tab_content").hide();
@@ -215,6 +215,7 @@ class Sigal {
             if(typeof(sessionStorage) !== "undefined") sessionStorage.setItem("lasttab", activeTab);
             return false;
           });
+          
     }
   );
 </script></head><body>';
@@ -436,13 +437,13 @@ class Sigal {
             echo '</div>';
             echo '<a href="?alb='.urlencode($bn).'" title="'.$bn.'">';
           } else {
-                        echo '<a href="'.$f.'" title="'.$bn.'">';
+                        echo '<a href="'.$f.'" title="'.$bn.'" class="i">';
           }
         } else {
-          echo '<a href="'.$middle.'" title="'.$bn.'">';
+          echo '<a href="'.$middle.'" title="'.$bn.'" class="i">';
         }
       } else {
-        echo '<a href="?mkmid='.urlencode($bn).'" title="'.$bn.'">';
+        echo '<a href="?mkmid='.urlencode($bn).'" title="'.$bn.'" class="i">';
       }
       if (is_dir($f)) {
         $thumb = $this->getThumbName($this->getAlbumTitleFile($f));

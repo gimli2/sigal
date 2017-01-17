@@ -15,7 +15,7 @@
  * @brief      Simple gallery script provides single-file web gallery.
  */ 
 class Sigal {
-  public $version = '1.5.1';
+  public $version = '1.5.2';
 
   /** Directory with pictures. */
   public $dir = 'pictures';
@@ -111,7 +111,7 @@ class Sigal {
 <script type="text/javascript">
   $(document).ready(
      function(){
-         $(".fotos").ceebox({imageGallery:true,image:true,html:false,video:true,videoGallery:true});
+         $(".fotos").ceebox({imageGallery:true,image:true,html:false,video:true,videoGallery:true,onload:preload_next});
 
           //show first when page loads...
           $(".tab_content").hide();
@@ -148,6 +148,7 @@ class Sigal {
             if(typeof(sessionStorage) !== "undefined") sessionStorage.setItem("lasttab", activeTab);
             return false;
           });
+          
     }
   );
 </script></head><body>';
@@ -410,13 +411,13 @@ class Sigal {
             echo '<a href="?alb='.urlencode($bn).'" title="'.$bn.'">';
           } else {
             // no middle? -> use full size
-            echo '<a href="'.$f.'" title="'.$bn.'">';
+            echo '<a href="'.$f.'" title="'.$bn.'" class="i">';
           }
         } else {
-          echo '<a href="'.$middle.'" title="'.$bn.'">';
+          echo '<a href="'.$middle.'" title="'.$bn.'" class="i">';
         }
       } else {
-        echo '<a href="?mkmid='.urlencode($bn).'" title="'.$bn.'">';
+        echo '<a href="?mkmid='.urlencode($bn).'" title="'.$bn.'" class="i">';
       }
       if (is_dir($f)) {
         $thumb = $this->getThumbName($this->getAlbumTitleFile($f));

@@ -1,3 +1,6 @@
+1.52 2017-01-17
+	Preloading the middle size images.
+
 1.51 2017-01-17
 	Indication of subdirs in album as overlay icon similar to locked albums.
 
