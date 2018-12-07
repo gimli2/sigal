@@ -101,6 +101,7 @@ class Sigal {
 /** HTML head of each page of gallery. You can use string "{title}" which will be replaced by title of gallery defined above. */
   public $html_head = '<!DOCTYPE html><head><title>{title}</title>
 <meta name="author" content="Gimli2; http://gimli2.gipix.net" />
+<meta name="robots" content="noindex">
 <link rel="shotcut icon" href="./images/favicon.png" />
 <link rel="stylesheet" href="./css/style.css" type="text/css" />
 <!--OWNCSS-->
