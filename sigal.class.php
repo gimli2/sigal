@@ -293,7 +293,7 @@ class Sigal {
     //foreach ($albs_by_group as $group => $albs) {
 		foreach ($groups as $group) {
       $albs = $albs_by_group[$group];
-      echo '<div id="tab-'.$tabs.'" class="tab_content">';
+      echo '<div id="tab-'.$tabs.'" class="tab_content" style="display:none">';
       echo '<br class="clall" />';
       echo '<div class="tab_inner_content">';
       echo '<h2 class="subheader">'.$group.'</h2>';
