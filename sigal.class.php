@@ -280,7 +280,7 @@ class Sigal {
     }
     // if we have only one group with empty string in name, we will NOT display it as tab
     //if(count($albs_by_group) > 1 || ( count($albs_by_group) == 1 && strlen($groups[0]) > 0) ) {
-		if(count($groups) > 1 || ( count($groups) == 1 && strlen($groups[0]) > 0) ) {
+    if(count($groups) > 1 || ( count($groups) == 1 && strlen($groups[0]) > 0) ) {
       echo '<ul class="tabs">';
       foreach ($groups as $g) {
         echo '<li><a href="#tab-'.$tabs.'">'.$g.'</a></li>';
@@ -291,7 +291,7 @@ class Sigal {
     
     $tabs = 100;
     //foreach ($albs_by_group as $group => $albs) {
-		foreach ($groups as $group) {
+    foreach ($groups as $group) {
       $albs = $albs_by_group[$group];
       echo '<div id="tab-'.$tabs.'" class="tab_content" style="display:none">';
       echo '<br class="clall" />';
@@ -323,7 +323,7 @@ class Sigal {
         if ($thumb === $this->defaultIcon || $thumb === $this->defaultDirIcon || file_exists($thumb)) {
           echo '<img src="'.$thumb.'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
         } else {
-          echo '<img src="?mkthumb='.urlencode($this->basepathname($titlefoto)).'"  height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
+          echo '<img src="?static=1px" data-lazy="?mkthumb='.urlencode($this->basepathname($titlefoto)).'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
         }
         echo '</a>';
         echo $this->getAlbumTitle($a);
@@ -344,6 +344,7 @@ class Sigal {
         echo ' | <a href="?">'.$this->lang('Back to top level').'</a>';
         echo '</div>';
     }
+    echo '<script src="?static=lazy.min"></script><script>lazy.init({delay:200});</script>';
     
     echo $this->html_tail;
   }
@@ -400,10 +401,10 @@ class Sigal {
         // middle size image cannot be obtained or middle size file exists
         if ($middle===$this->defaultIcon) {
           if (is_dir($f)) {
-				    echo '<div class="overlay_icons">';
+            echo '<div class="overlay_icons">';
             // handle hierarchy
             // has subdirs?
-						echo '<img src="?static=defdirico" height="32" alt="'.$this->lang('Contain subdirs').'" title="'.$this->lang('Contain subdirs').'" class="overico" />';
+            echo '<img src="?static=defdirico" height="32" alt="'.$this->lang('Contain subdirs').'" title="'.$this->lang('Contain subdirs').'" class="overico" />';
             // is locked?
             if (file_exists($f.'/'.$this->lockfname)) {
               echo '<img src="?static=lock" height="32" alt="'.$this->lang('locked').'" title="'.$this->lang('access restricted').'" class="lock" />';
