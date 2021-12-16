@@ -82,7 +82,7 @@ class Sigal {
   /** Callback function for getting album/directory group name */
   public $func_groupname = NULL;
   /** Callback function for sorting group names. */
-	public $func_sortgroups = NULL;
+  public $func_sortgroups = NULL;
 
   /** Available languages */
   public $langs = array(
