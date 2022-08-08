@@ -9,3 +9,5 @@ It is a free photo gallery written in PHP. This script inspired by simplicity of
 
 More info at:
 http://gimli2.gipix.net/sigal/
+
+2022
