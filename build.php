@@ -103,13 +103,8 @@
 /*============================================================================*/
   // replace static files
   $sfiles = array(
-    './images/favicon.png',
-    './images/lock.png',
-    './images/defico.png',
-    './images/defdirico.png',
-    './images/info.png',
-    './images/download.png',
-    './images/1px.gif',
+    
+    
     './img/close.svg',
     './img/error.svg',
     './img/loading.svg',
@@ -117,6 +112,11 @@
     './img/play-pause.svg',
     './img/prev.svg',
     './img/video-play.svg',
+    './img/defico.svg',
+    './img/defdirico.svg',
+    './img/lock.svg',
+    './img/favicon.png',
+    './img/1px.gif',
     './css/style.css',
     './css/blueimp-gallery.min.css',
     './js/sigal.min.js',

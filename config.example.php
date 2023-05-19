@@ -4,7 +4,7 @@
   /** Directory for caching thumbnails (must be writeable!).*/
   $conf['cache'] = 'cache';
   /** URL to default album and picture icon. May be absolute or relative. */
-  $conf['defaultIcon'] = '?static=defico';
+  $conf['defaultIcon'] = '?static=defico.svg';
   /** Name of file with definition of title image. */
   $conf['icotitlefname'] = '000.nfo';
   /** Name of file with defined usernames/passwords for locked/private albums. */

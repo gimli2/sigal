@@ -24,7 +24,7 @@ class Sigal {
   /** URL to default picture icon. May be absolute or relative. */
   public $defaultIcon = '?static=defico.png';
   /** URL to default album. May be absolute or relative. */
-  public $defaultDirIcon = '?static=defdirico.png';
+  public $defaultDirIcon = '?static=defdirico.svg';
   /** Name of file with definition of title image. */
   public $icotitlefname = '000.nfo';
   /** Name of file with defined usernames/passwords for locked/private albums. */
@@ -356,11 +356,11 @@ class Sigal {
         // has subdirs?
         echo '<div class="overlay_icons">';
         if (count($subdirs) > 0) {
-          echo '<img src="?static=defdirico.png" height="32" alt="'.$this->lang('Contain subdirs').'" title="'.$this->lang('Contain subdirs').'" class="overico" />';
+          echo '<img src="?static=defdirico.svg" height="32" alt="'.$this->lang('Contain subdirs').'" title="'.$this->lang('Contain subdirs').'" class="overico" />';
         }
         // is locked?
         if (array_search($a.'/'.$this->lockfname, $content)!==FALSE) {
-          echo '<img src="?static=lock.png" height="32" alt="'.$this->lang('locked').'" title="'.$this->lang('access restricted').'" class="overico" />';
+          echo '<img src="?static=lock.svg" height="32" alt="'.$this->lang('locked').'" title="'.$this->lang('access restricted').'" class="overico" />';
         }
         echo '</div>';
         echo '<a href="?alb='.$this->urlpathencode($bn).'" title="'.$bn.'" class="clall">';
@@ -451,10 +451,10 @@ class Sigal {
             echo '<div class="overlay_icons">';
             // handle hierarchy
             // has subdirs?
-            echo '<img src="?static=defdirico.png" height="32" alt="'.$this->lang('Contain subdirs').'" title="'.$this->lang('Contain subdirs').'" class="overico dir" />';
+            echo '<img src="?static=defdirico.svg" height="32" alt="'.$this->lang('Contain subdirs').'" title="'.$this->lang('Contain subdirs').'" class="overico dir" />';
             // is locked?
             if (file_exists($f.'/'.$this->lockfname)) {
-              echo '<img src="?static=lock.png" height="32" alt="'.$this->lang('locked').'" title="'.$this->lang('access restricted').'" class="lock" />';
+              echo '<img src="?static=lock.svg" height="32" alt="'.$this->lang('locked').'" title="'.$this->lang('access restricted').'" class="lock" />';
             }
             echo '</div>';
             echo '<a href="?alb='.urlencode($bn).'" title="'.$bn.'">';
@@ -486,8 +486,8 @@ class Sigal {
       if ($this->enable_mass_download) {
         echo '<div class="infbutton"><input type="checkbox" name="i[]" value="'.$f.'" onClick="addToDownload(\''.$f.'\')" title="'.$this->lang('+/- to multiple download').'" /></div>';
       }
-      echo '<div class="infbutton"><a href="?foto='.urlencode($bn).'#tab-base"><img src="?static=info.png" alt="'.$this->lang('Detailed info').'" title="'.$this->lang('Detailed info (EXIF, GPS)').'" /></a></div>';
-      echo '<div class="infbutton"><a href="'.$f.'#t"><img src="?static=download.png" alt="'.$this->lang('Download').'" title="'.$this->lang('Download full size').'" /></a></div>';
+      echo '<div class="infbutton"><a href="?foto='.urlencode($bn).'#tab-base"><span title="'.$this->lang('Detailed info (EXIF, GPS)').'">&#x1F6C8</span></a></div>';
+      echo '<div class="infbutton"><a href="'.$f.'#t"><span title="'.$this->lang('Download full size').'">&#x1F5AB;</span></a></div>';
       
       echo '</div>';
       echo '</div>';
