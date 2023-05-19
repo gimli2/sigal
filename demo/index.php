@@ -59,7 +59,7 @@
     }
     
     if (isset($_GET["static"]) && $_GET["static"]==="style.css") {
-      header("Content-Type: text/css"); header("Expires: Tue, 1 Jan 2030 05:00:00 GMT"); header("Cache-Control: max-age=8640000, public"); echo base64_decode("aHRtbCwgYm9keSB7DQogIGZvbnQtZmFtaWx5OiBDYWxpYnJpLCBWZXJkYW5hLCBzYW5zLXNlcmlmOw0KICBmb250LXNpemU6IDExcHQ7DQogIG1hcmdpbjogMDsNCiAgcGFkZGluZzogMDsNCiAgYmFja2dyb3VuZC1jb2xvcjogI2FhYTsNCn0NCi5oZWFkZXJ7DQogIHBhZGRpbmc6IDFleDsNCiAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkICM2NjY7DQp9DQouaGVhZGVyIGgxew0KICBwYWRkaW5nLWxlZnQ6IDFleDsNCn0NCi5zdWJoZWFkZXIgew0KICBwYWRkaW5nLWxlZnQ6IDFleDsNCn0NCi5mb290ZXIgew0KICBjbGVhcjogYm90aDsNCiAgcGFkZGluZzogMWV4Ow0KICBib3JkZXItdG9wOiAxcHggc29saWQgIzY2NjsNCn0NCi5mb290ZXIgYSwgLmhlYWRlciBhIHsNCiAgY29sb3I6ICM2NjY7DQogIHRleHQtZGVjb3JhdGlvbjogbm9uZTsNCn0NCiNjcmVkaXRzIHsNCiAgY2xlYXI6IGJvdGg7DQogIHRleHQtYWxpZ246IHJpZ2h0Ow0KICBwYWRkaW5nOiAxZXg7DQogIGJvcmRlci10b3A6IDFweCBzb2xpZCAjNjY2Ow0KICBjb2xvcjogIzY2NjsNCn0NCiNjcmVkaXRzIGEgew0KICBjb2xvcjogIzY2NjsNCiAgdGV4dC1kZWNvcmF0aW9uOiBub25lOw0KfQ0KLmZvdG8gaW1nIHsNCiAgZmxvYXQ6IGxlZnQ7DQp9DQouaW5mYnV0dG9uIHsNCiAgd2lkdGg6IDE2cHg7DQogIHZlcnRpY2FsLWFsaWduOiBib3R0b207DQogIGRpc3BsYXk6IGlubGluZTsNCiAgbWFyZ2luOiAycHg7IA0KfQ0KLmluZmJ1dHRvbiBhIHsNCiAgdGV4dC1kZWNvcmF0aW9uOiBub25lOw0KICBib3JkZXI6IDA7DQogIHZlcnRpY2FsLWFsaWduOiBtaWRkbGU7DQp9DQouaW5mYnV0dG9uIGltZyB7DQogIHZlcnRpY2FsLWFsaWduOiB0b3A7DQp9DQouY2xhbGx7DQogIGNsZWFyOiBib3RoOw0KfQ0KLm92ZXJsYXlfaWNvbnMgew0KICBwb3NpdGlvbjogYWJzb2x1dGU7DQp9DQoub3ZlcmljbyB7DQogIHRvcDogMHB4Ow0KICBsZWZ0OiAwcHg7DQogIGZsb2F0OiBsZWZ0Ow0KICBjbGVhcjogYm90aDsNCn0NCi8qID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0gKi8NCnVsLnRhYnMgew0KICBtYXJnaW46IDA7DQogIHBhZGRpbmc6IDA7DQogIGZsb2F0OiBsZWZ0Ow0KICBsaXN0LXN0eWxlOiBub25lOw0KICBoZWlnaHQ6IDI2cHg7DQogIGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjOTk5Ow0KICB3aWR0aDogMTAwJTsNCn0NCnVsLnRhYnMgbGkgew0KICBmbG9hdDogbGVmdDsNCiAgbWFyZ2luOiAwOw0KICBwYWRkaW5nOiAwOw0KICBoZWlnaHQ6IDI1cHg7IA0KICBsaW5lLWhlaWdodDogMjVweDsNCiAgYm9yZGVyOiAxcHggc29saWQgIzk5OTsNCiAgYm9yZGVyLWxlZnQ6IG5vbmU7DQogIG1hcmdpbi1ib3R0b206IC0xcHg7DQogIG92ZXJmbG93OiBoaWRkZW47DQogIHBvc2l0aW9uOiByZWxhdGl2ZTsNCiAgYmFja2dyb3VuZDogI2UwZTBlMDsNCn0NCnVsLnRhYnMgbGkgYSB7DQogIHRleHQtZGVjb3JhdGlvbjogbm9uZTsNCiAgY29sb3I6ICMwMDA7DQogIGRpc3BsYXk6IGJsb2NrOw0KICBwYWRkaW5nOiAwIDFleDsNCiAgb3V0bGluZTogbm9uZTsNCn0NCnVsLnRhYnMgbGkgYTpob3ZlciB7DQogIGJhY2tncm91bmQ6ICNjY2M7DQp9DQpodG1sIHVsLnRhYnMgbGkuYWN0aXZlLCBodG1sIHVsLnRhYnMgbGkuYWN0aXZlIGE6aG92ZXIgIHsNCiAgYmFja2dyb3VuZDogI2ZmZjsNCiAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkICNmZmY7DQp9DQoudGFiX2NvbnRlbnQgew0KDQp9DQoudGFiX2lubmVyX2NvbnRlbnQgew0KICBjbGVhcjogYm90aDsNCiAgcGFkZGluZzogMWV4Ow0KICBjb2xvcjogIzAwMDsNCiAgbGluZS1oZWlnaHQ6IDE0MCU7DQp9DQoudGFiX2lubmVyX2NvbnRlbnQgYSB7DQogIGNvbG9yOiAjMDA5Ow0KfQ0KLmNyZWRpdHNfY29udGVudCB7DQogIHBhZGRpbmc6IDFlbTsgICAgICAgICANCn0NCi5jcmVkaXRzX2NvbnRlbnQgbGl7DQogIG1hcmdpbi1sZWZ0OiAxZW07ICAgICANCn0NCm9sIGxpew0KICBsaXN0LXN0eWxlOiBpbnNpZGU7DQogIGxpc3Qtc3R5bGUtdHlwZTogZGVjaW1hbDsNCn0NCi5tc2dib3ggew0KICBib3JkZXI6IDJweCBzb2xpZCBibGFjazsNCiAgYmFja2dyb3VuZDogI2FhYTsNCiAgYm9yZGVyLXJhZGl1czogMTBweDsgICAgICANCiAgcGFkZGluZzogMWV4Ow0KICBtYXJnaW46IDJleCBhdXRvOw0KICBtaW4td2lkdGg6IDIwMHB4Ow0KICB3aWR0aDogNTAlOyANCn0NCi5jZW50ZXIgew0KICB0ZXh0LWFsaWduOiBjZW50ZXI7ICAgICAgICAgDQp9DQoubXNnYm94IGlucHV0IHsNCiAgcGFkZGluZzogMC41ZXg7ICAgICANCiAgd2lkdGg6IDE1MHB4OyAgIA0KfQ0KbGFiZWwgeyAgDQp9DQojdGFiLWV4aWYgLnRhYl9pbm5lcl9jb250ZW50IGRpdiB7DQogIGJvcmRlci1ib3R0b206IDFweCBkYXNoZWQgIzAwMDsNCn0NCiN0YWItZXhpZiAudGFiX2lubmVyX2NvbnRlbnQgc3Ryb25new0KICBmbG9hdDogcmlnaHQ7DQp9DQouYWxiLWRlc2Mgew0KICBtYXJnaW4tdG9wOiAxZXg7DQp9DQouZGVzYywgLmZvdG8gew0KICBmbG9hdDogbGVmdDsNCn0NCi8qID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0gKi8NCi5pbWFnZS1nYWxsZXJ5IHsNCiAgZGlzcGxheTogZmxleDsNCiAgZmxleC13cmFwOiB3cmFwOw0KICBnYXA6IDEwcHg7DQogIG1hcmdpbi1ib3R0b206IDJleDsNCn0NCnVsLmltYWdlLWdhbGxlcnkgew0KICBwYWRkaW5nOiAxZXg7DQp9DQouaW1hZ2UtZ2FsbGVyeSA+IGxpIHsNCiAgZmxleDogMSAxIGF1dG87IC8qIG9yIGZsZXg6IGF1dG87ICovDQogIGhlaWdodDogMzAwcHg7DQogIGN1cnNvcjogcG9pbnRlcjsNCiAgcG9zaXRpb246IHJlbGF0aXZlOw0KICBsaXN0LXN0eWxlLXR5cGU6IG5vbmU7DQp9DQouaW1hZ2UtZ2FsbGVyeTo6YWZ0ZXIgew0KICBjb250ZW50OiAiIjsNCiAgZmxleC1ncm93OiA5OTk7DQp9DQouaW1hZ2UtZ2FsbGVyeSBsaSBpbWcuaXQgew0KICBvYmplY3QtZml0OiBjb3ZlcjsNCiAgd2lkdGg6IDEwMCU7DQogIGhlaWdodDogMTAwJTsNCiAgdmVydGljYWwtYWxpZ246IG1pZGRsZTsNCiAgYm9yZGVyLXJhZGl1czogNXB4Ow0KfQ0KLm92ZXJsYXkgew0KICBwb3NpdGlvbjogYWJzb2x1dGU7DQogIHdpZHRoOiAxMDAlOw0KICBoZWlnaHQ6IDEwMCU7DQogIGJhY2tncm91bmQ6IHJnYmEoNjAsIDYwLCA2MCwgMC41KTsNCiAgdG9wOiAwOw0KICBsZWZ0OiAwOw0KICB0cmFuc2Zvcm06IHNjYWxlKDApOw0KICB0cmFuc2l0aW9uOiBhbGwgMC4ycyAwLjFzIGVhc2UtaW4tb3V0Ow0KICBjb2xvcjogI2ZmZjsNCiAgYm9yZGVyLXJhZGl1czogNXB4Ow0KICAvKiBjZW50ZXIgb3ZlcmxheSBjb250ZW50ICovDQogIC8qDQogIGRpc3BsYXk6IGZsZXg7DQogIGFsaWduLWl0ZW1zOiBjZW50ZXI7DQogIGFsaWduLWl0ZW1zOiBib3R0b207DQogIGp1c3RpZnktY29udGVudDogY2VudGVyOw0KICAqLw0KfQ0KLm92ZXJsYXlfaW4gew0KICBtYXJnaW46IDFleDsNCiAgcG9zaXRpb246YWJzb2x1dGU7DQogIGJvdHRvbTowOw0KfQ0KLmltYWdlLWdhbGxlcnkgbGk6aG92ZXIgLm92ZXJsYXkgew0KICB0cmFuc2Zvcm06IHNjYWxlKDEpOw0KfQ0K"); exit;
+      header("Content-Type: text/css"); header("Expires: Tue, 1 Jan 2030 05:00:00 GMT"); header("Cache-Control: max-age=8640000, public"); echo base64_decode("aHRtbCwgYm9keSB7DQogIGZvbnQtZmFtaWx5OiBDYWxpYnJpLCBWZXJkYW5hLCBzYW5zLXNlcmlmOw0KICBmb250LXNpemU6IDExcHQ7DQogIG1hcmdpbjogMDsNCiAgcGFkZGluZzogMDsNCiAgYmFja2dyb3VuZC1jb2xvcjogI2FhYTsNCn0NCi5oZWFkZXJ7DQogIHBhZGRpbmc6IDFleDsNCiAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkICM2NjY7DQp9DQouaGVhZGVyIGgxew0KICBwYWRkaW5nLWxlZnQ6IDFleDsNCn0NCi5zdWJoZWFkZXIgew0KICBwYWRkaW5nLWxlZnQ6IDFleDsNCn0NCi5mb290ZXIgew0KICBjbGVhcjogYm90aDsNCiAgcGFkZGluZzogMWV4Ow0KICBib3JkZXItdG9wOiAxcHggc29saWQgIzY2NjsNCn0NCi5mb290ZXIgYSwgLmhlYWRlciBhIHsNCiAgY29sb3I6ICM2NjY7DQogIHRleHQtZGVjb3JhdGlvbjogbm9uZTsNCn0NCiNjcmVkaXRzIHsNCiAgY2xlYXI6IGJvdGg7DQogIHRleHQtYWxpZ246IHJpZ2h0Ow0KICBwYWRkaW5nOiAxZXg7DQogIGJvcmRlci10b3A6IDFweCBzb2xpZCAjNjY2Ow0KICBjb2xvcjogIzY2NjsNCn0NCiNjcmVkaXRzIGEgew0KICBjb2xvcjogIzY2NjsNCiAgdGV4dC1kZWNvcmF0aW9uOiBub25lOw0KfQ0KLmZvdG8gaW1nIHsNCiAgZmxvYXQ6IGxlZnQ7DQp9DQouaW5mYnV0dG9uIHsNCiAgd2lkdGg6IDE2cHg7DQogIHZlcnRpY2FsLWFsaWduOiBib3R0b207DQogIGRpc3BsYXk6IGlubGluZTsNCiAgbWFyZ2luOiAycHg7IA0KfQ0KLmluZmJ1dHRvbiBhIHsNCiAgdGV4dC1kZWNvcmF0aW9uOiBub25lOw0KICBib3JkZXI6IDA7DQogIHZlcnRpY2FsLWFsaWduOiBtaWRkbGU7DQp9DQouaW5mYnV0dG9uIGltZyB7DQogIHZlcnRpY2FsLWFsaWduOiB0b3A7DQp9DQouY2xhbGx7DQogIGNsZWFyOiBib3RoOw0KfQ0KLm92ZXJsYXlfaWNvbnMgew0KICBwb3NpdGlvbjogYWJzb2x1dGU7DQp9DQoub3ZlcmljbyB7DQogIHRvcDogMHB4Ow0KICBsZWZ0OiAwcHg7DQogIGZsb2F0OiBsZWZ0Ow0KICBjbGVhcjogYm90aDsNCn0NCi8qID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0gKi8NCnVsLnRhYnMgew0KICBtYXJnaW46IDA7DQogIHBhZGRpbmc6IDA7DQogIGZsb2F0OiBsZWZ0Ow0KICBsaXN0LXN0eWxlOiBub25lOw0KICBoZWlnaHQ6IDI2cHg7DQogIGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjOTk5Ow0KICB3aWR0aDogMTAwJTsNCn0NCnVsLnRhYnMgbGkgew0KICBmbG9hdDogbGVmdDsNCiAgbWFyZ2luOiAwOw0KICBwYWRkaW5nOiAwOw0KICBoZWlnaHQ6IDI1cHg7IA0KICBsaW5lLWhlaWdodDogMjVweDsNCiAgYm9yZGVyOiAxcHggc29saWQgIzk5OTsNCiAgYm9yZGVyLWxlZnQ6IG5vbmU7DQogIG1hcmdpbi1ib3R0b206IC0xcHg7DQogIG92ZXJmbG93OiBoaWRkZW47DQogIHBvc2l0aW9uOiByZWxhdGl2ZTsNCiAgYmFja2dyb3VuZDogI2UwZTBlMDsNCn0NCnVsLnRhYnMgbGkgYSB7DQogIHRleHQtZGVjb3JhdGlvbjogbm9uZTsNCiAgY29sb3I6ICMwMDA7DQogIGRpc3BsYXk6IGJsb2NrOw0KICBwYWRkaW5nOiAwIDFleDsNCiAgb3V0bGluZTogbm9uZTsNCn0NCnVsLnRhYnMgbGkgYTpob3ZlciB7DQogIGJhY2tncm91bmQ6ICNjY2M7DQp9DQpodG1sIHVsLnRhYnMgbGkuYWN0aXZlLCBodG1sIHVsLnRhYnMgbGkuYWN0aXZlIGE6aG92ZXIgIHsNCiAgYmFja2dyb3VuZDogI2ZmZjsNCiAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkICNmZmY7DQp9DQoudGFiX2NvbnRlbnQgew0KDQp9DQoudGFiX2lubmVyX2NvbnRlbnQgew0KICBjbGVhcjogYm90aDsNCiAgcGFkZGluZzogMWV4Ow0KICBjb2xvcjogIzAwMDsNCiAgbGluZS1oZWlnaHQ6IDE0MCU7DQp9DQoudGFiX2lubmVyX2NvbnRlbnQgYSB7DQogIGNvbG9yOiAjMDA5Ow0KfQ0KLmNyZWRpdHNfY29udGVudCB7DQogIHBhZGRpbmc6IDFlbTsgICAgICAgICANCn0NCi5jcmVkaXRzX2NvbnRlbnQgbGl7DQogIG1hcmdpbi1sZWZ0OiAxZW07ICAgICANCn0NCm9sIGxpew0KICBsaXN0LXN0eWxlOiBpbnNpZGU7DQogIGxpc3Qtc3R5bGUtdHlwZTogZGVjaW1hbDsNCn0NCi5tc2dib3ggew0KICBib3JkZXI6IDJweCBzb2xpZCBibGFjazsNCiAgYmFja2dyb3VuZDogI2FhYTsNCiAgYm9yZGVyLXJhZGl1czogMTBweDsgICAgICANCiAgcGFkZGluZzogMWV4Ow0KICBtYXJnaW46IDJleCBhdXRvOw0KICBtaW4td2lkdGg6IDIwMHB4Ow0KICB3aWR0aDogNTAlOyANCn0NCi5jZW50ZXIgew0KICB0ZXh0LWFsaWduOiBjZW50ZXI7ICAgICAgICAgDQp9DQoubXNnYm94IGlucHV0IHsNCiAgcGFkZGluZzogMC41ZXg7ICAgICANCiAgd2lkdGg6IDE1MHB4OyAgIA0KfQ0KbGFiZWwgeyAgDQp9DQojdGFiLWV4aWYgLnRhYl9pbm5lcl9jb250ZW50IGRpdiB7DQogIGJvcmRlci1ib3R0b206IDFweCBkYXNoZWQgIzAwMDsNCn0NCiN0YWItZXhpZiAudGFiX2lubmVyX2NvbnRlbnQgc3Ryb25new0KICBmbG9hdDogcmlnaHQ7DQp9DQouYWxiLWRlc2Mgew0KICBtYXJnaW4tdG9wOiAxZXg7DQp9DQouZGVzYywgLmZvdG8gew0KICBmbG9hdDogbGVmdDsNCn0NCi8qID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0gKi8NCi5pbWFnZS1nYWxsZXJ5IHsNCiAgZGlzcGxheTogZmxleDsNCiAgZmxleC13cmFwOiB3cmFwOw0KICBnYXA6IDEwcHg7DQogIG1hcmdpbi1ib3R0b206IDJleDsNCn0NCnVsLmltYWdlLWdhbGxlcnkgew0KICBwYWRkaW5nOiAxZXg7DQp9DQouaW1hZ2UtZ2FsbGVyeSA+IGxpIHsNCiAgZmxleDogMSAxIGF1dG87IC8qIG9yIGZsZXg6IGF1dG87ICovDQogIGhlaWdodDogMjQwcHg7DQogIGN1cnNvcjogcG9pbnRlcjsNCiAgcG9zaXRpb246IHJlbGF0aXZlOw0KICBsaXN0LXN0eWxlLXR5cGU6IG5vbmU7DQp9DQouaW1hZ2UtZ2FsbGVyeTo6YWZ0ZXIgew0KICBjb250ZW50OiAiIjsNCiAgZmxleC1ncm93OiA5OTk7DQp9DQouaW1hZ2UtZ2FsbGVyeSBsaSBpbWcuaXQgew0KICBvYmplY3QtZml0OiBjb3ZlcjsNCiAgd2lkdGg6IDEwMCU7DQogIGhlaWdodDogMTAwJTsNCiAgdmVydGljYWwtYWxpZ246IG1pZGRsZTsNCiAgYm9yZGVyLXJhZGl1czogNXB4Ow0KfQ0KLm92ZXJsYXkgew0KICBwb3NpdGlvbjogYWJzb2x1dGU7DQogIHdpZHRoOiAxMDAlOw0KICBoZWlnaHQ6IDEwMCU7DQogIGJhY2tncm91bmQ6IHJnYmEoNjAsIDYwLCA2MCwgMC41KTsNCiAgdG9wOiAwOw0KICBsZWZ0OiAwOw0KICB0cmFuc2Zvcm06IHNjYWxlKDApOw0KICB0cmFuc2l0aW9uOiBhbGwgMC4ycyAwLjFzIGVhc2UtaW4tb3V0Ow0KICBjb2xvcjogI2ZmZjsNCiAgYm9yZGVyLXJhZGl1czogNXB4Ow0KICAvKiBjZW50ZXIgb3ZlcmxheSBjb250ZW50ICovDQogIC8qDQogIGRpc3BsYXk6IGZsZXg7DQogIGFsaWduLWl0ZW1zOiBjZW50ZXI7DQogIGFsaWduLWl0ZW1zOiBib3R0b207DQogIGp1c3RpZnktY29udGVudDogY2VudGVyOw0KICAqLw0KfQ0KLm92ZXJsYXlfaW4gew0KICBtYXJnaW46IDFleDsNCiAgcG9zaXRpb246YWJzb2x1dGU7DQogIGJvdHRvbTowOw0KfQ0KLmltYWdlLWdhbGxlcnkgbGk6aG92ZXIgLm92ZXJsYXkgew0KICB0cmFuc2Zvcm06IHNjYWxlKDEpOw0KfQ0K"); exit;
     }
     
     if (isset($_GET["static"]) && $_GET["static"]==="blueimp-gallery.min.css") {
@@ -108,9 +108,9 @@ class Sigal {
   
   public $lockfname = '000.lock';
   
-  public $thumb_x = 160;
+  public $thumb_x = 320;
   
-  public $thumb_y = 120;
+  public $thumb_y = 240;
   
   public $middle_x = 800;
   
@@ -875,7 +875,6 @@ echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->la
     if (file_exists($f) && in_array($ext, $this->extsIcon)) {
       $thumb = $this->resizeImage($f, $this->thumb_x);
       header('Location: '.$thumb);
-      header('Content-type: image/jpeg');
       die();
     }
     header('Status: 404 Not Found');
@@ -944,7 +943,7 @@ echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->la
     if (in_array($ext, $this->extsIcon) && !in_array($ext, $this->extsVideo)) {
       $md5 = MD5($file.$this->middle_x);
       $targetDir = $this->getCacheDir($md5);
-      $targetImagePath = $targetDir.$md5.".jpg";
+      $targetImagePath = $targetDir.$md5.".webp";
       return $targetImagePath;
     }
     
@@ -961,7 +960,7 @@ echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->la
     if (in_array($ext, $this->extsIcon)) {
       $md5 = MD5($file.$this->thumb_x);
       $targetDir = $this->getCacheDir($md5);
-      $targetImagePath = $targetDir.$md5.".jpg";
+      $targetImagePath = $targetDir.$md5.".webp";
       return $targetImagePath;
     }
     
@@ -1042,14 +1041,12 @@ echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->la
   }
   
   
-  public function resizeImage($path, $max_x) {
+  public function resizeImage($path, $max_x) {   
     $sourceImagePath = $path;
     $md5 = MD5($path.$max_x);
     $targetDir = $this->getCacheDir($md5);
-    $targetImagePath = $targetDir.$md5.".jpg";
+    $targetImagePath = $targetDir.$md5.".webp";
     $targetImageTempPath = $targetDir.$md5."-tmp.jpg";
-    echo $targetDir;
-
 
     if (!file_exists($targetDir)) mkdir($targetDir, 0777, true);
 
@@ -1193,14 +1190,13 @@ echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->la
       }
       $newImage = imagecreatetruecolor($new_x, $new_y);
       imagecopyresampled($newImage, $originalImage, 0, 0, $srcx, $srcy, $new_x, $new_y, $srcw, $srch);
-      imagejpeg($newImage, $targetImagePath, $this->cache_image_quality);
+      imagewebp($newImage, $targetImagePath, $this->cache_image_quality);
       imagedestroy($newImage);
       imagedestroy($originalImage);
-
     }
 
     
-    $imageSize = getimagesize($targetImagePath);
+    
     return $targetImagePath;
   }
   

@@ -165,7 +165,7 @@ ul.image-gallery {
 }
 .image-gallery > li {
   flex: 1 1 auto; /* or flex: auto; */
-  height: 300px;
+  height: 240px;
   cursor: pointer;
   position: relative;
   list-style-type: none;

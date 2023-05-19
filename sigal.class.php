@@ -30,9 +30,9 @@ class Sigal {
   /** Name of file with defined usernames/passwords for locked/private albums. */
   public $lockfname = '000.lock';
   /** Width of thumbnail. Minimal 120px. */
-  public $thumb_x = 160;
+  public $thumb_x = 320;
   /** Height of thumbnail. Minimal 120px. */
-  public $thumb_y = 120;
+  public $thumb_y = 240;
   /** Width of middle size picture - the view size. */
   public $middle_x = 800;
   /** Number of characters of shortened image title. */
@@ -791,7 +791,6 @@ class Sigal {
     if (file_exists($f) && in_array($ext, $this->extsIcon)) {
       $thumb = $this->resizeImage($f, $this->thumb_x);
       header('Location: '.$thumb);
-      header('Content-type: image/jpeg');
       die();
     }
     header('Status: 404 Not Found');
@@ -881,7 +880,7 @@ class Sigal {
     if (in_array($ext, $this->extsIcon) && !in_array($ext, $this->extsVideo)) {
       $md5 = MD5($file.$this->middle_x);
       $targetDir = $this->getCacheDir($md5);
-      $targetImagePath = $targetDir.$md5.".jpg";
+      $targetImagePath = $targetDir.$md5.".webp";
       return $targetImagePath;
     }
     // fallback - no suitable icon
@@ -901,7 +900,7 @@ class Sigal {
     if (in_array($ext, $this->extsIcon)) {
       $md5 = MD5($file.$this->thumb_x);
       $targetDir = $this->getCacheDir($md5);
-      $targetImagePath = $targetDir.$md5.".jpg";
+      $targetImagePath = $targetDir.$md5.".webp";
       return $targetImagePath;
     }
     // fallback - no suitable icon
@@ -1008,14 +1007,12 @@ class Sigal {
    * @param double $max_x Final width.
    * @returns string Full path of resized image in cache.
    */
-  public function resizeImage($path, $max_x) {
+  public function resizeImage($path, $max_x) {   
     $sourceImagePath = $path;
     $md5 = MD5($path.$max_x);
     $targetDir = $this->getCacheDir($md5);
-    $targetImagePath = $targetDir.$md5.".jpg";
+    $targetImagePath = $targetDir.$md5.".webp";
     $targetImageTempPath = $targetDir.$md5."-tmp.jpg";
-    echo $targetDir;
-
 
     if (!file_exists($targetDir)) mkdir($targetDir, 0777, true);
 
@@ -1159,14 +1156,13 @@ class Sigal {
       }
       $newImage = imagecreatetruecolor($new_x, $new_y);
       imagecopyresampled($newImage, $originalImage, 0, 0, $srcx, $srcy, $new_x, $new_y, $srcw, $srch);
-      imagejpeg($newImage, $targetImagePath, $this->cache_image_quality);
+      imagewebp($newImage, $targetImagePath, $this->cache_image_quality);
       imagedestroy($newImage);
       imagedestroy($originalImage);
-
     }
 
     /* Output Image */
-    $imageSize = getimagesize($targetImagePath);
+    //$imageSize = getimagesize($targetImagePath);
     return $targetImagePath;
   }
   /*========================================================================*/
