@@ -128,6 +128,8 @@ class Sigal {
   
   public $show_gps_tab = true;
   
+  public $cache_image_quality = 80;
+  
   
   public $exts = array('jpg','jpeg','png','gif','bmp','tif','tiff','svg','swf','flv','mp4', 'mp3','mts','mov');
   
@@ -1051,7 +1053,6 @@ echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->la
     $targetDir = $this->getCacheDir($md5);
     $targetImagePath = $targetDir.$md5.".jpg";
     $targetImageTempPath = $targetDir.$md5."-tmp.jpg";
-    $outputImageQuality = 80;
     echo $targetDir;
 
 
@@ -1197,7 +1198,7 @@ echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->la
       }
       $newImage = imagecreatetruecolor($new_x, $new_y);
       imagecopyresampled($newImage, $originalImage, 0, 0, $srcx, $srcy, $new_x, $new_y, $srcw, $srch);
-      imagejpeg($newImage, $targetImagePath, $outputImageQuality);
+      imagejpeg($newImage, $targetImagePath, $this->cache_image_quality);
       imagedestroy($newImage);
       imagedestroy($originalImage);
 
@@ -1814,7 +1815,7 @@ function optionlist($options, $selected = null, $use_keys = false) {
   if (file_exists('./config.php')) include './config.php';
   $kws = array(
     'dir', 'cache', 'defaultIcon', 'icotitlefname', 'lockfname', 'thumb_x', 'thumb_y', 'middle_x', 'imgTitleLen', 'galTitle', 'legal_notice', 'date_format',
-    'enable_mass_download', 'show_exif_tab', 'show_gps_tab',
+    'enable_mass_download', 'show_exif_tab', 'show_gps_tab', 'cache_image_quality', 
     'func_sortimages', 'func_sortalbums', 'func_sortgroups', 'func_scandir', 'func_albumname', 'func_groupname', 'func_getalbums', 'func_videoimage', 'func_avfileplay'
   );
   foreach ($kws as $item) {

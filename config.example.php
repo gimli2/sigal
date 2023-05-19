@@ -10,11 +10,13 @@
   /** Name of file with defined usernames/passwords for locked/private albums. */
   $conf['lockfname'] = '000.lock';
   /** Width of thumbnail. */
-  $conf['thumb_x'] = 160;
+  $conf['thumb_x'] = 240;
   /** Height of thumbnail. */
-  $conf['thumb_y'] = 120;
+  $conf['thumb_y'] = 180;
   /** Width of middle size picture - the view size. */
   $conf['middle_x'] = 800;
+  /** Quality of output cached jpeg images. */
+  $conf['cache_image_quality'] = 80;
   /** Number of characters of shortened image title. */
   $conf['imgTitleLen'] = 16;
   /** Date format for image/thumbnail display. */

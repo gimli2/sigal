@@ -24,7 +24,7 @@
   if (file_exists('./config.php')) include './config.php';
   $kws = array(
     'dir', 'cache', 'defaultIcon', 'icotitlefname', 'lockfname', 'thumb_x', 'thumb_y', 'middle_x', 'imgTitleLen', 'galTitle', 'legal_notice', 'date_format',
-    'enable_mass_download', 'show_exif_tab', 'show_gps_tab',
+    'enable_mass_download', 'show_exif_tab', 'show_gps_tab', 'cache_image_quality', 
     'func_sortimages', 'func_sortalbums', 'func_sortgroups', 'func_scandir', 'func_albumname', 'func_groupname', 'func_getalbums', 'func_videoimage', 'func_avfileplay'
   );
   foreach ($kws as $item) {

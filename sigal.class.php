@@ -49,6 +49,8 @@ class Sigal {
   public $show_exif_tab = true;
   /** Flag to show GPS info in image details. */
   public $show_gps_tab = true;
+  /** Quality of output cached jpeg images. */
+  public $cache_image_quality = 80;
   /*========================================================================*/
   /** Array of file extensions for scanning in directiories. */
   public $exts = array('jpg','jpeg','png','gif','bmp','tif','tiff','svg','swf','flv','mp4', 'mp3','mts','mov');
@@ -1015,7 +1017,6 @@ class Sigal {
     $targetDir = $this->getCacheDir($md5);
     $targetImagePath = $targetDir.$md5.".jpg";
     $targetImageTempPath = $targetDir.$md5."-tmp.jpg";
-    $outputImageQuality = 80;
     echo $targetDir;
 
 
@@ -1161,7 +1162,7 @@ class Sigal {
       }
       $newImage = imagecreatetruecolor($new_x, $new_y);
       imagecopyresampled($newImage, $originalImage, 0, 0, $srcx, $srcy, $new_x, $new_y, $srcw, $srch);
-      imagejpeg($newImage, $targetImagePath, $outputImageQuality);
+      imagejpeg($newImage, $targetImagePath, $this->cache_image_quality);
       imagedestroy($newImage);
       imagedestroy($originalImage);
 
