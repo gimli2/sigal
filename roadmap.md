@@ -7,4 +7,3 @@ roadmap of sigal project
 - link to upper directory like in commander (..) - fake first item
 - Image watermarking (Overlay? - I dont want to manipulate original image)
 - EXIF auto rotation (Only for thumbnails and preview? - I dont want to manipulate original image)
-- photowall like http://quick.gallery/demo3/

@@ -4,10 +4,10 @@
  *  
  * @author    Martin Šlapák [aka: Gimli2]
  * @brief     Simple gallery script provides single-file web gallery.
- * @date      2012-2015
+ * @date      2012-2023
  * @copyright http://www.xfree86.org/3.3.6/COPYRIGHT2.html#5 Modified BSD License
  * @details   SiGal project page: http://gimli2.gipix.net/sigal/
- * @version   1.6
+ * @version   1.7
  *   
  */
 
@@ -15,16 +15,16 @@
  * @brief      Simple gallery script provides single-file web gallery.
  */ 
 class Sigal {
-  public $version = '1.6.0';
+  public $version = '1.7.0';
 
   /** Directory with pictures. */
   public $dir = 'pictures';
   /** Directory for caching thumbnails (must be writeable!).*/
   public $cache = 'cache';
   /** URL to default picture icon. May be absolute or relative. */
-  public $defaultIcon = '?static=defico';
+  public $defaultIcon = '?static=defico.png';
   /** URL to default album. May be absolute or relative. */
-  public $defaultDirIcon = '?static=defdirico';
+  public $defaultDirIcon = '?static=defdirico.png';
   /** Name of file with definition of title image. */
   public $icotitlefname = '000.nfo';
   /** Name of file with defined usernames/passwords for locked/private albums. */
@@ -36,7 +36,7 @@ class Sigal {
   /** Width of middle size picture - the view size. */
   public $middle_x = 800;
   /** Number of characters of shortened image title. */
-  public $imgTitleLen = 16;
+  public $imgTitleLen = 24;
   /** Date format for image/thumbnail display. */
   public $date_format = 'Y-m-d';
   /** Title of whole gallery. */
@@ -100,59 +100,90 @@ class Sigal {
 
 /** HTML head of each page of gallery. You can use string "{title}" which will be replaced by title of gallery defined above. */
   public $html_head = '<!DOCTYPE html><head><title>{title}</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="author" content="Gimli2; http://gimli2.gipix.net" />
 <meta name="robots" content="noindex">
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 <link rel="shotcut icon" href="./images/favicon.png" />
+<link rel="stylesheet" href="./css/blueimp-gallery.min.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="./css/style.css" type="text/css" />
 <!--OWNCSS-->
-<link rel="stylesheet" href="./modules/ceebox/css/ceebox-min-static-img.css" type="text/css" media="screen" />
 <!--GAJS-->
 <script type="text/javascript" src="./js/sigal.min.js"></script>
-<script type="text/javascript" src="./modules/ceebox/js/ceeboxall.min.js"></script>
+<script type="text/javascript" src="./js/jquery-3.7.0.min.js"></script>
+
 <script type="text/javascript">
   $(document).ready(
-     function(){
-         $(".fotos").ceebox({imageGallery:true,image:true,html:false,video:true,videoGallery:true,onload:preload_next});
+    function(){
+      //show first when page loads...
+      $(".tab_content").hide();
+      $("ul.tabs li:first").addClass("active").show();
+      $(".tab_content:first").show();
 
-          //show first when page loads...
+      var activeTab = window.location.hash;
+      if (activeTab=="") {
+        if(typeof(sessionStorage) !== "undefined") {
+            activeTab = sessionStorage.getItem("lasttab");
+            if (activeTab == null) activeTab = "";
+        }
+      }
+      if (activeTab!="") {
+          $("ul.tabs li").removeClass("active");
           $(".tab_content").hide();
-          $("ul.tabs li:first").addClass("active").show();
-          $(".tab_content:first").show();
-
-          var activeTab = window.location.hash;
-          if (activeTab=="") {
-            if(typeof(sessionStorage) !== "undefined") {
-                activeTab = sessionStorage.getItem("lasttab");
-                if (activeTab == null) activeTab = "";
-            }
-          }
-          if (activeTab!="") {
-              $("ul.tabs li").removeClass("active");
-              $(".tab_content").hide();
-              $("ul.tabs li").each(function(index) {
-                  x = $(this).find("a").attr("href");
-                  if (x == activeTab) {
-                      $(this).addClass("active");
-                  }
-              });
-              $(activeTab).show();
-          }
-
-          //On Click Event
-          $("ul.tabs li").click(function() {
-            $("ul.tabs li").removeClass("active");
-            $(this).addClass("active");
-            $(".tab_content").hide();
-            var activeTab = $(this).find("a").attr("href");
-            $(activeTab).show();
-            window.location.hash = activeTab;
-            if(typeof(sessionStorage) !== "undefined") sessionStorage.setItem("lasttab", activeTab);
-            return false;
+          $("ul.tabs li").each(function(index) {
+              x = $(this).find("a").attr("href");
+              if (x == activeTab) {
+                  $(this).addClass("active");
+              }
           });
+          $(activeTab).show();
+      }
+
+      $("ul.tabs li").click(function() {
+        $("ul.tabs li").removeClass("active");
+        $(this).addClass("active");
+        $(".tab_content").hide();
+        var activeTab = $(this).find("a").attr("href");
+        $(activeTab).show();
+        window.location.hash = activeTab;
+        if(typeof(sessionStorage) !== "undefined") sessionStorage.setItem("lasttab", activeTab);
+        return false;
+      });
           
+      $("#image-gallery").click(function (event) {
+        event = event || window.event
+        var target = event.target || event.srcElement
+        var link = target.src ? target.parentNode : target
+        var options = { index: link, event: event }
+        var links = Array.from(this.getElementsByTagName("a")).filter(function (x) {
+          return null !== x.attributes.getNamedItem("data-gallery");
+        });
+        if (links.length > 0) blueimp.Gallery(links, options);
+        console.log(links);
+      });
+      
+      $(".overlay").click(function(event) {
+        event = event || window.event
+        var target = event.target || event.srcElement
+        var isdir = $(target.parentElement).find(".dir").length > 0;       
+        if (isdir) window.location = $(target.parentElement).children("a")[0];
+      });
     }
   );
-</script></head><body>';
+</script>
+</head><body>
+
+<div id="blueimp-gallery" class="blueimp-gallery" aria-label="image gallery" aria-modal="true" role="dialog" data-start-slideshow="true">
+  <div class="slides" aria-live="off"></div>
+  <h3 class="title"></h3>
+  <a class="prev" aria-controls="blueimp-gallery" aria-label="previous slide" aria-keyshortcuts="ArrowLeft" ></a>
+  <a class="next" aria-controls="blueimp-gallery" aria-label="next slide" aria-keyshortcuts="ArrowRight" ></a>
+  <a class="close" aria-controls="blueimp-gallery" aria-label="close" aria-keyshortcuts="Escape" ></a>
+  <a class="play-pause" aria-controls="blueimp-gallery" aria-label="play slideshow" aria-keyshortcuts="Space" aria-pressed="true" role="button" ></a>
+  <ol class="indicator"></ol>
+</div>
+';
 
   /*========================================================================*/
   /** HTML tail of each page of galllery. */
@@ -184,6 +215,7 @@ class Sigal {
     '.$this->lang('Powered by').' <a href="http://gimli2.gipix.net/sigal/">SiGal</a> |
     <a href="?credits">'.$this->lang('Settings &amp; info').'</a>
     </div>
+    <script src="./js/blueimp-gallery.min.js"></script>
     </body></html>';
 
     // replace copyright and license
@@ -298,6 +330,7 @@ class Sigal {
       echo '<div class="tab_inner_content">';
       echo '<h2 class="subheader">'.$group.'</h2>';
 
+      echo '<ul class="image-gallery">';
       // albums in given year
       foreach ($albs as $key=>$a) {
         $titlefoto = $this->getAlbumTitleFile($a);
@@ -308,29 +341,32 @@ class Sigal {
         $cnt = count($content);
         $date = filemtime($a);
 
-        echo '<div class="album-thumb">';
+        echo '<li>';
         // has subdirs?
         echo '<div class="overlay_icons">';
         if (count($subdirs) > 0) {
-          echo '<img src="?static=defdirico" height="32" alt="'.$this->lang('Contain subdirs').'" title="'.$this->lang('Contain subdirs').'" class="overico" />';
+          echo '<img src="?static=defdirico.png" height="32" alt="'.$this->lang('Contain subdirs').'" title="'.$this->lang('Contain subdirs').'" class="overico" />';
         }
         // is locked?
         if (array_search($a.'/'.$this->lockfname, $content)!==FALSE) {
-          echo '<img src="?static=lock" height="32" alt="'.$this->lang('locked').'" title="'.$this->lang('access restricted').'" class="overico" />';
+          echo '<img src="?static=lock.png" height="32" alt="'.$this->lang('locked').'" title="'.$this->lang('access restricted').'" class="overico" />';
         }
         echo '</div>';
         echo '<a href="?alb='.$this->urlpathencode($bn).'" title="'.$bn.'" class="clall">';
         if ($thumb === $this->defaultIcon || $thumb === $this->defaultDirIcon || file_exists($thumb)) {
           echo '<img src="'.$thumb.'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
         } else {
-          echo '<img src="?static=1px" data-lazy="?mkthumb='.urlencode($this->basepathname($titlefoto)).'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
+          echo '<img src="?static=1px.gif" data-lazy="?mkthumb='.urlencode($this->basepathname($titlefoto)).'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
         }
         echo '</a>';
+        echo '<div class="alb-desc">';
         echo $this->getAlbumTitle($a);
         echo '<div class="desc">'.date($this->date_format, $date).' ('.$this->lang('%d files',$cnt).')</div>';
-        echo '</div>'."\n";
+        echo '</div>';
+        echo '</li>'."\n";
         ob_flush();
       }
+      echo '</ul>';
       
       echo '<br class="clall" />';
       echo '</div>'."\n";
@@ -344,7 +380,7 @@ class Sigal {
         echo ' | <a href="?">'.$this->lang('Back to top level').'</a>';
         echo '</div>';
     }
-    echo '<script src="?static=lazy.min"></script><script>lazy.init({delay:200});</script>';
+    echo '<script src="?static=lazy.min.js"></script><script>lazy.init({delay:200});</script>';
     
     echo $this->html_tail;
   }
@@ -388,15 +424,15 @@ class Sigal {
       echo $this->html_tail;
       die();
     }
-    echo '<div class="fotos">';
+    echo '<ul id="image-gallery" class="image-gallery">';
     foreach($fotos as $f) {
       $bn = $this->basepathname($f);
       $middle = $this->getMiddleName($f);
-      echo '<div class="foto-thumb">';
+      echo '<li>';
       $ext = strtolower($this->getExt($f));
       if($ext !== "mp4" && isset($this->func_avfileplay) && in_array($ext, $this->extsVideo)) {
         // some video file may need reencoding if defined
-        echo '<a href="?avfile='.$this->basepathname($f).'" title="'.$bn.'">';
+        echo '<a href="?avfile='.$this->basepathname($f).'" title="'.$bn.'" data-gallery>';
       } else if ($middle===$this->defaultIcon || file_exists($middle)) {
         // middle size image cannot be obtained or middle size file exists
         if ($middle===$this->defaultIcon) {
@@ -404,10 +440,10 @@ class Sigal {
             echo '<div class="overlay_icons">';
             // handle hierarchy
             // has subdirs?
-            echo '<img src="?static=defdirico" height="32" alt="'.$this->lang('Contain subdirs').'" title="'.$this->lang('Contain subdirs').'" class="overico" />';
+            echo '<img src="?static=defdirico.png" height="32" alt="'.$this->lang('Contain subdirs').'" title="'.$this->lang('Contain subdirs').'" class="overico dir" />';
             // is locked?
             if (file_exists($f.'/'.$this->lockfname)) {
-              echo '<img src="?static=lock" height="32" alt="'.$this->lang('locked').'" title="'.$this->lang('access restricted').'" class="lock" />';
+              echo '<img src="?static=lock.png" height="32" alt="'.$this->lang('locked').'" title="'.$this->lang('access restricted').'" class="lock" />';
             }
             echo '</div>';
             echo '<a href="?alb='.urlencode($bn).'" title="'.$bn.'">';
@@ -416,10 +452,10 @@ class Sigal {
             echo '<a href="'.$f.'" title="'.$bn.'" class="i">';
           }
         } else {
-          echo '<a href="'.$middle.'" title="'.$bn.'" class="i">';
+          echo '<a href="'.$middle.'" title="'.$bn.'" class="i" data-gallery>';
         }
       } else {
-        echo '<a href="?mkmid='.urlencode($bn).'" title="'.$bn.'" class="i">';
+        echo '<a href="?mkmid='.urlencode($bn).'" title="'.$bn.'" class="i" data-gallery>';
       }
       if (is_dir($f)) {
         $thumb = $this->getThumbName($this->getAlbumTitleFile($f));
@@ -429,23 +465,26 @@ class Sigal {
       if ($thumb === $this->defaultIcon || $thumb === $this->defaultDirIcon || file_exists($thumb)) {
         echo '<img src="'.$thumb.'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
       } else {
-        echo '<img src="?static=1px" data-lazy="?mkthumb='.urlencode($bn).'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
+        echo '<img src="?static=1px.gif" data-lazy="?mkthumb='.urlencode($bn).'" height="'.$this->thumb_y.'" alt="'.$bn.'" class="it" />';
       }
       echo '</a>';
+      echo '<div class="overlay">';
+      echo '<div class="overlay_in">';
       echo $this->getImageTitle($f);
-      echo '<div class="desc">';
-      echo date($this->date_format, filemtime($f));
-      echo '<div class="infbutton"><a href="?foto='.urlencode($bn).'#tab-base"><img src="?static=info" alt="'.$this->lang('Detailed info').'" title="'.$this->lang('Detailed info (EXIF, GPS)').'" /></a></div>';
-      echo '<div class="infbutton"><a href="'.$f.'#t"><img src="?static=download" alt="'.$this->lang('Download').'" title="'.$this->lang('Download full size').'" /></a></div>';
+      echo date($this->date_format, filemtime($f)).' | ';
       if ($this->enable_mass_download) {
         echo '<div class="infbutton"><input type="checkbox" name="i[]" value="'.$f.'" onClick="addToDownload(\''.$f.'\')" title="'.$this->lang('+/- to multiple download').'" /></div>';
       }
+      echo '<div class="infbutton"><a href="?foto='.urlencode($bn).'#tab-base"><img src="?static=info.png" alt="'.$this->lang('Detailed info').'" title="'.$this->lang('Detailed info (EXIF, GPS)').'" /></a></div>';
+      echo '<div class="infbutton"><a href="'.$f.'#t"><img src="?static=download.png" alt="'.$this->lang('Download').'" title="'.$this->lang('Download full size').'" /></a></div>';
+      
       echo '</div>';
-      echo '</div>'."\n";
+      echo '</div>';
+      echo '</li>'."\n";
       ob_flush();
     }
-    echo '</div>';
-    echo '<script src="?static=lazy.min"></script><script>lazy.init({delay:200});</script>';
+    echo '</ul>';
+    echo '<script src="?static=lazy.min.js"></script><script>lazy.init({delay:200});</script>';
     echo '<div class="footer">'.$this->lang('Navigation').': <a href="?alb='.urlencode($this->getparentdir($aname)).'">'.$this->lang('Back to album selection').'</a></div>';
     echo $this->html_tail;
   }

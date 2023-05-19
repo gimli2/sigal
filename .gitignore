@@ -3,5 +3,5 @@
 *.min.php*
 /demo/cache
 /.htaccess
-/_work/Single_File_PHP_Gallery_4.5.0.zip
+/_work/*
 /config.php

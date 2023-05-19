@@ -37,11 +37,11 @@
   }
   /*========================================================================*/
   if (isset($_POST["lang"])) {
-  	$gg->cookie("sigal_lang", $_POST["lang"]);
+    $gg->cookie("sigal_lang", $_POST["lang"]);
     $loc = $gg->remove_from_uri();
     $loc = ($loc !== '') ? $loc : '.';
-  	header("Location: ".$loc);
-  	die();
+    header("Location: ".$loc);
+    die();
   }
   /*========================================================================*/
   if (isset($_GET['credits'])) {

@@ -6,203 +6,209 @@ html, body {
   background-color: #aaa;
 }
 .header{
-	padding: 1ex;
-	border-bottom: 1px solid #666;
+  padding: 1ex;
+  border-bottom: 1px solid #666;
 }
 .header h1{
-	padding-left: 1ex;
+  padding-left: 1ex;
 }
 .subheader {
-	padding-left: 1ex;
+  padding-left: 1ex;
 }
 .footer {
-	clear: both;
-	padding: 1ex;
-	border-top: 1px solid #666;
+  clear: both;
+  padding: 1ex;
+  border-top: 1px solid #666;
 }
 .footer a, .header a {
-	color: #666;
-	text-decoration: none;
+  color: #666;
+  text-decoration: none;
 }
 #credits {
-	clear: both;
-	text-align: right;
-	padding: 1ex;
-	border-top: 1px solid #666;
-	color: #666;
+  clear: both;
+  text-align: right;
+  padding: 1ex;
+  border-top: 1px solid #666;
+  color: #666;
 }
 #credits a {
-	color: #666;
-	text-decoration: none;
-}
-.album-thumb, .foto-thumb {
-	border: 2px solid #222222;
-	background-color: #222222;
-	text-align: center;
-	color: silver;
-	border-radius: 10px;
-	min-width: 160px;
-	overflow: hidden;
-	margin: 1ex;
-	padding: 1ex;
-	line-height: 100%;
-	float: left;
-}
-.album-thumb h2, .foto-thumb h2 {
-	font-size: 100%;
-}
-.album-thumb img, .foto-thumb img {
-	border: 0px;
-	border-radius: 8px;
-	overflow: hidden;
-}
-img.it{
-}
-.foto-thumb .infbutton img {
-	border-radius: 0;
-}
-.album-thumb a, .foto-thumb a {
-	text-decoration: none;
-	border: 0px;
-}
-.album-thumb .desc, .foto-thumb .desc {
-	font-size: 80%;
-	margin-top: 1ex;
-}
-.foto .desc {
-	float: right;
-	width: 300px;
-	background-color: silver;
-	padding: 1ex;
-	overflow: hidden;
-}
-.foto .desc h1 {
-	font-size: 110%;
-}
-.foto .desc h2 {
-	font-size: 105%;
-}
-.foto .desc ul {
-	padding: 0;
-	margin: 0;
-}
-.foto .desc ul li {
-	margin: 0;
-	padding: 0;
-	list-style-position: inside;
+  color: #666;
+  text-decoration: none;
 }
 .foto img {
-	float: left;
+  float: left;
 }
 .infbutton {
-	width: 16px;
-	vertical-align: middle;
-	display: inline;
-	margin: 2px; 
+  width: 16px;
+  vertical-align: bottom;
+  display: inline;
+  margin: 2px; 
 }
 .infbutton a {
-	text-decoration: none;
-	border: 0;
+  text-decoration: none;
+  border: 0;
+  vertical-align: middle;
 }
 .infbutton img {
-	vertical-align: middle;
+  vertical-align: top;
 }
 .clall{
-	clear: both;
+  clear: both;
 }
 .overlay_icons {
-	position: absolute;
+  position: absolute;
 }
 .overico {
-	top: 0px;
-	left: 0px;
-	float: left;
-	clear: both;
+  top: 0px;
+  left: 0px;
+  float: left;
+  clear: both;
 }
 /* ================================================================ */
 ul.tabs {
-	margin: 0;
-	padding: 0;
-	float: left;
-	list-style: none;
-	height: 26px;
-	border-bottom: 1px solid #999;
-	width: 100%;
+  margin: 0;
+  padding: 0;
+  float: left;
+  list-style: none;
+  height: 26px;
+  border-bottom: 1px solid #999;
+  width: 100%;
 }
 ul.tabs li {
-	float: left;
-	margin: 0;
-	padding: 0;
-	height: 25px; 
-	line-height: 25px;
-	border: 1px solid #999;
-	border-left: none;
-	margin-bottom: -1px;
-	overflow: hidden;
-	position: relative;
-	background: #e0e0e0;
+  float: left;
+  margin: 0;
+  padding: 0;
+  height: 25px; 
+  line-height: 25px;
+  border: 1px solid #999;
+  border-left: none;
+  margin-bottom: -1px;
+  overflow: hidden;
+  position: relative;
+  background: #e0e0e0;
 }
 ul.tabs li a {
-	text-decoration: none;
-	color: #000;
-	display: block;
-	padding: 0 1ex;
-	outline: none;
+  text-decoration: none;
+  color: #000;
+  display: block;
+  padding: 0 1ex;
+  outline: none;
 }
 ul.tabs li a:hover {
-	background: #ccc;
+  background: #ccc;
 }
 html ul.tabs li.active, html ul.tabs li.active a:hover  {
-	background: #fff;
-	border-bottom: 1px solid #fff;
+  background: #fff;
+  border-bottom: 1px solid #fff;
 }
 .tab_content {
 
 }
 .tab_inner_content {
-	clear: both;
-	padding: 1ex;
-	color: #000;
-	line-height: 140%;
+  clear: both;
+  padding: 1ex;
+  color: #000;
+  line-height: 140%;
 }
 .tab_inner_content a {
-	color: #009;
+  color: #009;
 }
 .credits_content {
-	padding: 1em;         
+  padding: 1em;         
 }
 .credits_content li{
-	margin-left: 1em;     
+  margin-left: 1em;     
 }
 ol li{
-	list-style: inside;
-	list-style-type: decimal;
+  list-style: inside;
+  list-style-type: decimal;
 }
 .gps-container {
-	height: 500px; 
-	overflow: auto;
+  height: 500px; 
+  overflow: auto;
 }
 .msgbox {
-	border: 2px solid black;
-	background: #aaa;
-	border-radius: 10px;      
-	padding: 1ex;
-	margin: 2ex auto;
-	min-width: 200px;
-	width: 50%; 
+  border: 2px solid black;
+  background: #aaa;
+  border-radius: 10px;      
+  padding: 1ex;
+  margin: 2ex auto;
+  min-width: 200px;
+  width: 50%; 
 }
 .center {
-	text-align: center;         
+  text-align: center;         
 }
 .msgbox input {
-	padding: 0.5ex;     
-	width: 150px;   
+  padding: 0.5ex;     
+  width: 150px;   
 }
 label {  
 }
 #tab-exif .tab_inner_content div {
-	border-bottom: 1px dashed #000;
+  border-bottom: 1px dashed #000;
 }
 #tab-exif .tab_inner_content strong{
-	float: right;
+  float: right;
+}
+.alb-desc {
+  margin-top: 1ex;
+}
+.desc, .foto {
+  float: left;
+}
+/* ================================================================ */
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 2ex;
+}
+ul.image-gallery {
+  padding: 1ex;
+}
+.image-gallery > li {
+  flex: 1 1 auto; /* or flex: auto; */
+  height: 300px;
+  cursor: pointer;
+  position: relative;
+  list-style-type: none;
+}
+.image-gallery::after {
+  content: "";
+  flex-grow: 999;
+}
+.image-gallery li img.it {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  vertical-align: middle;
+  border-radius: 5px;
+}
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(60, 60, 60, 0.5);
+  top: 0;
+  left: 0;
+  transform: scale(0);
+  transition: all 0.2s 0.1s ease-in-out;
+  color: #fff;
+  border-radius: 5px;
+  /* center overlay content */
+  /*
+  display: flex;
+  align-items: center;
+  align-items: bottom;
+  justify-content: center;
+  */
+}
+.overlay_in {
+  margin: 1ex;
+  position:absolute;
+  bottom:0;
+}
+.image-gallery li:hover .overlay {
+  transform: scale(1);
 }
