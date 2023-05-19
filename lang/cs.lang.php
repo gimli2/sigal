@@ -44,7 +44,6 @@ $translations['cs'] = array(
 	'File name' => 'Jméno souboru',
 	'Links' => 'Odkazy',
 	'Position' => 'Poloha',
-	'Maps' => 'Mapy',
 	'Contain subdirs' => 'Obsahuje podadresáře',
 );
 ?>

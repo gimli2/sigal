@@ -600,18 +600,6 @@ class Sigal {
           echo '<p>'.$this->lang('Links').':</p>';
           echo '<a href="http://mapy.cz/#t=s&q='.urlencode($gps[0].', '.$gps[1]).'">mapy.cz</a><br />';
           echo '<a href="http://maps.google.cz/maps?q='.urlencode($gps[0].', '.$gps[1]).'">maps.google.com</a><br />';
-          echo '<p>'.$this->lang('Maps').':</p>';
-          echo '<div class="gps-container">';
-          echo '<div>';
-          echo '<img src="http://pafciu17.dev.openstreetmap.org/?module=map&center='.$gps[1].','.$gps[0].',&zoom=13&type=mapnik&width=240&height=240&points='.$gps[1].','.$gps[0].',pointImagePattern:red" /><br class="clall">';
-          echo '</div>';
-          echo '<div>';
-          echo '<img src="http://ojw.dev.openstreetmap.org/StaticMap/?lat='.$gps[0].'&lon='.$gps[1].'&z=10&w=240&h=240&layer=hiking&mode=Add+icon&mlat0='.$gps[0].'&mlon0='.$gps[1].'&show=1" /><br class="clall">';
-          echo '</div>';
-          echo '<div>';
-          echo '<img src="http://ojw.dev.openstreetmap.org/StaticMap/?lat='.$gps[0].'&lon='.$gps[1].'&z=13&w=240&h=240&layer=hiking&mode=Add+icon&mlat0='.$gps[0].'&mlon0='.$gps[1].'&show=1" /><br class="clall">';
-          echo '</div>';
-          echo '</div>';
         }  else {
           echo $this->lang('No GPS data.');
         }

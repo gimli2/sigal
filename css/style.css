@@ -123,10 +123,6 @@ ol li{
   list-style: inside;
   list-style-type: decimal;
 }
-.gps-container {
-  height: 500px; 
-  overflow: auto;
-}
 .msgbox {
   border: 2px solid black;
   background: #aaa;
