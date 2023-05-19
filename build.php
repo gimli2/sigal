@@ -152,7 +152,6 @@
     if ($sf == './css/blueimp-gallery.min.css') {
       $content = file_get_contents($sf);
       $content = preg_replace('~url\(\.\./img/([^\.]+\.[a-z]+)\)~i', 'url(?static=\\1)', $content);
-      echo $content."\n";
       $content = base64_encode($content);
     }
     

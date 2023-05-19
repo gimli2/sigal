@@ -196,6 +196,7 @@ class Sigal {
 <script type="text/javascript">
   $(document).ready(
     function(){
+      var g = null;
       //show first when page loads...
       $(".tab_content").hide();
       $("ul.tabs li:first").addClass("active").show();
@@ -235,14 +236,22 @@ class Sigal {
         event = event || window.event
         var target = event.target || event.srcElement
         var link = target.src ? target.parentNode : target
-        var options = { index: link, event: event }
-        var links = Array.from(this.getElementsByTagName("a")).filter(function (x) {
-          return null !== x.attributes.getNamedItem("data-gallery");
-        });
-        if (links.length > 0) blueimp.Gallery(links, options);
-        console.log(links);
+        // only clicks on thumbnail overlay lead to open slideshow
+        if (link.tagName === "DIV" && link.className === "overlay") {
+          var links = Array.from(this.getElementsByTagName("a")).filter(function (x) {
+            return null !== x.attributes.getNamedItem("data-gallery");
+          });
+          if (links.length > 0) {
+            var options = { index: link, event: event }
+            g = blueimp.Gallery(links, options);
+            var curlink = $(target.parentElement).children("a")[0];
+            var idx = links.indexOf(curlink);
+            g.slide(idx, 0);  // 0 = delay in ms
+          }
+        }
       });
       
+      // handle click to subdir
       $(".overlay").click(function(event) {
         event = event || window.event
         var target = event.target || event.srcElement
