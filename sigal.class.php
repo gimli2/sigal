@@ -1278,6 +1278,7 @@ class Sigal {
   * @return string
   */
   function remove_from_uri($param = "") {
+    if (!defined('SID')) define('SID', session_id());
     return substr(preg_replace("~(?<=[?&])($param" . (SID ? "" : "|" . session_name()) . ")=[^&]*&~", '', "$_SERVER[REQUEST_URI]&"), 0, -1);
   }
   /*========================================================================*/
