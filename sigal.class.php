@@ -1195,6 +1195,7 @@ class Sigal {
   */
   function lang($idf, $number = null) {
     global $translations;
+    if ($translations === null) $translations = array();
     //print_r($translations);
     $translations_lang = $translations[$this->LANG];
     $translation = (isset($translations_lang[$idf]) ? $translations_lang[$idf] : $idf);
