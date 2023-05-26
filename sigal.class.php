@@ -15,6 +15,7 @@
  * @brief      Simple gallery script provides single-file web gallery.
  */ 
 class Sigal {
+  /** Current version. */
   public $version = '1.7.0';
 
   /** Directory with pictures. */
@@ -754,6 +755,9 @@ class Sigal {
     return $this->defaultDirIcon;
   }
   /*========================================================================*/
+  /**
+   * @returns zipped binary data
+   */
   public function downloadZippedImages() {
     $url = parse_url($_POST['imgalbum'],PHP_URL_QUERY); // only part after ?
     $archive = urlencode(substr($url, 1 + strpos($url, '=')));
@@ -1167,9 +1171,9 @@ class Sigal {
   }
   /*========================================================================*/
   /** Set cookie valid on current path
-  * @param string
-  * @param string
-  * @param int number of seconds, 0 for session cookie
+  * @param string $name
+  * @param string $value
+  * @param int $lifetime number of seconds, 0 for session cookie
   * @return bool
   */
   function cookie($name, $value, $lifetime = 2592000) { // 2592000 - 30 days
@@ -1189,8 +1193,8 @@ class Sigal {
   }
   /*========================================================================*/
   /** Translate string
-  * @param string
-  * @param int
+  * @param string $idf
+  * @param int $number
   * @return string
   */
   function lang($idf, $number = null) {
@@ -1221,13 +1225,16 @@ class Sigal {
   }
   /*========================================================================*/
   /** Format decimal number
-  * @param int
+  * @param int $val
   * @return string
   */
   function format_number($val) {
     return strtr(number_format($val, 0, ".", $this->lang(',')), preg_split('~~u', $this->lang('0123456789'), -1, PREG_SPLIT_NO_EMPTY));
   }
   /*========================================================================*/
+  /**
+   * @returns string 2 chars of language ID (eg.: en | cs | ...)
+   */
   function detect_lang() {
     $this->LANG = "en";
     if (isset($_COOKIE["sigal_lang"]) && isset($this->langs[$_COOKIE["sigal_lang"]])) {
@@ -1256,6 +1263,9 @@ class Sigal {
     return $this->LANG;
   }
   /*========================================================================*/
+  /**
+   * Prints the form for language switching.
+   */
   function switch_lang() {
     echo "<form action='' method='post'>\n<div id='lang'>";
     echo $this->lang('Language') . ": " . html_select("lang", $this->langs, $this->LANG, "this.form.submit();");
@@ -1264,7 +1274,7 @@ class Sigal {
   }
   /*========================================================================*/
   /** Remove parameter from query string
-  * @param string
+  * @param string $param
   * @return string
   */
   function remove_from_uri($param = "") {
