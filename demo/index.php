@@ -113,7 +113,8 @@
 
  
 class Sigal {
-  public $version = '1.7.0';
+  
+  public $version = '1.7.1';
 
   
   public $dir = 'pictures';
@@ -262,7 +263,7 @@ class Sigal {
             return null !== x.attributes.getNamedItem("data-gallery");
           });
           if (links.length > 0) {
-            var options = { index: link, event: event }
+            var options = { index: link, event: event, videoCoverClass: "video-cover toggle" }
             g = blueimp.Gallery(links, options);
             var curlink = $(target.parentElement).children("a")[0];
             var idx = links.indexOf(curlink);
@@ -523,6 +524,11 @@ class Sigal {
       $middle = $this->getMiddleName($f);
       echo '<li>';
       $ext = strtolower($this->getExt($f));
+      if (in_array($ext, $this->extsVideo)) {
+        $video_attributes = ' type="video/'.strtolower($ext).'" ';
+      } else {
+        $video_attributes = '';
+      }
       if($ext !== "mp4" && isset($this->func_avfileplay) && in_array($ext, $this->extsVideo)) {
         
         echo '<a href="?avfile='.$this->basepathname($f).'" title="'.$bn.'" data-gallery>';
@@ -542,13 +548,16 @@ class Sigal {
             echo '<a href="?alb='.urlencode($bn).'" title="'.$bn.'">';
           } else {
             
-            echo '<a href="'.$f.'" title="'.$bn.'" class="i">';
+            $video_attributes .= ($video_attributes !== '') ? ' data-poster="?mkmid='.urlencode($bn).'" ' : '';
+            echo '<a href="'.$f.'" title="'.$bn.'" '.$video_attributes.' class="i" data-gallery>';
           }
         } else {
-          echo '<a href="'.$middle.'" title="'.$bn.'" class="i" data-gallery>';
+          $video_attributes .= ($video_attributes !== '') ? ' data-poster="'.$middle.'" ' : '';
+          echo '<a href="'.$middle.'" title="'.$bn.'" '.$video_attributes.' class="i" data-gallery>';
         }
       } else {
-        echo '<a href="?mkmid='.urlencode($bn).'" title="'.$bn.'" class="i" data-gallery>';
+        $video_attributes .= ($video_attributes !== '') ? ' data-poster="?mkmid='.urlencode($bn).'" ' : '';
+        echo '<a href="?mkmid='.urlencode($bn).'" title="'.$bn.'" '.$video_attributes.' class="i" data-gallery>';
       }
       if (is_dir($f)) {
         $thumb = $this->getThumbName($this->getAlbumTitleFile($f));
@@ -860,6 +869,7 @@ echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->la
     
     return $this->defaultDirIcon;
   }
+  
   
   public function downloadZippedImages() {
     $url = parse_url($_POST['imgalbum'],PHP_URL_QUERY); 
@@ -1270,6 +1280,7 @@ echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->la
     return strtr(number_format($val, 0, ".", $this->lang(',')), preg_split('~~u', $this->lang('0123456789'), -1, PREG_SPLIT_NO_EMPTY));
   }
   
+  
   function detect_lang() {
     $this->LANG = "en";
     if (isset($_COOKIE["sigal_lang"]) && isset($this->langs[$_COOKIE["sigal_lang"]])) {
@@ -1298,6 +1309,7 @@ echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->la
     return $this->LANG;
   }
   
+  
   function switch_lang() {
     echo "<form action='' method='post'>\n<div id='lang'>";
     echo $this->lang('Language') . ": " . html_select("lang", $this->langs, $this->LANG, "this.form.submit();");
@@ -1307,6 +1319,7 @@ echo '<div class="footer">'.$this->lang('Navigation').': <a href="?">'.$this->la
   
   
   function remove_from_uri($param = "") {
+    if (!defined('SID')) define('SID', session_id());
     return substr(preg_replace("~(?<=[?&])($param" . (SID ? "" : "|" . session_name()) . ")=[^&]*&~", '', "$_SERVER[REQUEST_URI]&"), 0, -1);
   }
   
